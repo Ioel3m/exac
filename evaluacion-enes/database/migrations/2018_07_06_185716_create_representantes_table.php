@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAsistenciasTable extends Migration
+class CreateRepresentantesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,19 @@ class CreateAsistenciasTable extends Migration
      */
     public function up()
     {
-        Schema::create('asistencias', function (Blueprint $table) {
+        Schema::create('representantes', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('asistio');
-            $table->boolean('fuga')->default(0);
-            $table->string('observacion', 100);
-
+            $table->string('cedula', 12);
+            $table->string('nombres', 95);
+            $table->string('apellidos', 95);
+            $table->string('telefono', 12);
+            $table->string('correo', 95);
+            $table->boolean('condicion')->default(1);
+            
             $table->integer('idalumno')->unsigned();
             $table->foreign('idalumno')->references('id')->on('users')->onDelete('cascade');
-
-            $table->integer('idclase')->unsigned();
-            $table->foreign('idclase')->references('id')->on('clases')->onDelete('cascade');
-            $table->timestamps();
         });
+
     }
 
     /**
@@ -35,6 +35,6 @@ class CreateAsistenciasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('asistencias');
+        Schema::dropIfExists('representantes');
     }
 }

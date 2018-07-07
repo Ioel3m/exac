@@ -23,7 +23,6 @@ class CreatePeriodosAcademicosTable extends Migration
         });
 
         DB::table('periodos_academicos')->insert(array('id'=>'1', 'fecha_inicio' => '2018-07-02', 'fecha_fin' => '2018-10-10', 'condicion' => true));  
-        DB::table('periodos_academicos')->insert(array('id'=>'2', 'fecha_inicio' => '2018-10-12', 'fecha_fin' => '2019-02-12', 'condicion' => true));  
     }
 
     /**

@@ -13,7 +13,7 @@ class PeriodoAcademico extends Model
         'fecha_inicio', 'fecha_fin', 'condicion'
     ];
 
-    public function paralelos(){
-        return $this->hasMany('App\Paralelo');
+    public function users(){
+        return $this->hasMany('App\User');
     }
 }

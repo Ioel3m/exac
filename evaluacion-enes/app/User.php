@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nombres', 'apellidos', 'nickname', 'email', 'password', 'telefono', 'direccion', 'fecha_nacimiento', 'estado_civil', 'condicion', 'idrol', 'idusuario_habilitado', 'idparalelo'
+        'nombres', 'apellidos', 'nickname', 'email', 'password', 'telefono', 'direccion', 'fecha_nacimiento', 'estado_civil', 'informacion_personal', 'condicion', 'idrol', 'idparalelo', 'idarea', 'idperiodo'
     ];
 
     /**
@@ -35,8 +35,8 @@ class User extends Authenticatable
         return $this->belongsTo('App\Paralelo');
     }
 
-    public function usuario_habilitado() {
-        return $this->belongsTo('App\UsuarioHabilitado');
+    public function periodo_academico() {
+        return $this->belongsTo('App\PeriodoAcademico');
     }
 
     public function clases(){

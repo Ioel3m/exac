@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Paralelo extends Model
+class Area extends Model
 {
     protected $fillable = [
-        'descripcion', 'condicion'
+        'name'
     ];
 
     public function users(){
