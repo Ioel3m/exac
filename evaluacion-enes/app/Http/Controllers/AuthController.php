@@ -18,14 +18,15 @@ class AuthController extends Controller
     {
         //$this->middleware('jwt.auth', ['except' => ['login']]);
     }
- 
+
+
     public function Autenticar(Request $request)
     {
         $credenciales = $request->only('nickname', 'password'); 
         $user = null;
         try {
             if (! $token = JWTAuth::attempt($credenciales)) {
-                return response()->json(['error' => 'Las credenciales son incorrectas']);
+                return response()->json(['error' => 'Las credenciales son incorrectas'], 401);
             }
             $user = Auth::user();
         } catch (JWTException $e) {

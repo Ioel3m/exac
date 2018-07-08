@@ -268,7 +268,11 @@ a {
   bottom: 0px;
   width: 100%;
   height: 100%;
+  background-color: #E5EBF1;
 }
+
+
+
 #seccion-contacto span {
   margin: 0;
   background-color: #E5EBF1;
@@ -288,13 +292,15 @@ a {
 #seccion-contacto form input[type=text] {
   width: 100%;
 }
-
-#form-contacto {
+#form-contacto{
+  width: 100%
+}
+#form-contact {
   transition: 2s all;
-  background-color: #E5EBF1;
 }
 #form-contacto form {
   width: 100%;
+  margin-top: 40px;
 }
 #form-contacto form input[type=text], #form-contacto form textarea {
   border: 1px solid #AEAEAE;
@@ -316,8 +322,13 @@ a {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.16);
   transition: 0.3s all;
 }
+
 #form-contacto form input[type=submit]:hover {
   background-color: #006DC4;
+}
+
+#form-contact{
+  width: 100%
 }
 
 .i-seleccionado {

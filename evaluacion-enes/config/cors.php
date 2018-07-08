@@ -12,19 +12,15 @@ return [
     |
     */
    
-  /*  'supportsCredentials' => false,
-    'allowedOrigins' => ['*'],
-    'allowedOriginsPatterns' => [],
-    'allowedHeaders' => ['*'],
-    'allowedMethods' => ['*'],
-    'exposedHeaders' => [],
-    'maxAge' => 0,
-*/
     'supportsCredentials' => true,
     'allowedOrigins' => ['*'],
+
     'allowedHeaders' => ['Origin', 'Content-Type', 'Accept', 'Authorization', 'X-Request-With'],
+    'allowedHeaders' => ['*'],
     'allowedMethods' => ['GET', 'POST', 'PUT',  'DELETE', 'OPTIONS'],
     'exposedHeaders' => [],
     'maxAge' => 0,
     'hosts' => [],
+
+
 ];

@@ -1,74 +1,59 @@
-<!DOCTYPE html>
-<html lang="es">
+<div class="container-fluid">
 
-<head>
-  <meta charset="UTF-8">
-  <title>Login</title>
-</head>
+  <div class="row d_100vh">
 
-<body>
-  <div class="container-fluid" style="overflow: hidden;">
-
-    <div class="row d_100vh">
-
-      <div class="col-6 d_flex d_text-center d_flex-column d_align-content-center d_justify-center d_align-items-center" style="padding: 0">
+    <div class="col-12 col-lg-6 d_flex d_text-center d_flex-column d_align-content-center d_justify-center d_align-items-center" style="padding: 0">
 
 
-        <div class="container-login d-flex align-content-center justify-content-center align-items-center flex-column d_100vh">
-          
-          
-          <span>
-            <h1 class="f_roboto-bold f_2rem d_p-5 d_mb-5 t_c-gris-primario">INICIAR SESIÓN</h1>
-            <p class="f_roboto-light d_p-5 t_c-gris-secundario">Ingresa tu nombre de usuario y contraseña</p>
-            <form action="" id="m_login" class="d_flex d_flex-column d_align-items-center">
-              <span id="s-login" class="d_flex d_flex-row d_align-items-center d_justify-around">
-                <i class="fa fa-user mx-2" aria-hidden="true"></i>
-                <input id="i-login" class="f_roboto-regular" type="text" placeholder="Usuario">
-              </span>
-              <span id="s-pass" class="d_flex d_flex-row d_align-items-center d_justify-around">
-                <i class="fa fa-lock mx-2" aria-hidden="true"></i>
-                <input id="i-pass" type="password" class="f_roboto-regular" placeholder="*****">
-              </span>
-              <input type="submit" class="f_roboto-regular" value="INICIAR">
-            </form>
-          </span>
+      <div class="container-login d-flex align-content-center justify-content-center align-items-center flex-column d_100vh">
 
-        </div>
 
-        <div id="seccion-contacto" class="div d_flex d_flex-column" style="height: 20%;">
+        <span>
+          <h1 class="f_roboto-bold f_2rem d_p-5 d_mb-5 t_c-gris-primario">INICIAR SESIÓN</h1>
+          <p class="f_roboto-light d_p-5 t_c-gris-secundario">Ingresa tu nombre de usuario y contraseña</p>
+          <form action="" id="m_login" class="d_flex d_flex-column d_align-items-center">
+            <span id="s-login" class="d_flex d_flex-row d_align-items-center d_justify-around">
+              <i class="fa fa-user mx-2" aria-hidden="true"></i>
+              <input id="i-login" class="f_roboto-regular" type="text" placeholder="Usuario">
+            </span>
+            <span id="s-pass" class="d_flex d_flex-row d_align-items-center d_justify-around">
+              <i class="fa fa-lock mx-2" aria-hidden="true"></i>
+              <input id="i-pass" type="password" class="f_roboto-regular" placeholder="*****">
+            </span>
+            <input type="submit" class="f_roboto-regular" value="INICIAR">
+          </form>
+        </span>
 
-          <span class="d_flex d_flex-row d_justify-center fixed-bottom" style="width: 50%">
-            <p class="f_roboto-italic d_mx-5">¿Preguntas? Usa nuestro formulario de contacto</p>
-            <i id="up-contacto" class="fa fa-chevron-up t_c-gris-primario d_p-5" aria-hidden="true"></i>
-            <i id="down-contacto" class="fa fa-chevron-down t_c-gris-primario d_p-5" aria-hidden="true" style="display: none"></i>
-          </span>
+      </div>
 
-          <div id="form-contacto" class="d_flex d_justify-center" style="height: 100vh; margin-bottom: -95%; display:none">
+      <div id="seccion-contacto" class="div d_flex d_flex-column fixed-bottom col-12 col-lg-6" style="top:90vh">
 
-            <form id="form-contact" action="" class="d_flex d_flex-column d_align-items-center">
-              <input type="text" placeholder="Nombre" required>
-              <input type="text" placeholder="telefono" required>
-              <input type="text" placeholder="correo" required>
-              <textarea>
+        <span class="d_flex d_flex-row d_justify-center align-items-center align-content-center">
+          <p class="f_roboto-italic d_mx-5">¿Preguntas? Usa nuestro formulario de contacto</p>
+          <i id="up-contacto" class="fa fa-chevron-up t_c-gris-primario d_mx-5" aria-hidden="true"></i>
+          <i id="down-contacto" class="fa fa-chevron-down t_c-gris-primario d_mx-5" aria-hidden="true" style="display: none"></i>
+        </span>
+
+        <div id="form-contacto" class="d_flex d_justify-center d-none col-12">
+
+          <form id="form-contact" action="" class="d_flex d_flex-column d_align-items-center col-12" style="height: 100vh;">
+            <input type="text" placeholder="Nombre" required>
+            <input type="text" placeholder="telefono" required>
+            <input type="text" placeholder="correo" required>
+            <textarea>
                 Comentario
               </textarea>
-              <input type="submit" class="f_roboto-regular" value="ENVIAR">
-            </form>
-
-          </div>
+            <input type="submit" class="f_roboto-regular" value="ENVIAR">
+          </form>
 
         </div>
 
       </div>
 
-      <div id="portada" class="col-6"></div>
-
     </div>
+
+    <div id="portada" class="col-12 d-none d-lg-block col-lg-6"></div>
 
   </div>
 
-  <script src="libs/jquery.js"></script>
-  <script src="js/efectos.js"></script>
-</body>
-
-</html>
+</div>
