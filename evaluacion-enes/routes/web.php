@@ -10,11 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*Route::get('/', function () {
+Route::get('/', function () {
     return view('welcome');
-});*/
+});
 
-Route::group(['middleware' => 'cors'], function () {
+
+Route::group([ 'middleware' => ['api', 'cors'], 'namespace' => $this->namespace, 'prefix' => 'api', ], function ($router) { 
     Route::post('/auth', 'AuthController@Autenticar');
-    Route::get('/students', 'EstudianteController@index');
+    Route::get('/students', 'EstudianteController@index'); 
 });

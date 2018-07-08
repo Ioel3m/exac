@@ -12,6 +12,11 @@ use Carbon\Carbon;
 
 class EstudianteController extends Controller
 {
+    public function __construct()
+    {
+        //$this->middleware('jwt.auth', ['except' => ['login']]);
+    }
+
     public function index(Request $request){
         $paralelo = $request->paralelo;
         $periodo = $request->periodo;
