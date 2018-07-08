@@ -17,8 +17,11 @@
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+<<<<<<< HEAD
     
 
+=======
+>>>>>>> ddecb60260a5abe60f52a1d3e936713b346e5771
 
 </IfModule>
 

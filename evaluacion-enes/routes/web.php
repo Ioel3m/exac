@@ -10,12 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*Route::get('/', function () {
+Route::get('/', function () {
     return view('welcome');
-});*/
+});
 
-Route::group(['middleware' => 'cors'], function () {
+
+Route::group([ 'middleware' => ['api', 'cors'], 'namespace' => $this->namespace, 'prefix' => 'api', ], function ($router) { 
     Route::post('/auth', 'AuthController@Autenticar');
+<<<<<<< HEAD
     Route::get('/students', 'EstudianteController@index');
 });
 
@@ -28,3 +30,7 @@ Route::get('/token', array('middleware' => ['cors', 'jwt.auth'], function() {
     $newToken = \JWTAuth::refresh($token);
     return response()->json(['nickname' => $user->nickname, 'token' => $newToken], 200);
 }));
+=======
+    Route::get('/students', 'EstudianteController@index'); 
+});
+>>>>>>> ddecb60260a5abe60f52a1d3e936713b346e5771
