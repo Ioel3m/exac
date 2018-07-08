@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from "../../services/api.service";
+import { User, ApiService } from "../../services/api.service";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -7,12 +7,16 @@ import { ApiService } from "../../services/api.service";
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private _apiService:ApiService) { 
-
-  }
+  constructor(private _apiService:ApiService) {}
 
   ngOnInit() {
-    this._apiService.getUsuarios('1204392032-EST', '1204392032').subscribe(res=>console.log(res.json()))
+    let user: User= {
+      nickname: '1201215621-DOC',
+      password: '1201215621'
+    };
+    this._apiService.login(user).subscribe(res => {
+        console.log(res)
+    })
   }
 
 }

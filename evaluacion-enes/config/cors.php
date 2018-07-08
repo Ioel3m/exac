@@ -20,9 +20,9 @@ return [
     'exposedHeaders' => [],
     'maxAge' => 0,
 */
-    'supportsCredentials' => false,
+    'supportsCredentials' => true,
     'allowedOrigins' => ['*'],
-    'allowedHeaders' => ['*'],
+    'allowedHeaders' => ['Origin', 'Content-Type', 'Accept', 'Authorization', 'X-Request-With'],
     'allowedMethods' => ['GET', 'POST', 'PUT',  'DELETE', 'OPTIONS'],
     'exposedHeaders' => [],
     'maxAge' => 0,

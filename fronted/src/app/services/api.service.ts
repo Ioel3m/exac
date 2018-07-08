@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Jsonp, Http } from '@angular/http';
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
-import { map } from 'rxjs/operators/'
+export interface User {
+  nickname: string;
+  password: string
+}
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -10,22 +16,12 @@ import { map } from 'rxjs/operators/'
 export class ApiService {
 
 
-  private url: string = "http://localhost:8000/auth/";
+  private url: string = "http://127.0.0.1:8000/api/auth/";
 
 
-  constructor(private _http:Http) {
+  constructor(public http: HttpClient) {}
 
-   }
-
-
-   getUsuarios(nickname, password) {
-    let url = `${this.url}nickname=${nickname}&password=${password}`;
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':'application/x-www-form-urlencoded',
-
-      })}
-
-    return this._http.post(url, httpOptions).pipe(map(res => res.json()))
+  login(user: User) {
+    return this.http.post<User>(this.url, user, httpOptions)
   }
 }

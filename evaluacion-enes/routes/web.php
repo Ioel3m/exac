@@ -14,8 +14,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::group([ 'middleware' => ['api', 'cors'], 'namespace' => $this->namespace, 'prefix' => 'api', ], function ($router) { 
-    Route::post('/auth', 'AuthController@Autenticar');
-    Route::get('/students', 'EstudianteController@index'); 
-});
