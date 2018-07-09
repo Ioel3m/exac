@@ -5,23 +5,31 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './component/login/login.component';
+import { DashAdminComponent } from './dash-admin/dash-admin.component';
 
+
+//RUTAS
+import { RUTAS } from "./rutas.component";
 
 //SERVICIOS
 import { ApiService } from './services/api.service';
+import { GuardService } from './services/guard.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    DashAdminComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
-    HttpClientModule
+    HttpClientModule,
+    RUTAS
   ],
   providers: [
-    ApiService
+    ApiService,
+    GuardService
   ],
   bootstrap: [AppComponent]
 })

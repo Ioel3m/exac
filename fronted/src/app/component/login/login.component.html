@@ -2,7 +2,8 @@
 
   <div class="row d_100vh">
 
-    <div class="col-12 col-lg-6 d_flex d_text-center d_flex-column d_align-content-center d_justify-center d_align-items-center" style="padding: 0">
+    <div class="col-12 col-lg-6 d_flex d_text-center d_flex-column d_align-content-center d_justify-center d_align-items-center"
+      style="padding: 0">
 
 
       <div class="container-login d-flex align-content-center justify-content-center align-items-center flex-column d_100vh">
@@ -14,13 +15,16 @@
           <form action="" id="m_login" class="d_flex d_flex-column d_align-items-center">
             <span id="s-login" class="d_flex d_flex-row d_align-items-center d_justify-around">
               <i class="fa fa-user mx-2" aria-hidden="true"></i>
-              <input id="i-login" class="f_roboto-regular" type="text" placeholder="Usuario">
+              <input id="i-login" class="f_roboto-regular" type="text" placeholder="Usuario" #usuario (keyUp.enter)="sesionStart(usuario.value, password.value)">
             </span>
             <span id="s-pass" class="d_flex d_flex-row d_align-items-center d_justify-around">
               <i class="fa fa-lock mx-2" aria-hidden="true"></i>
-              <input id="i-pass" type="password" class="f_roboto-regular" placeholder="*****">
+              <input id="i-pass" type="password" class="f_roboto-regular" placeholder="*****" #password (keyUp.enter)="sesionStart(usuario.value, password.value)">
             </span>
-            <input type="submit" class="f_roboto-regular" value="INICIAR">
+            <input type="button" class="f_roboto-regular" value="INICIAR" (click)="sesionStart(usuario.value, password.value)">
+            <div class="mt-2 d-flex justify-content-center align-items-center align-content-center" style="width: 100%; height: 30px;">
+              <p class="mt-4 text-danger f_light-regular p-3 animated fadeIn fast" *ngIf="errorCre" >Credenciales incorrectas. Vuelva a internarlo</p>
+            </div>
           </form>
         </span>
 
