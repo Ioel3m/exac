@@ -20,6 +20,16 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => 'cors'], function () { 
     Route::post('/auth', 'AuthController@Autenticar');
     Route::get('/students', 'EstudianteController@index'); 
+    
+    Route::get('/teacher', 'AdministradorController@index');
+    Route::post('/teacher', 'AdministradorController@store');
+
+    Route::get('/teacher/area/{id}', 'DocenteController@getAreaDocente');
+    Route::get('/teacher/periodo/{id}', 'DocenteController@getPeriodoDocente');
+    Route::get('/teacher/paralelo/{id}', 'DocenteController@getParaleloDocente');
+    Route::get('/teacher/rol/{id}', 'DocenteController@getRolDocente');
+
+    Route::get('/dominio', 'AreaController@index');
 });
 
 Route::get('/token', array('middleware' => ['cors', 'jwt.auth'], function() {
