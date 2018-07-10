@@ -25,7 +25,7 @@ class AuthController extends Controller
         $user = null;
         try {
             if (! $token = JWTAuth::attempt($credenciales)) {
-                return response()->json(['error' => 'Las credenciales son incorrectas']);
+                return response()->json(['error' => 'Las credenciales son incorrectas'], 401);
             }
             $user = Auth::user();
         } catch (JWTException $e) {

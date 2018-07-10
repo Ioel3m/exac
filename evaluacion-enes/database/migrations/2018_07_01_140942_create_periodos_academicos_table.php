@@ -15,8 +15,8 @@ class CreatePeriodosAcademicosTable extends Migration
     {
         Schema::create('periodos_academicos', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
+            $table->date('fecha_inicio')->unique();
+            $table->date('fecha_fin')->unique();
             $table->boolean('condicion');
            
             $table->timestamps();

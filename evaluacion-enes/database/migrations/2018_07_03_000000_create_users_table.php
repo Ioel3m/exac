@@ -29,16 +29,16 @@ class CreateUsersTable extends Migration
             $table->boolean('condicion')->default(1);
             
             $table->integer('idrol')->unsigned();
-            $table->foreign('idrol')->references('id')->on('roles');
+            $table->foreign('idrol')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
 
             $table->integer('idparalelo')->unsigned();
-            $table->foreign('idparalelo')->references('id')->on('paralelos')->onDelete('cascade');
+            $table->foreign('idparalelo')->references('id')->on('paralelos')->onDelete('cascade')->onUpdate('cascade');
 
             $table->integer('idarea')->unsigned();
-            $table->foreign('idarea')->references('id')->on('areas')->onDelete('cascade');
+            $table->foreign('idarea')->references('id')->on('areas')->onDelete('cascade')->onUpdate('cascade');
             
             $table->integer('idperiodo')->unsigned();
-            $table->foreign('idperiodo')->references('id')->on('periodos_academicos')->onDelete('cascade');
+            $table->foreign('idperiodo')->references('id')->on('periodos_academicos')->onDelete('cascade')->onUpdate('cascade');
 
             $table->rememberToken();
             $table->timestamps();

@@ -19,17 +19,26 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => 'cors'], function () { 
     Route::post('/auth', 'AuthController@Autenticar');
-    Route::get('/students', 'EstudianteController@index'); 
+    Route::get('/students', 'DocenteController@index'); 
+        
+    Route::get('/area/teacher/{id}', 'DocenteController@getAreaDocente');
+    Route::get('/periodo/teacher/{id}', 'DocenteController@getPeriodoDocente');
+    Route::get('/paralelo/teacher/{id}', 'DocenteController@getParaleloDocente');
+    Route::get('/rol/teacher/{id}', 'DocenteController@getRolDocente');
     
     Route::get('/teacher', 'AdministradorController@index');
     Route::post('/teacher', 'AdministradorController@store');
-
-    Route::get('/teacher/area/{id}', 'DocenteController@getAreaDocente');
-    Route::get('/teacher/periodo/{id}', 'DocenteController@getPeriodoDocente');
-    Route::get('/teacher/paralelo/{id}', 'DocenteController@getParaleloDocente');
-    Route::get('/teacher/rol/{id}', 'DocenteController@getRolDocente');
+    Route::put('/teacher/{id}', 'AdministradorController@update');
+    Route::put('/teacher/active/{id}', 'AdministradorController@activarDocente');
+    Route::put('/teacher/desactive/{id}', 'AdministradorController@desactivarDocente');
+    Route::put('/profile', 'AdministradorController@updateProfile');
 
     Route::get('/dominio', 'AreaController@index');
+    Route::post('/dominio', 'AreaController@store');
+    Route::put('/dominio/{id}', 'AreaController@update');
+
+    Route::get('/contact', 'ContactoController@index');
+    Route::post('/contact', 'ContactoController@store');
 });
 
 Route::get('/token', array('middleware' => ['cors', 'jwt.auth'], function() {

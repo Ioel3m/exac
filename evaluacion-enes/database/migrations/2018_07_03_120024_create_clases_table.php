@@ -19,7 +19,7 @@ class CreateClasesTable extends Migration
             $table->boolean('condicion');
 
             $table->integer('idprofesor')->unsigned();
-            $table->foreign('idprofesor')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('idprofesor')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

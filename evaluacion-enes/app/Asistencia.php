@@ -8,8 +8,7 @@ class Asistencia extends Model
 {
     protected $fillable = ['idalumno', 'idclase', 'asistio', 'fuga', 'observacion'];
     
-    public function clase()
-    {
+    public function clase(){
         return $this->belongsTo('App\Clase');
     }
     

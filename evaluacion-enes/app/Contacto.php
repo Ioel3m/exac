@@ -4,15 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Area extends Model
+class Contacto extends Model
 {
     public $timestamps = false;
     
     protected $fillable = [
-        'name'
+        'nombres', 'telefono', 'correo', 'mensaje'
     ];
-
-    public function users(){
-        return $this->hasMany('App\User');
-    }
 }

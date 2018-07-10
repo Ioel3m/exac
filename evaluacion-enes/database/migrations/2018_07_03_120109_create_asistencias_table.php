@@ -20,10 +20,10 @@ class CreateAsistenciasTable extends Migration
             $table->string('observacion', 100);
 
             $table->integer('idalumno')->unsigned();
-            $table->foreign('idalumno')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('idalumno')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->integer('idclase')->unsigned();
-            $table->foreign('idclase')->references('id')->on('clases')->onDelete('cascade');
+            $table->foreign('idclase')->references('id')->on('clases')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
