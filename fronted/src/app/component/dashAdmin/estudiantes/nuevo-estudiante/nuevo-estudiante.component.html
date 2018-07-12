@@ -1,0 +1,47 @@
+<div class="container bg-white mt-3 animated fadeIn">
+    <form class="py-5 px-4" #formulario = "ngForm" (ngSubmit)="form(formulario)">
+  
+      <div class="form-group row py-2 col-8 offset-2">
+        <div class="col-12">
+          <input type="number" class="t_b-azul-base  border-0 form-control " id="cedula" [ngClass]="{'i-invalid': (mcedula.touched && mcedula.invalid)}"  placeholder="Cedula" #cedula #mcedula = "ngModel" ngModel name="cedula" required>
+            <p class="m-0 p-0 text-danger" *ngIf="mcedula.invalid && mcedula.touched">Campo requerido</p>
+   
+        </div>
+      </div>
+  
+      <div class="form-group row py-2 col-8 offset-2">
+          <div class="col-12">
+          <input type="text" class="t_b-azul-base border-0 form-control " id="paralelo" [ngClass]="{'i-invalid': (mparalelo.touched && mparalelo.invalid)}" placeholder="Paralelo" #paralelo #mparalelo="ngModel" ngModel name="paralelo" required>
+          <p class="m-0 p-0 text-danger" *ngIf="mparalelo.invalid && mparalelo.touched">Campo requerido</p>
+        </div>
+      </div>
+  
+      <div class="form-group row py-2 col-8 offset-2">
+          <label for="f_inicio" class="col-5 col-form-label">Inicio de periodo</label>
+        <div class="col-6">
+          <input type="date" class="t_b-azul-base border-0 offset-2 form-control " id="f_inicio" [ngClass]="{'i-invalid': (mi_periodo.touched && mi_periodo.invalid)}" #i_periodo #mi_periodo="ngModel" ngModel name="i_periodo" required>
+        </div>
+      </div>
+  
+      <div class="form-group row py-2 col-8 offset-2">
+          <label for="f_inicio" class="col-5 col-form-label">Fin de periodo</label>
+        <div class="col-6">
+          <input type="date" class="t_b-azul-base offset-2 form-control border-0" id="f_fin" [ngClass]="{'i-invalid': (mf_periodo.touched && mf_periodo.invalid)}" #f_periodo #mf_periodo="ngModel" ngModel name="f_periodo" required>
+        </div>
+      </div>
+  
+      <div class="form-group row py-2 col-8 offset-2">
+        <label for="" class="col-5 col-form-label ">Estado</label>
+        <label class="switch col-form-label offset-2">
+          <input type="checkbox" class="t_b-azul-base form-control border-0" id="estado_toggle" #estado ngModel name="estado">
+          <span class="slider round"></span>
+        </label>
+      </div>
+  
+      <div class="form-group row py-2 offset-2 col-8 mt-5">
+        <button type="button" [disabled]="!formulario.valid" class="btn t_b-verde col-12 mt-3 text-white" (click)="setNuevoEstudiante(cedula.value, paralelo.value, i_periodo.value, f_periodo.value, estado.checked)" >Registrar</button>
+      </div>
+  
+  
+    </form>
+  </div>

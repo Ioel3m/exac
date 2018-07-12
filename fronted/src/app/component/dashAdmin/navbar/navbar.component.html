@@ -1,0 +1,79 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-white  d-none d-md-block" style="min-height: 3.5rem">
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <form id="buscador" class="form-inline my-2 my-lg-0 ml-auto d-flex flex-row align-items-center justify-content-center align-content-center">
+      <a href="">
+        <p class="s" style="border:1px solid #1BDCCF; color: #1BDCCF; padding: 0 10px !important; margin: 0">A</p>
+      </a>
+      <li class="nav-item dropdown mr-3" style="list-style: none;">
+        <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          Junior Arboleda
+        </a>
+        <div class="container-fluid">
+
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" (click)="cerrarSesion()">Salir</a>
+
+          </div>
+        </div>
+      </li>
+    </form>
+  </div>
+</nav>
+
+
+
+<div class="nav-side-menu" style="box-shadow: 5px 5px 10px  rgba(0,0,0,0.1)">
+  <div class="brand text-center t_b-azul-primario" style="height: 54px;">
+    <i class="fa fa-youtube-play px-5" aria-hidden="true"></i>
+  </div>
+  <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+
+
+  <div class="menu-list pt-md-2">
+
+    <ul id="menu-content" class="menu-content collapse out p-0">
+      <!-- <a class="float-left">
+                  <p class="m-0 p-0 text-dark  px-2 py-0  mx-1 border border-dark border rounded-circle" style="border-radius: ">P</p>
+              </a> -->
+      <!-- <p class="text-dark text-left">
+                  Junior Arboleda
+              </p> -->
+
+      <li class="nav-item dropdown mr-5 d-lg-none" style="list-style: none;">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Junior Arboleda
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Salir</a>
+
+        </div>
+
+      </li>
+
+      <li class="mt-2" routerLinkActive="active">
+        <a [routerLink]="['estudiantes']" class="d-lg-flex flex-column text-lg-center justify-content-between align-items-center">
+          <i class="fa fa-user fa-lg f_2rem text-secondary pt-2"></i>
+          <a class="pb-0 pt-2 pl-3 pl-lg-0">
+            Estudiantes
+          </a>
+        </a>
+      </li>
+
+      <li class="mt-2" routerLinkActive="">
+        <a href="" class="d-lg-flex flex-column text-lg-center justify-content-between align-items-center">
+
+          <i class="fa fa-users fa-lg f_2rem text-secondary pt-2 pl-2"></i>
+          <a class="pb-0 pt-2 pl-3 pl-lg-0">
+            Profesores
+          </a>
+        </a>
+      </li>
+
+    </ul>
+
+
+  </div>
+</div>
