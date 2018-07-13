@@ -1,4 +1,8 @@
 @charset "UTF-8";
+
+body{
+  background-color: #E5EBF1;
+}
 a {
   text-decoration: none;
 }
@@ -10,6 +14,22 @@ a {
 .p-0{
   padding: 0 !important;
 }
+
+button {
+  outline: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+.i-invalid{
+  border: 1px solid #EB5469 !important;
+  
+}
+.i-valid{
+  border: 1px solid #7AEFAD !important;
+  
+}
+
 
 /* Diseño */
 .d_100vh {
@@ -191,6 +211,9 @@ a {
 .d_text-center {
   text-align: center;
 }
+/* ======================================= */
+
+/* FUENTES */
 
 .f_roboto-bold {
   font-family: Roboto-Bold;
@@ -216,6 +239,8 @@ a {
   font-size: 2rem;
 }
 
+/* ================================= */
+
 @font-face {
   font-family: Roboto-Bold;
   src: url("./assets/libs/Roboto/Roboto-Bold.ttf");
@@ -232,6 +257,8 @@ a {
   font-family: Roboto-Regular;
   src: url("./assets/libs/Roboto/Roboto-Regular.ttf");
 }
+
+/* MODULOS */
 /*login*/
 #m_login {
   margin-top: 40px;
@@ -351,6 +378,8 @@ a {
   background-size: 100% 100%;
 }
 
+/* TEMA > COLORES */
+
 .t_c-gris-primario {
   color: #505050;
 }
@@ -359,12 +388,87 @@ a {
   color: #2E90DE;
 }
 
+.t_b-azul-primario {
+  background-color: #2E90DE;
+}
+
+.t_b-azul-base {
+  background-color: #E5EBF1 !important;
+}
+
 .t_c-gris-secundario {
   color: #AEAEAE;
 }
 
-/*# sourceMappingURL=estilos.css.map */
+.t_b-verde {
+background-color: #7AEFAD;
+}
 
+.t_b-verde:hover {
+background-color: #6AD498;
+}
+
+
+
+/* SWITCH */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #7AEFAD;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* ============================= */
+
+/* ANIMACIONES */
   
 .animated{
   animation-fill-mode: both;

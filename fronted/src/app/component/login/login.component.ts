@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.efect();
         if (localStorage.getItem('credenciales')) {
             this._router.navigate(['./admin'])
         } else {
@@ -72,6 +71,7 @@ export class LoginComponent implements OnInit {
         };
 
         this._apiService.getSesion(user).subscribe(data => {
+            
             console.log(data)
             this.errorCre = false;
 

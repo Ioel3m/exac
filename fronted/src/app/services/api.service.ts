@@ -22,9 +22,10 @@ export class ApiService {
 
   url: string = "http://127.0.0.1:8000/api";
   logged: boolean;
-  tokenAPI;
+  private tokenAPI;
+  constructor(public http: HttpClient, private _router: Router) {
 
-  constructor(public http: HttpClient, private _router:Router) { }
+  }
 
 
   getSesion(user: User) {
@@ -32,18 +33,38 @@ export class ApiService {
     return this.http.post(`${this.url}/auth`, user, httpOptions)
   }
 
+
+
   setLocalStorage(id: string, datos: Object) {
-    localStorage.setItem(id, JSON.stringify(datos))
+    localStorage.setItem(id, JSON.stringify(datos));
+    this.tokenAPI = datos['token'];
+    console.log("Token de acceso" + this.tokenAPI);
+
   }
 
   getLogged() {
-    if(localStorage.getItem('credenciales')){
+    if (localStorage.getItem('credenciales')) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
 
+  cleanStorage() {
+    localStorage.clear();
+  }
+
+  getNToken() {
+    return this.tokenAPI;
+  }
 
 
-}
+  //Admin
+  setNuevoEstudiante(estudiante) {
+    for (let i in estudiante) {
+      console.log(estudiante[i]);
+    }}
+
+
+
+  }
