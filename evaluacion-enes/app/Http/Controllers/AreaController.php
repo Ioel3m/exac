@@ -36,7 +36,7 @@ class AreaController extends Controller
             $area = Area::findOrFail($id);
             $area->name = $request->name;
             $area->save();
-            return response()->json(['success' => 'Se ha creado una nueva área'], 200);   
+            return response()->json(['success' => 'Se ha modificado esta área'], 200);   
         }catch(QueryException $ex){
             return response()->json($e, 500);
         }
