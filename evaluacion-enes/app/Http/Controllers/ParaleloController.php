@@ -20,7 +20,7 @@ class ParaleloController extends Controller
      */
     public function index()
     {
-        $paralelos = Paralelo::where('condicion', '=', '1')->orderBy('id', 'desc')->get();
+        $paralelos = Paralelo::where('condicion', '=', '1')->where('id', '<>', '1')->orderBy('id', 'desc')->get();
         return response()->json(['paralelos' => $paralelos], 200);
     }
 

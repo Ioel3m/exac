@@ -54,7 +54,7 @@ class DocenteController extends Controller
             $docente->idperiodo = $request->idperiodo;
             
             $docente->save();
-            return response()->json(['success' => 'Docente registrado correctamente'], 200);   
+            return response()->json(['success' => 'DOCENTE REGISTRADO CORRECTAMENTE'], 200);   
 
         }catch(QueryException $e){
             return response()->json($e, 500);

@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 
 use App\User;
 
+use App\Representante;
+
 use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Hash;
 
 use Carbon\Carbon;
 
@@ -38,6 +42,22 @@ class EstudianteController extends Controller
         return $estudiantes;
     }
 
+    public function allStudent(Request $request){
+        $paralelo = $request->paralelo;
+        $periodo = $request->periodo;
+        $estudiantes = User::join('roles', 'roles.id', '=', 'users.idrol')
+            ->join('areas', 'areas.id', '=', 'users.idarea')
+            ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
+            ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
+            ->select('users.id', 'areas.name', 'paralelos.descripcion', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+            ->where('paralelos.id', '=', $paralelo)
+            ->where('periodos_academicos.id', '=', $periodo)
+            ->where('users.idrol', '=', '2')
+            ->orderBy('users.apellidos', 'users.nombres', 'asc')
+            ->get();   
+        return $estudiantes;
+    }
+
     public function ingresarAlumno(Request $request){
         try{
             $estudiante = new User();
@@ -52,39 +72,73 @@ class EstudianteController extends Controller
             $estudiante->fecha_nacimiento = '1990-09-09';
             $estudiante->estado_civil = null;
             $estudiante->informacion_personal = 0;
-            $estudiante->condicion = 0;
+            $estudiante->condicion = $request->condicion;
             $estudiante->idrol = 2;
             $estudiante->idparalelo = $request->idparalelo;
-            $estudiante->idarea = $request->idarea;
+            $estudiante->idarea = 2;
             $estudiante->idperiodo = $request->idperiodo;
             
             $estudiante->save();
-            return response()->json(['success' => 'Estudiante ingresado'], 200);   
+
+            return response()->json(['success' => 'ESTUDIANTE INGRESADO'], 200);   
 
         }catch(QueryException $e){
             return response()->json($e, 500);
         }
     }
 
-    public function habilitar($id){
+    public function updateInformation (Request $request){
         try{
-            $estudiante = User::findOrFail($id);
-            $estudiante->condicion = '1';
-            $estudiante->save();
-            return response()->json(['success' => 'Se ha habilitado el alumno '.$estudiante->nombres.' '.$estudiante->apellidos], 200);   
+            DB::beginTransaction();
+                $estudiante = User::findOrFail(Auth::user()->id);
+                $estudiante->nombres = $request->nombres;
+                $estudiante->apellidos = $request->apellidos;
+                $estudiante->nickname = $request->nickname;
+                $estudiante->email = $request->email;
+                $estudiante->password = Hash::make($request->password);
+                $estudiante->telefono = $request->telefono;
+                $estudiante->direccion = $request->direccion;
+                $estudiante->fecha_nacimiento = $request->fecha_nacimiento;
+                $estudiante->estado_civil = $request->estado_civil;
+                $estudiante->informacion_personal = 1;
+                $estudiante->update();
+
+                $representantes = $request->representantes;
+                foreach ($representantes as $r => $representante) {
+                    $rep = new Representante();
+                    $rep->cedula = $representante['cedula'];
+                    $rep->nombres = $representante['nombres'];
+                    $rep->apellidos = $representante['apellidos'];
+                    $rep->telefono = $representante['telefono'];
+                    $rep->correo = $representante['correo'];
+                    $rep->condicion = 1;
+                    $rep->idalumno = Auth::user()->id;
+                    $rep->save();
+                }
+            DB::commit();
+            return response()->json(['success' => 'SU INFORMACIÓN HA SIDO ACTUALIZADA '.$request->nombres.' '.$request->apellidos], 200);
+        }catch(QueryException $e){
+            DB::rollBack();
+            return response()->json($e, 500);
+        }
+    }
+
+    public function habilitado(Request $request){
+        try{
+            $habilitado = $request->habilitado;
+            if ($habilitado != null) {
+                foreach ($habilitado as $hb => $habilitar) {
+                    $estudiante = User::findOrFail($habilitar['id']);
+                    $estudiante->condicion = $habilitar['condicion'];
+                    $estudiante->update();
+                }
+            }else{
+                return response()->json(['error' => 'No hay estudiantes !!'], 401);    
+            }
+            return response()->json(['success' => 'DATOS ENVIADOS !!'], 200);   
         }catch(QueryException $e){
             return response()->json($e, 500);
         }
     }
     
-    public function deshabilitar($id){
-        try{
-            $estudiante = User::findOrFail($id);
-            $estudiante->condicion = '0';
-            $estudiante->save();
-            return response()->json(['success' => 'Se ha deshabilitado el alumno '.$estudiante->nombres.' '.$estudiante->apellidos], 200);   
-        }catch(QueryException $e){
-            return response()->json($e, 500);
-        }
-    }
 }
