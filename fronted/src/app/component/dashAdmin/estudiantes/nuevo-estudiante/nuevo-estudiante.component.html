@@ -16,7 +16,7 @@
         </div>
       </div>
   
-      <div class="form-group row py-2 col-8 offset-2">
+      <!-- <div class="form-group row py-2 col-8 offset-2">
           <label for="f_inicio" class="col-5 col-form-label">Inicio de periodo</label>
         <div class="col-6">
           <input type="date" class="t_b-azul-base border-0 offset-2 form-control " id="f_inicio" [ngClass]="{'i-invalid': (mi_periodo.touched && mi_periodo.invalid)}" #i_periodo #mi_periodo="ngModel" ngModel name="i_periodo" required>
@@ -28,6 +28,19 @@
         <div class="col-6">
           <input type="date" class="t_b-azul-base offset-2 form-control border-0" id="f_fin" [ngClass]="{'i-invalid': (mf_periodo.touched && mf_periodo.invalid)}" #f_periodo #mf_periodo="ngModel" ngModel name="f_periodo" required>
         </div>
+      </div> -->
+
+      <div class="form-group row py-2 col-8 offset-2 px-4 ">
+
+      <select class="form-control border-0 t_b-azul-base px-4  col-12">
+        <option>Seleccione periodo</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+
       </div>
   
       <div class="form-group row py-2 col-8 offset-2">
