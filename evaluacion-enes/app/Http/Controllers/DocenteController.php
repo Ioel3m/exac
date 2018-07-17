@@ -106,7 +106,7 @@ class DocenteController extends Controller
             $docente->idperiodo = $request->idperiodo;
             
             $docente->save();
-            return response()->json(['success' => 'Se han guardado los cambios'], 200);   
+            return response()->json(['success' => 'SE HAN GUARDADO LOS CAMBIOS'], 200);   
 
         }catch(QueryException $e){
             return response()->json($e, 500);
@@ -119,7 +119,7 @@ class DocenteController extends Controller
             $docente = User::findOrFail($id);
             $docente->condicion = '0';
             $docente->save();
-            return response()->json(['success' => 'Se ha desactivado el docente '.$docente->nombres.' '.$docente->apellidos], 200);   
+            return response()->json(['success' => 'SE HA DESHABILITADO EL DOCENTE '.$docente->nombres.' '.$docente->apellidos], 200);   
         }catch(QueryException $e){
             return response()->json($e, 500);
         }
@@ -131,7 +131,7 @@ class DocenteController extends Controller
             $docente = User::findOrFail($id);
             $docente->condicion = '1';
             $docente->save();
-            return response()->json(['success' => 'Se ha activado el docente '.$docente->nombres.' '.$docente->apellidos], 200);
+            return response()->json(['success' => 'SE HA HABILITADO EL DOCENTE '.$docente->nombres.' '.$docente->apellidos], 200);
         }catch(QueryException $e){
             return response()->json($e, 500);
         }

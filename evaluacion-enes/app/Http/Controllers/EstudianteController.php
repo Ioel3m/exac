@@ -33,13 +33,13 @@ class EstudianteController extends Controller
             ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
             ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
             ->select('users.id', 'areas.name', 'paralelos.descripcion', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
-            ->where('paralelos.id', '=', $paralelo)
-            ->where('periodos_academicos.id', '=', $periodo)
+            ->where('paralelos.id', '=', Auth::user()->idparalelo)
+            ->where('periodos_academicos.id', '=', Auth::user()->idperiodo)
             ->where('users.condicion', '=', '1')
             ->where('users.idrol', '=', '2')
             ->orderBy('users.apellidos', 'users.nombres', 'asc')
             ->get();   
-        return $estudiantes;
+        return response()->json(['estudiantes' => $estudiantes], 200);
     }
 
     public function allStudent(Request $request){
@@ -50,12 +50,12 @@ class EstudianteController extends Controller
             ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
             ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
             ->select('users.id', 'areas.name', 'paralelos.descripcion', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
-            ->where('paralelos.id', '=', $paralelo)
-            ->where('periodos_academicos.id', '=', $periodo)
+            ->where('paralelos.id', '=', Auth::user()->idparalelo)
+            ->where('periodos_academicos.id', '=', Auth::user()->idperiodo)
             ->where('users.idrol', '=', '2')
             ->orderBy('users.apellidos', 'users.nombres', 'asc')
             ->get();   
-        return $estudiantes;
+        return response()->json(['estudiantes' => $estudiantes], 200);   
     }
 
     public function ingresarAlumno(Request $request){

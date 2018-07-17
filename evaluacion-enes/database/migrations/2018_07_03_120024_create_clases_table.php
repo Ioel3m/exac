@@ -15,7 +15,7 @@ class CreateClasesTable extends Migration
     {
         Schema::create('clases', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tema', 100);
+            $table->string('tema', 100)->unique();
             $table->boolean('condicion');
 
             $table->integer('idprofesor')->unsigned();
