@@ -15,9 +15,9 @@ class CreateAsistenciasTable extends Migration
     {
         Schema::create('asistencias', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('asistio');
+            $table->boolean('asistio')->default(1);
             $table->boolean('fuga')->default(0);
-            $table->string('observacion', 100);
+            $table->string('observacion', 100)->nullable();
 
             $table->integer('idalumno')->unsigned();
             $table->foreign('idalumno')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

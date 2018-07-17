@@ -27,7 +27,12 @@ class AuthController extends Controller
             if (! $token = JWTAuth::attempt($credenciales)) {
                 return response()->json(['error' => 'Las credenciales son incorrectas'], 401);
             }
+            
             $user = Auth::user();
+
+            if ($user->condicion == 0) {
+                return response()->json(['error' => 'El usuario '.$user->nickname.' está deshabilitado'], 401);
+            }
         } catch (JWTException $e) {
             return response()->json(['error' => 'Ha ocurrido un error interno en el servidor'], 500);
         }

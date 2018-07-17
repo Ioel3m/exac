@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 
 use App\User;
 
-use App\Area;
+use Illuminate\Support\Facades\DB;
 
-use App\PeriodoAcademico;
+use Illuminate\Database\QueryException;
 
-use App\Paralelo;
+use Illuminate\Support\Facades\Hash;
 
-use App\Rol;
+use Illuminate\Support\Facades\Auth;
 
 class DocenteController extends Controller
 {
@@ -21,40 +21,120 @@ class DocenteController extends Controller
         $this->middleware('jwt.auth', ['except' => ['Autenticar']]);
     }
 
-    public function index(Request $request){
-        $paralelo = $request->paralelo;
-        $periodo = $request->periodo;
-        $estudiantes = User::join('roles', 'roles.id', '=', 'users.idrol')
-        ->join('areas', 'areas.id', '=', 'users.idarea')
-        ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
-        ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
-        ->select('users.id', 'areas.name', 'paralelos.descripcion', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
-        ->where('paralelos.id', '=', $paralelo)
-        ->where('periodos_academicos.id', '=', $periodo)
-        ->where('users.condicion', '=', '1')
-        ->where('users.idrol', '=', '2')
-        ->orderBy('users.apellidos', 'users.nombres', 'asc')
-        ->get();   
-        return $estudiantes;
+    public function index(){
+        $docentes = User::join('roles', 'roles.id', '=', 'users.idrol')
+            ->join('areas', 'areas.id', '=', 'users.idarea')
+            ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
+            ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
+            ->select('users.id', 'areas.name as area', 'paralelos.descripcion', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula', 'users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+            ->where('users.idrol', '=', '3')
+            ->orderBy('users.apellidos', 'users.nombres', 'asc')
+            ->get();   
+        return response()->json(['docentes' => $docentes], 200);
+    }
+    
+    public function store(Request $request){
+        try{
+            $docente = new User();
+            $docente->nombres = $request->nombres;
+            $docente->apellidos = $request->apellidos;
+            $docente->cedula = $request->cedula;
+            $docente->nickname = $request->cedula.'-DOC';
+            $docente->email = $request->email;
+            $docente->password = Hash::make($request->cedula);
+            $docente->telefono = $request->telefono;
+            $docente->direccion = $request->direccion;
+            $docente->fecha_nacimiento = '1990-09-09';
+            $docente->estado_civil = null;
+            $docente->informacion_personal = 1;
+            $docente->condicion = 1;
+            $docente->idrol = 3;
+            $docente->idparalelo = $request->idparalelo;
+            $docente->idarea = $request->idarea;
+            $docente->idperiodo = $request->idperiodo;
+            
+            $docente->save();
+            return response()->json(['success' => 'DOCENTE REGISTRADO CORRECTAMENTE'], 200);   
+
+        }catch(QueryException $e){
+            return response()->json($e, 500);
+        }
     }
 
-    public function getAreaDocente($id){
-        $area = Area::where('id', '=', $id)->get();
-        return response()->json(['area_docente' => $area], 200);
+    public function updateProfileDocente(Request $request){
+        try{
+            $docente = User::findOrFail(Auth::user()->id);
+            $docente->nombres = $request->nombres;
+            $docente->apellidos = $request->apellidos;
+            $docente->cedula = $request->cedula;
+            $docente->nickname = $request->nickname;
+            $docente->email = $request->email;
+            $docente->password = Hash::make($request->password);
+            $docente->telefono = $request->telefono;
+            $docente->direccion = $request->direccion;
+            $docente->fecha_nacimiento = $request->fecha_nacimiento;
+            $docente->estado_civil = $request->estado_civil;
+            $docente->informacion_personal = 1;
+            $docente->condicion = 1;
+        
+            $docente->save();
+            return response()->json(['success' => 'Perfil del administrador actualizado'], 200);   
+
+        }catch(QueryException $e){
+            return response()->json($e, 500);
+        }
+    }
+    
+    public function update(Request $request, $id){
+        try{
+            $docente = User::findOrFail($id);
+            $docente->nombres = $request->nombres;
+            $docente->apellidos = $request->apellidos;
+            $docente->cedula = $request->cedula;
+            $docente->nickname = $request->cedula.'-DOC';
+            $docente->email = $request->email;
+            $docente->password = Hash::make($request->cedula);
+            $docente->telefono = $request->telefono;
+            $docente->direccion = $request->direccion;
+            $docente->fecha_nacimiento = '1990-09-09';
+            $docente->estado_civil = null;
+            $docente->informacion_personal = 1;
+            $docente->condicion = 1;
+            $docente->idrol = 3;
+            $docente->idparalelo = $request->idparalelo;
+            $docente->idarea = $request->idarea;
+            $docente->idperiodo = $request->idperiodo;
+            
+            $docente->save();
+            return response()->json(['success' => 'SE HAN GUARDADO LOS CAMBIOS'], 200);   
+
+        }catch(QueryException $e){
+            return response()->json($e, 500);
+        }
     }
 
-    public function getPeriodoDocente($id){
-        $periodo = PeriodoAcademico::where('id', '=', $id)->get();
-        return response()->json(['periodo_docente' => $periodo], 200);
+    public function desactivarDocente($id) 
+    {
+        try{
+            $docente = User::findOrFail($id);
+            $docente->condicion = '0';
+            $docente->save();
+            return response()->json(['success' => 'SE HA DESHABILITADO EL DOCENTE '.$docente->nombres.' '.$docente->apellidos], 200);   
+        }catch(QueryException $e){
+            return response()->json($e, 500);
+        }
     }
 
-    public function getParaleloDocente($id){
-        $paralelo = Paralelo::where('id', '=', $id)->get();
-        return response()->json(['paralelo_docente' => $paralelo], 200);
+    public function activarDocente($id) 
+    {
+        try{
+            $docente = User::findOrFail($id);
+            $docente->condicion = '1';
+            $docente->save();
+            return response()->json(['success' => 'SE HA HABILITADO EL DOCENTE '.$docente->nombres.' '.$docente->apellidos], 200);
+        }catch(QueryException $e){
+            return response()->json($e, 500);
+        }
     }
-   
-    public function getRolDocente($id){
-        $rol = Rol::where('id', '=', $id)->get();
-        return response()->json(['rol_docente' => $rol], 200);
-    }
+    
 }
