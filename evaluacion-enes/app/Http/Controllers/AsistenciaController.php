@@ -38,7 +38,7 @@ class AsistenciaController extends Controller
             ->where('clases.id', '=', $idclase)
             ->orderBy('users.apellidos', 'users.nombres', 'asc')
             ->get();
-        return response()->json(['asistencias' => $asistencias], 200);
+        return response()->json($asistencias, 200);
     }
 
     public function show($id){
@@ -53,7 +53,7 @@ class AsistenciaController extends Controller
             ->where('users.id', '=', $idalumno)
             ->orderBy('asistencias.id', 'desc')
             ->get();
-        return response()->json(['asistencias' => $asistencias], 200);
+        return response()->json($asistencias, 200);
     }
 
     public function store(Request $request){

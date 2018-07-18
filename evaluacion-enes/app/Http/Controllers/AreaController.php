@@ -17,7 +17,7 @@ class AreaController extends Controller
 
     public function index(){
         $areas = Area::orderBy('name', 'asc')->where('id', '<>', '1')->where('id', '<>', '2')->get();
-        return response()->json(['areas' => $areas], 200);
+        return response()->json($areas, 200);
     }
 
     public function store(Request $request){    

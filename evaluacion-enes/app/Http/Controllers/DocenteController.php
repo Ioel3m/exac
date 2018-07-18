@@ -30,9 +30,42 @@ class DocenteController extends Controller
             ->where('users.idrol', '=', '3')
             ->orderBy('users.apellidos', 'users.nombres', 'asc')
             ->get();   
-        return response()->json(['docentes' => $docentes], 200);
+        return response()->json($docentes, 200);
     }
     
+    public function show(Request $request){
+        $paralelo = $request->paralelo;
+        $periodo = $request->periodo;
+        $docentes = User::join('roles', 'roles.id', '=', 'users.idrol')
+            ->join('areas', 'areas.id', '=', 'users.idarea')
+            ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
+            ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
+            ->select('users.id', 'areas.name as area', 'paralelos.descripcion', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula', 'users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+            ->where('users.idrol', '=', '3')
+            ->where('paralelos.id', '=', $paralelo)
+            ->where('periodos_academicos.id', '=', $periodo)
+            ->orderBy('users.apellidos', 'users.nombres', 'asc')
+            ->get();   
+        return response()->json($docentes, 200);
+    }
+
+    public function getDocentesActive(Request $request){
+        $paralelo = $request->paralelo;
+        $periodo = $request->periodo;
+        $docentes = User::join('roles', 'roles.id', '=', 'users.idrol')
+            ->join('areas', 'areas.id', '=', 'users.idarea')
+            ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
+            ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
+            ->select('users.id', 'areas.name as area', 'paralelos.descripcion', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula', 'users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+            ->where('users.idrol', '=', '3')
+            ->where('paralelos.id', '=', $paralelo)
+            ->where('periodos_academicos.id', '=', $periodo)
+            ->where('users.condicion', '=', '1')
+            ->orderBy('users.apellidos', 'users.nombres', 'asc')
+            ->get();   
+        return response()->json($docentes, 200);
+    }
+
     public function store(Request $request){
         try{
             $docente = new User();
@@ -44,7 +77,7 @@ class DocenteController extends Controller
             $docente->password = Hash::make($request->cedula);
             $docente->telefono = $request->telefono;
             $docente->direccion = $request->direccion;
-            $docente->fecha_nacimiento = '1990-09-09';
+            $docente->fecha_nacimiento = $request->fecha_nacimiento;
             $docente->estado_civil = null;
             $docente->informacion_personal = 1;
             $docente->condicion = 1;
@@ -113,28 +146,20 @@ class DocenteController extends Controller
         }
     }
 
-    public function desactivarDocente($id) 
+    public function habilitar(Request $request, $id) 
     {
         try{
             $docente = User::findOrFail($id);
-            $docente->condicion = '0';
+            $docente->condicion = $request->condicion;
             $docente->save();
-            return response()->json(['success' => 'SE HA DESHABILITADO EL DOCENTE '.$docente->nombres.' '.$docente->apellidos], 200);   
+            if ($request->condicion) {
+                return response()->json(['success' => 'SE HA HABILITADO EL DOCENTE '.$docente->nombres.' '.$docente->apellidos], 200);   
+            }else{
+                return response()->json(['success' => 'SE HA DESHABILITADO EL DOCENTE '.$docente->nombres.' '.$docente->apellidos], 200);
+            }
         }catch(QueryException $e){
             return response()->json($e, 500);
         }
     }
 
-    public function activarDocente($id) 
-    {
-        try{
-            $docente = User::findOrFail($id);
-            $docente->condicion = '1';
-            $docente->save();
-            return response()->json(['success' => 'SE HA HABILITADO EL DOCENTE '.$docente->nombres.' '.$docente->apellidos], 200);
-        }catch(QueryException $e){
-            return response()->json($e, 500);
-        }
-    }
-    
 }

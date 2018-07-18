@@ -22,8 +22,9 @@ Route::group(['middleware' => 'cors'], function () {
 
     Route::get('/student', 'EstudianteController@index'); 
     Route::get('/student/all', 'EstudianteController@allStudent'); 
+    Route::get('/students', 'EstudianteController@getStudents'); 
     Route::post('/student', 'EstudianteController@ingresarAlumno'); 
-    Route::put('/student/enable', 'EstudianteController@habilitado'); 
+    Route::put('/student/enable/{id}', 'EstudianteController@habilitado'); 
     Route::put('/student/info', 'EstudianteController@updateInformation'); 
     
     Route::get('/class', 'ClaseController@index');
@@ -32,16 +33,16 @@ Route::group(['middleware' => 'cors'], function () {
     Route::get('/asistencia/clase/{id}', 'AsistenciaController@getAsistenciasByClase');
     Route::get('/asistencia/alumno/{id}', 'AsistenciaController@show');
 
-    Route::get('/teacher', 'DocenteController@index');
+    Route::get('/teachers', 'DocenteController@index');
+    Route::get('/teacher/all', 'DocenteController@show');
+    Route::get('/teacher', 'DocenteController@getDocentesActive');
     Route::post('/teacher', 'DocenteController@store');
     Route::put('/teacher/{id}', 'DocenteController@update');
-    Route::put('/teacher/active/{id}', 'DocenteController@activarDocente');
-    Route::put('/teacher/desactive/{id}', 'DocenteController@desactivarDocente');
+    Route::put('/teacher/enable/{id}', 'DocenteController@habilitar');
     
     Route::get('/periodo', 'PeriodoAcademicoController@index');
     Route::post('/periodo', 'PeriodoAcademicoController@store');
-    Route::put('/periodo/active/{id}', 'PeriodoAcademicoController@activarPeriodo');
-    Route::put('/periodo/desactive/{id}', 'PeriodoAcademicoController@desactivarPeriodo');
+    Route::put('/periodo/enable/{id}', 'PeriodoAcademicoController@habilitado');
     Route::put('/periodo/{id}', 'PeriodoAcademicoController@update');
 
     Route::get('/paralelo', 'ParaleloController@index');

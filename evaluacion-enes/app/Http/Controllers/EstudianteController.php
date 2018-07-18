@@ -39,7 +39,7 @@ class EstudianteController extends Controller
             ->where('users.idrol', '=', '2')
             ->orderBy('users.apellidos', 'users.nombres', 'asc')
             ->get();   
-        return response()->json(['estudiantes' => $estudiantes], 200);
+        return response()->json($estudiantes, 200);
     }
 
     public function allStudent(Request $request){
@@ -55,7 +55,19 @@ class EstudianteController extends Controller
             ->where('users.idrol', '=', '2')
             ->orderBy('users.apellidos', 'users.nombres', 'asc')
             ->get();   
-        return response()->json(['estudiantes' => $estudiantes], 200);   
+        return response()->json($estudiantes, 200);   
+    }
+    
+    public function getStudents(){
+        $estudiantes = User::join('roles', 'roles.id', '=', 'users.idrol')
+            ->join('areas', 'areas.id', '=', 'users.idarea')
+            ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
+            ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
+            ->select('users.id', 'areas.name', 'paralelos.descripcion', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+            ->where('users.idrol', '=', '2')
+            ->orderBy('users.apellidos', 'users.nombres', 'asc')
+            ->get();   
+        return response()->json($estudiantes, 200);   
     }
 
     public function ingresarAlumno(Request $request){
@@ -123,19 +135,17 @@ class EstudianteController extends Controller
         }
     }
 
-    public function habilitado(Request $request){
+    public function habilitado(Request $request, $id) 
+    {
         try{
-            $habilitado = $request->habilitado;
-            if ($habilitado != null) {
-                foreach ($habilitado as $hb => $habilitar) {
-                    $estudiante = User::findOrFail($habilitar['id']);
-                    $estudiante->condicion = $habilitar['condicion'];
-                    $estudiante->update();
-                }
+            $estudiante = User::findOrFail($id);
+            $estudiante->condicion = $request->condicion;
+            $estudiante->save();
+            if ($request->condicion) {
+                return response()->json(['success' => 'SE HA HABILITADO EL ESTUDIANTE '.$estudiante->nombres.' '.$estudiante->apellidos], 200);   
             }else{
-                return response()->json(['error' => 'No hay estudiantes !!'], 401);    
+                return response()->json(['success' => 'SE HA DESHABILITADO EL ESTUDIANTE '.$estudiante->nombres.' '.$estudiante->apellidos], 200);
             }
-            return response()->json(['success' => 'DATOS ENVIADOS !!'], 200);   
         }catch(QueryException $e){
             return response()->json($e, 500);
         }

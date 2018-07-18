@@ -79,15 +79,20 @@ class PeriodoAcademicoController extends Controller
         }
     }
 
-    public function activarPeriodo($id) 
+    public function habilitado(Request $request, $id) 
     {
         try{
             $periodo = PeriodoAcademico::findOrFail($id);
-            $periodo->condicion = '1';
+            $periodo->condicion = $request->condicion;
             $periodo->save();
-            return response()->json(['success' => 'Se ha activado este periodo'], 200);   
+            if ($request->condicion) {
+                return response()->json(['success' => 'SE HA HABILITADO EL PERIODO CON FECHA INICIO '.$periodo->fecha_inicio.' Y FIN '.$periodo->fecha_fin], 200);   
+            }else{
+                return response()->json(['success' => 'SE HA DESHABILITADO EL PERIODO CON FECHA INICIO '.$periodo->fecha_inicio.' Y FIN '.$periodo->fecha_fin], 200);
+            }
         }catch(QueryException $e){
             return response()->json($e, 500);
         }
     }
+    
 }
