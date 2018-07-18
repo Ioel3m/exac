@@ -12,7 +12,7 @@ class ContactoController extends Controller
 {
     public function index(){
         $contactos = Contacto::orderBy('id', 'desc')->get();
-        return response()->json(['contactos' => $contactos], 200);
+        return response()->json($contactos, 200);
     }
 
     public function store(Request $request){

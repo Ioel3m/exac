@@ -23,6 +23,6 @@ class ClaseController extends Controller
         $clases = Clase::where('condicion', '=', '1')
             ->where('idprofesor', '=', Auth::user()->id)
             ->orderBy('id', 'desc')->get();
-        return response()->json(['clases' => $clases], 200);
+        return response()->json($clases, 200);
     }
 }

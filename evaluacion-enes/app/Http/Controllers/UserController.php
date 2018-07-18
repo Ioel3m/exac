@@ -22,26 +22,26 @@ class UserController extends Controller
     
     public function getUserAuth(){
         $user = User::where('id', '=', Auth::user()->id)->get();
-        return response()->json(['admin' => $user], 200);  
+        return response()->json($user, 200);  
     }
 
     public function getAreaUser(){
         $area = Area::where('id', '=', Auth::user()->idarea)->get();
-        return response()->json(['area_docente' => $area], 200);
+        return response()->json($area, 200);
     }
 
     public function getPeriodoUser(){
         $periodo = PeriodoAcademico::where('id', '=', Auth::user()->idperiodo)->get();
-        return response()->json(['periodo_docente' => $periodo], 200);
+        return response()->json($periodo, 200);
     }
 
     public function getParaleloUser(){
         $paralelo = Paralelo::where('id', '=', Auth::user()->idparalelo)->get();
-        return response()->json(['paralelo_docente' => $paralelo], 200);
+        return response()->json($paralelo, 200);
     }
    
     public function getRolUser(){
         $rol = Rol::where('id', '=', Auth::user()->idrol)->get();
-        return response()->json(['rol_docente' => $rol], 200);
+        return response()->json($rol, 200);
     }
 }
