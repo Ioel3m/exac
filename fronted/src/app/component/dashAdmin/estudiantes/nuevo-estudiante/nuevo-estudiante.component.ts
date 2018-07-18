@@ -8,24 +8,55 @@ import { ApiService } from "../../../../services/api.service";
 })
 export class NuevoEstudianteComponent implements OnInit {
 
-  constructor(private _apiService:ApiService) { }
+
+  paralelos = [];
+  periodos = [];
+
+  constructor(private _apiService: ApiService) { }
 
   ngOnInit() {
-    let n = {
-      
-    }
-
+    this.getPeriodos();
+    this.getParalelos();
 
   }
 
-  setNuevoEstudiante(ci, paralelo, i_periodo, f_periodo, estado){
-    let user = {
-      ci, paralelo, i_periodo, f_periodo, estado
+  setNuevoEstudiante(cedula, idparalelo, idperiodo, condicion) {
+    let estudiante = {
+      cedula, idparalelo, idperiodo, condicion
     }
-    this._apiService.setNuevoEstudiante(user);
+
+    this._apiService.setNuevoEstudiante(estudiante).subscribe(res=>{
+
+    },error=>{
+      console.log(error)
+    })
   }
 
-  form(form){
+  form(form) {
     console.log(form);
+  }
+
+  getParalelos() {
+    let array = [];
+    this._apiService.getParalelos().subscribe(res => {
+      for (let key in res) {
+        array = res[key];
+      }
+      for (let key in array) {
+        this.paralelos.push(array[key]);
+      }
+    })
+  }
+
+  getPeriodos() {
+    let array = [];
+    this._apiService.getPeriodos().subscribe(res => {
+      for (let key in res) {
+        array = res[key];
+      }
+      for (let key in array) {
+        this.periodos.push(array[key]);
+      }
+    })
   }
 }

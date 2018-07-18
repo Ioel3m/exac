@@ -24,7 +24,6 @@ export class ApiService {
   logged: boolean;
   private tokenAPI;
   constructor(public http: HttpClient, private _router: Router) {
-
   }
 
 
@@ -33,10 +32,10 @@ export class ApiService {
     return this.http.post(`${this.url}/auth`, user, httpOptions)
   }
 
-
-
+  
   setLocalStorage(id: string, datos: Object) {
     localStorage.setItem(id, JSON.stringify(datos));
+    localStorage.setItem('data',datos['token']);
     this.tokenAPI = datos['token'];
     console.log("Token de acceso" + this.tokenAPI);
 
@@ -53,18 +52,34 @@ export class ApiService {
   cleanStorage() {
     localStorage.clear();
   }
-
+  
   getNToken() {
     return this.tokenAPI;
   }
-
+  
 
   //Admin
   setNuevoEstudiante(estudiante) {
-    for (let i in estudiante) {
-      console.log(estudiante[i]);
-    }}
+    // console.log(estudiante)
+    return this.http.post(`${this.url}/student?token=${localStorage.getItem("data")}`, estudiante, httpOptions)
+
+    }
+    
+    getParalelos() {
+      let err = false;
+      console.log(localStorage.getItem('credenciales'));
+      return this.http.get(`${this.url}/paralelo?token=${localStorage.getItem('data')}`, httpOptions)
+    }
+    
+    getPeriodos() {
+      let err = false;
+      // return this.http.post(`${this.url}/paralelo?token="${this.tokenAPI}"`, httpOptions)
+      return this.http.get(`${this.url}/periodo?token=${localStorage.getItem('data')}`, httpOptions)
+    }
 
 
 
+
+
+    
   }

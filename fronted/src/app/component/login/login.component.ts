@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.efect();
         if (localStorage.getItem('credenciales')) {
             this._router.navigate(['./admin'])
         } else {
@@ -83,7 +84,8 @@ export class LoginComponent implements OnInit {
                 rol: data['user'].idrol,
                 nombres: data['user'].nombres,
                 apellidos: data['user'].apellidos,
-                periodo: data['user'].idperiodo
+                periodo: data['user'].idperiodo,
+                cedula: data['user'].cedula
             }
 
             this._apiService.setLocalStorage('credenciales', credenciales);

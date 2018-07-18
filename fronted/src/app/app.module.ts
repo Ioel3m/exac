@@ -20,6 +20,7 @@ import { RUTAS } from "./rutas.component";
 import { ApiService } from './services/api.service';
 import { GuardService } from './services/guard.service';
 import { ListaComponent } from './component/dashAdmin/estudiantes/lista/lista.component';
+import { CapitalizarPipe } from './pipes/capitalizar.pipe';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ListaComponent } from './component/dashAdmin/estudiantes/lista/lista.co
     NavbarComponent,
     NuevoEstudianteComponent,
     EstudiantesComponent,
-    ListaComponent
+    ListaComponent,
+    CapitalizarPipe
   ],
   imports: [
     BrowserModule,
