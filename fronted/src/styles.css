@@ -30,6 +30,12 @@ button {
   
 }
 
+.desactivado{
+  cursor: not-allowed;
+}
+
+
+
 
 /* Diseño */
 .d_100vh {

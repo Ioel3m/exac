@@ -11,8 +11,12 @@ export class NuevoEstudianteComponent implements OnInit {
 
   paralelos = [];
   periodos = [];
+  cargando: boolean;
+  tick:boolean;
 
-  constructor(private _apiService: ApiService) { }
+  constructor(private _apiService: ApiService) {
+    this.tick = false;
+   }
 
   ngOnInit() {
     this.getPeriodos();
@@ -20,24 +24,33 @@ export class NuevoEstudianteComponent implements OnInit {
 
   }
 
-  setNuevoEstudiante(cedula, idparalelo, idperiodo, condicion) {
+  setNuevoEstudiante(cedula, idparalelo, idperiodo, condicion, form) {
     let estudiante = {
       cedula, idparalelo, idperiodo, condicion
     }
-
-    this._apiService.setNuevoEstudiante(estudiante).subscribe(res=>{
-
-    },error=>{
+    this.cargando = true;
+    this._apiService.setNuevoEstudiante(estudiante).subscribe(res => {
+      this.cargando = false;
+      this.tick = true;
+      setTimeout(()=>{
+        this.tick = false;
+        form.reset();
+      }, 3000)
+      
+      
+    }, error => {
       console.log(error)
     })
   }
 
   form(form) {
     console.log(form);
+    
   }
 
   getParalelos() {
     let array = [];
+    this.cargando = true;
     this._apiService.getParalelos().subscribe(res => {
       for (let key in res) {
         array = res[key];
@@ -45,10 +58,12 @@ export class NuevoEstudianteComponent implements OnInit {
       for (let key in array) {
         this.paralelos.push(array[key]);
       }
+      this.cargando = false;
     })
   }
 
   getPeriodos() {
+    this.cargando = true;
     let array = [];
     this._apiService.getPeriodos().subscribe(res => {
       for (let key in res) {
@@ -57,6 +72,7 @@ export class NuevoEstudianteComponent implements OnInit {
       for (let key in array) {
         this.periodos.push(array[key]);
       }
+      this.cargando = false;
     })
   }
 }

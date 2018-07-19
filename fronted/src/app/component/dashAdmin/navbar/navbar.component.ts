@@ -15,7 +15,8 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     let data = JSON.parse(localStorage.getItem("credenciales"));
-    this.nombreUsuario = data['nombres'] +" "+ data['apellidos'];  
+    this.nombreUsuario = data['nombres'];  
+    // this.nombreUsuario = data['nombres'] +" "+ data['apellidos'];  
     this.nombreUsuario =  this.nombreUsuario.toLocaleLowerCase();
     console.log(this.nombreUsuario);
     // this.nombreUsuario = localStorage

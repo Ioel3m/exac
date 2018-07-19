@@ -66,6 +66,7 @@ export class LoginComponent implements OnInit {
     }
 
     sesionStart(nickname, password) {
+        
         let user: User = {
             nickname,
             password

@@ -1,39 +1,73 @@
 <div class="container bg-white mt-3 animated fadeIn">
-  <div class="table-responsive">
 
-    <table class="table table-borderless mt-4">
+  <form class="row justify-content-center" #formulario="ngForm">
+
+    <div class="col-3">
+      <div class="form-group row py-4 col-12 px-4" style="margin: auto 0">
+        <label for="periodo" class="col-12 col-form-label text-center px-0 py-1 m-0">Periodo</label>
+        <select ngModel id="periodo" class="form-control border-0 t_b-azul-base  col-12" [disabled]="cargando" [ngClass]="{'desactivado': cargando}"  ngModel required name="periodo" #periodo>
+          <option *ngFor="let periodo of periodos" [value]="periodo.id" (click)="p()">{{periodo.fecha_inicio}} hasta {{periodo.fecha_fin}}</option>
+    
+        </select>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="form-group row py-4 col-12 px-4" style="margin: auto 0;">
+        <label for="periodo" class="col-12 col-form-label text-center px-0 py-1 m-0">Paralelo</label>
+        <select ngModel id="paralelo" class="form-control border-0 t_b-azul-base  col-12"  ngModel required name="paralelo" #paralelo>
+          <option *ngFor="let paralelo of paralelos" [value]="paralelo.id">{{paralelo.descripcion}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="form-group row py-4 col-12 px-4 " style="margin: auto 0">
+        <label for="periodo" class="col-12 col-form-label text-center px-0 py-1 m-0">Condicion</label>
+        <select id="condicion" ngModel class="form-control border-0 t_b-azul-base col-12" ngModel required name="condicion" #condicion>
+          <option value="true">Habilitados</option>
+          <option value="false">Deshabilitados</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-3 justify-content-center">
+      <div class="form-group row py-4 col-12 px-4 mt-4 justify-content-center justify-content-center" style="margin: auto 0">
+        <button type="button" class="btn t_b-verde col-12 text-white mt-2 py-2" [disabled]="!formulario.valid" (click)="getEstudiantes(periodo.value, paralelo.value, condicion.value)">
+          <ng-container *ngIf="cargando; else filtrarElse">
+              <i class="fa fa-spinner fa-spin"></i>
+          </ng-container>
+          <ng-template #filtrarElse>
+            Filtrar
+          </ng-template>
+          
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="table-responsive col-12 animated fadeIn" *ngIf="data.length>0">
+
+    <table class="table table-striped  mt-4">
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Paralelo</th>
+          <th scope="col">Cedula</th>
+          <th scope="col">NickName</th>
           <th scope="col">Estado</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th class="">1</th>
-          <td>Cesar Lata Jacome</td>
-          <td class="pl-4">A</td>
+        <tr *ngFor="let item of data; let i = index">
+          <th class="">{{i+1}}</th>
+          <td>{{item.cedula}}</td>
+          <td class="pl-4">{{item.nickname}}</td>
           <td>
             <label class="switch col-form-label offset-1 m-0">
-              <input type="checkbox" class="t_b-azul-base form-control border-0" id="estado_toggle">
+              <input type="checkbox" class="t_b-azul-base form-control border-0" id="estado_toggle" [checked]="item.condicion == true" [attr.data-id]="item.id" (click)="setEstado(estado.getAttribute('data-id'),estado.checked)" #estado>
               <span class="slider round"></span>
             </label>
           </td>
         </tr>
 
-        <tr>
-          <th scope="row">1</th>
-          <td>Joel Velez Rivera</td>
-          <td class="pl-4">A</td>
-          <td>
-            <label class="switch col-form-label offset-1 m-0">
-              <input type="checkbox" class="t_b-azul-base form-control border-0" id="estado_toggle">
-              <span class="slider round"></span>
-            </label>
-          </td>
-        </tr>
+ 
 
 
 
@@ -42,16 +76,6 @@
   </div>
 
 
-  <div class="row py-5">
-    <div class="col-6 offset-4">
-      <button type="button" class="btn t_b-verde col-6 text-white" (click)="vari = !vari">
-        <span *ngIf="!vari">
-          Guardar
-        </span>
 
-          <i class="fa fa-spinner fa-spin" *ngIf="vari" ></i>
-      </button>
-      
-    </div>
-  </div>
+
 </div>
