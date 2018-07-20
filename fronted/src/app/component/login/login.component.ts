@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from "../../services/api.service";
 import { Router } from "@angular/router";
 import * as $ from 'jquery';
-import { map, catchError } from 'rxjs/operators'
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from "@angular/common/http";
+// import { map, catchError } from 'rxjs/operators'
+// import { Observable } from 'rxjs';
+// import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from "@angular/common/http";
 
 //INTERFACES
 import { User } from "../../user.interface";
@@ -15,10 +15,12 @@ import { User } from "../../user.interface";
     styles: []
 })
 export class LoginComponent implements OnInit {
-    errorCre = false;
+    errorCre: boolean;
+    cargando: boolean;
+    success:boolean;
 
     constructor(private _apiService: ApiService, private _router: Router) {
-
+        this.cargando = false;
     }
 
     ngOnInit() {
@@ -66,16 +68,19 @@ export class LoginComponent implements OnInit {
     }
 
     sesionStart(nickname, password) {
-        
+        this.errorCre = false;
+        this.cargando = true;
+
         let user: User = {
             nickname,
             password
         };
 
         this._apiService.getSesion(user).subscribe(data => {
-            
-            console.log(data)
             this.errorCre = false;
+            this.cargando = false;
+            this.success = true;
+            console.log(data)
 
             let credenciales = {
                 token: data[0].token,
@@ -89,10 +94,15 @@ export class LoginComponent implements OnInit {
                 cedula: data['user'].cedula
             }
 
-            this._apiService.setLocalStorage('credenciales', credenciales);
-            this._router.navigate(['./admin'])
+
+            setTimeout(() => {
+                this._apiService.setLocalStorage('credenciales', credenciales);
+                this._router.navigate(['./admin']);
+            }, 1000);
 
         }, error => {
+            this.cargando = false;
+            this.success = false;
             this.errorCre = true;
             this._router.navigate(['./login'])
         })

@@ -7,6 +7,7 @@ import { ApiService } from "../../../../services/api.service";
   templateUrl: './lista.component.html',
   styles: []
 })
+
 export class ListaComponent implements OnInit {
   
   cargando: boolean;
@@ -64,7 +65,6 @@ export class ListaComponent implements OnInit {
   }
 
   getEstudiantes(periodo, paralelo, condicion){
-    
     this.data = [];
     this.cargando = true;
     this._apiService.getEstudiantes(periodo, paralelo, condicion).subscribe(res=>{
