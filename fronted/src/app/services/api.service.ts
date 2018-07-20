@@ -93,10 +93,10 @@ export class ApiService {
     return this.http.get(`${this.url}/periodo?token=${this.getLocalStorage("credenciales","token")}`, httpOptions)
   }
   
-  getEstudiantes(periodo:string, paralelo:string) {
+  getEstudiantes(periodo:string, paralelo:string, estado:boolean) {
     let err = false;
     // console.log(`${this.url}/student/all?periodo=${periodo}&${paralelo}&token=${this.getLocalStorage("credenciales","token")}`);
-    return this.http.get(`${this.url}/student/all?periodo=${periodo}&paralelo=${paralelo}&token=${this.getLocalStorage("credenciales","token")}`, httpOptions)
+    return this.http.get(`${this.url}/student/all?periodo=${periodo}&paralelo=${paralelo}&condicion=${estado}&token=${this.getLocalStorage("credenciales","token")}`, httpOptions)
   }
 
 

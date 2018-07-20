@@ -67,17 +67,13 @@ export class ListaComponent implements OnInit {
     
     this.data = [];
     this.cargando = true;
-    condicion = ( condicion === "true" ) ? true : false;
-    if(condicion == true){
-      this._apiService.getEstudiantes(periodo, paralelo).subscribe(res=>{
-        for(let i in res){
-          this.data.push((res[i]));
-        }
-        this.cargando = false;
-      }, err=>{
-        console.log(err);
-      })
-    }
+    this._apiService.getEstudiantes(periodo, paralelo, condicion).subscribe(res=>{
+      for(let i in res){
+        this.data.push((res[i]));
+      }
+      this.cargando = false;
+    }, err=>{
+      console.log(err);
+    })
   }
-
 }

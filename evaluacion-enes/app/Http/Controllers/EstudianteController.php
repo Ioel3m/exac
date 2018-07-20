@@ -45,6 +45,7 @@ class EstudianteController extends Controller
     public function allStudent(Request $request){
         $paralelo = $request->paralelo;
         $periodo = $request->periodo;
+        $condicion = $request->condicion;
         $estudiantes = User::join('roles', 'roles.id', '=', 'users.idrol')
             ->join('areas', 'areas.id', '=', 'users.idarea')
             ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
@@ -53,7 +54,8 @@ class EstudianteController extends Controller
             ->where('paralelos.id', '=', $paralelo)
             ->where('periodos_academicos.id', '=', $periodo)
             ->where('users.idrol', '=', '2')
-            ->orderBy('users.apellidos', 'users.nombres', 'asc')
+            ->where('users.condicion', '=', $condicion)
+            ->orderBy('users.id', 'desc')
             ->get();   
         return response()->json($estudiantes, 200);   
     }
