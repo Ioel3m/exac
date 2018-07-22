@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from "@angular/common/http";
+import { CookieService } from "ngx-cookie-service";
+
 // import { map, catchError } from 'rxjs/operators'
 import { Router } from "@angular/router";
 
@@ -24,79 +26,90 @@ export class ApiService {
   url: string = "http://127.0.0.1:8000/api";
   logged: boolean;
   private tokenAPI;
-  constructor(public http: HttpClient, private _router: Router) {
+  constructor(public http: HttpClient, private _router: Router, private cookie: CookieService) {
+    this.tokenAPI = (this.cookie.get("datos")) ? this.getCookie('datos', 'token') : false;
+    this.getNToken();
   }
 
-
-
-  
 
   // SESION
   getSesion(user: User) {
-    let err = false;
+    this.tokenAPI = this.getCookie("datos", "token");
     return this.http.post(`${this.url}/auth`, user, httpOptions)
   }
 
-  // STORAGE
-  setLocalStorage(id: string, datos: Object) {
-    localStorage.setItem(id, JSON.stringify(datos));
-    // localStorage.setItem('data', datos['token']);
-    this.tokenAPI = datos['token'];
-    console.log("Token de acceso" + this.tokenAPI);
+  //COOKIES
+  getCookie(idCookie: string, dato: string) {
+    let datos = JSON.parse(this.cookie.get(idCookie));
+    return datos[dato] ? datos[dato] : false;
   }
 
-  getLocalStorage(idStorage:string, dato:string){
-    let credenciales =  JSON.parse(localStorage.getItem(idStorage));
-    return credenciales[dato] ? credenciales[dato]: false;
+  setCookie(id: string, datos: Object) {
+    this.cookie.set(id, JSON.stringify(datos));
   }
 
+  clearCookies() {
+    this.cookie.deleteAll();
+  }
 
   getLogged() {
-    if (localStorage.getItem('credenciales')) {
+    if (this.tokenAPI) {
       return true;
     } else {
       return false;
     }
   }
 
-  cleanStorage() {
-    localStorage.clear();
-  }
+  //TOKEN
 
   getToken() {
     return this.tokenAPI;
   }
 
+  getNToken() {
+    if (this.cookie.get('credenciales')) {
+      let user: User = {
+        nickname: this.getCookie('credenciales', 'nickname'),
+        password: this.getCookie('credenciales', 'password')
+      };
 
-  //Admin > Estudiantes
-  setNuevoEstudiante(estudiante) {
-    // console.log(estudiante)
-    // return this.http.post(`${this.url}/student?token=${localStorage.getItem("data")}`, estudiante, httpOptions)
-    return this.http.post(`${this.url}/student?token=${this.getLocalStorage("credenciales","token")}`, estudiante, httpOptions)
+
+      setInterval(() => {
+        this.getSesion(user).subscribe(data => {
+          this.tokenAPI = data[0].token;
+        })
+      }, 10000);
+      // }, 600000);
+    } else {
+      return false;
+    }
 
   }
 
-  setEstado(idEstudiante:string, estado:string){
-    return this.http.put(`${this.url}/student/enable/${idEstudiante}?token=${this.getLocalStorage("credenciales","token")}`, {condicion: estado}, httpOptions)
+
+
+  //ADMIN > Estudiantes
+  setNuevoEstudiante(estudiante) {
+    return this.http.post(`${this.url}/student?token=${this.tokenAPI}`, estudiante, httpOptions)
+
+  }
+
+  setEstado(idEstudiante: string, estado: string) {
+    return this.http.put(`${this.url}/student/enable/${idEstudiante}?token=${this.tokenAPI}`, { condicion: estado }, httpOptions)
   }
 
   getParalelos() {
-    let err = false;
-    console.log(localStorage.getItem('credenciales'));
-    return this.http.get(`${this.url}/paralelo?token=${this.getLocalStorage("credenciales","token")}`, httpOptions)
-    // return this.http.get(`${this.url}/paralelo?token=${localStorage.getItem('data')}`, httpOptions)
+    return this.http.get(`${this.url}/paralelo?token=${this.tokenAPI}`, httpOptions)
   }
 
   getPeriodos() {
     let err = false;
-    // return this.http.post(`${this.url}/paralelo?token="${this.tokenAPI}"`, httpOptions)
-    return this.http.get(`${this.url}/periodo?token=${this.getLocalStorage("credenciales","token")}`, httpOptions)
+    return this.http.get(`${this.url}/periodo?token=${this.tokenAPI}`, httpOptions)
   }
-  
-  getEstudiantes(periodo:string, paralelo:string, estado:boolean) {
+
+  getEstudiantes(periodo: string, paralelo: string, estado: boolean) {
     let err = false;
-    // console.log(`${this.url}/student/all?periodo=${periodo}&${paralelo}&token=${this.getLocalStorage("credenciales","token")}`);
-    return this.http.get(`${this.url}/student/all?periodo=${periodo}&paralelo=${paralelo}&condicion=${estado}&token=${this.getLocalStorage("credenciales","token")}`, httpOptions)
+    return this.http.get(`${this.url}/student/all?periodo=${periodo}&paralelo=${paralelo}&condicion=${estado}&token=${this.tokenAPI}`, httpOptions)
   }
 
 

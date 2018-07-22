@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from "../../services/api.service";
+import { CookieService } from "ngx-cookie-service";
 import { Router } from "@angular/router";
 import * as $ from 'jquery';
 // import { map, catchError } from 'rxjs/operators'
@@ -19,14 +20,16 @@ export class LoginComponent implements OnInit {
     cargando: boolean;
     success:boolean;
 
-    constructor(private _apiService: ApiService, private _router: Router) {
+    constructor(private _apiService: ApiService, private _router: Router, private _cookie:CookieService) {
         this.cargando = false;
     }
 
     ngOnInit() {
+   
         this.efect();
         if (localStorage.getItem('credenciales')) {
-            this._router.navigate(['./admin'])
+            this._router.navigate(['./admin']);
+
         } else {
             console.log("falso");
         }
@@ -82,7 +85,7 @@ export class LoginComponent implements OnInit {
             this.success = true;
             console.log(data)
 
-            let credenciales = {
+            let datos = {
                 token: data[0].token,
                 paralelo: data['user'].idparalelo,
                 area: data['user'].idarea,
@@ -94,9 +97,10 @@ export class LoginComponent implements OnInit {
                 cedula: data['user'].cedula
             }
 
-
+            this._apiService.setCookie('datos', datos);
+            this._apiService.setCookie('credenciales', user);
+     
             setTimeout(() => {
-                this._apiService.setLocalStorage('credenciales', credenciales);
                 this._router.navigate(['./admin']);
             }, 1000);
 

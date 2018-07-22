@@ -3,6 +3,7 @@ import { FormsModule } from "@angular/forms";
 import { NgModule } from '@angular/core';
 import { HttpModule } from "@angular/http";
 import { HttpClientModule } from "@angular/common/http";
+import { CookieService } from "ngx-cookie-service";
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './component/login/login.component';
@@ -21,6 +22,8 @@ import { ApiService } from './services/api.service';
 import { GuardService } from './services/guard.service';
 import { ListaComponent } from './component/dashAdmin/estudiantes/lista/lista.component';
 import { CapitalizarPipe } from './pipes/capitalizar.pipe';
+import { LoadComponent } from './decorates/load/load.component';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +34,8 @@ import { CapitalizarPipe } from './pipes/capitalizar.pipe';
     NuevoEstudianteComponent,
     EstudiantesComponent,
     ListaComponent,
-    CapitalizarPipe
+    CapitalizarPipe,
+    LoadComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,8 @@ import { CapitalizarPipe } from './pipes/capitalizar.pipe';
   ],
   providers: [
     ApiService,
-    GuardService
+    GuardService,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })
