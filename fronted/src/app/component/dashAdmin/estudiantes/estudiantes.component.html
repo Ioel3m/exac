@@ -1,26 +1,23 @@
 <div class="">
 
-  <h2 class="mt-5 text-center text-lg-left">ESTUDIANTES</h2>
-  
-  <div class="row mt-3">
-    <div class="container-fluid navbar navbar-expand-lg">
-      <ul class="navbar-nav">
-        <li class="nav-item px-2 text-center" routerLinkActive="">
-          <a class="text-center" [routerLink]="['./nuevo-estudiante']">Nuevo registro</a>
-        </li>
-        <li class="nav-item px-2" routerLinkActive="">
-          <a [routerLink]="['todos']">Todos</a>
-        </li>
-      </ul>
-      <!-- <p>
-        <a routerLinkActive="" [routerLink]="['']">Nuevo estudiante</a>
-      </p>
-      <p>
-        <a routerLinkActive="" [routerLink]="['']">Lista completa</a>
-  </p> -->
-</div>
-</div>
+    <h2 class="mt-5 text-center text-lg-left">ESTUDIANTES</h2>
+
+    <div class="row mt-3">
+        <div class="container-fluid navbar navbar-expand-lg">
+            <ul class="navbar-nav text-center w-100">
+                <li class="nav-item px-2 text-center" routerLinkActive="">
+                    <a class="text-center" [routerLink]="['./nuevo-estudiante']">Nuevo registro</a>
+                </li>
+                <li class="nav-item px-2" routerLinkActive="">
+                    <a [routerLink]="['todos']">Todos</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
 </div>
 
-<router-outlet></router-outlet>
+<div class="container m-0 p-0">
 
+    <router-outlet></router-outlet>
+</div>

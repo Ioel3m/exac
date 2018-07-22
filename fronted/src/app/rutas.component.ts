@@ -17,15 +17,19 @@ const routes: Routes = [
   // { path: 'inicio', redirectTo: 'mejores', pathMatch: 'full' },
   { path: '', component: LoginComponent, pathMatch: 'full' },
   { path: ' ', redirectTo: 'login' },
-  { path: 'login', component: LoginComponent},
-  { path: 'admin', component: DashAdminComponent, children: [
-    { path: 'estudiantes', component: EstudiantesComponent, children:[
-      { path: 'nuevo-estudiante', component: NuevoEstudianteComponent, canActivate: [GuardService]},
-      { path: 'todos', component: ListaComponent, canActivate: [GuardService]}
-      
-    ]},
+  { path: 'login', component: LoginComponent },
+  {
+    path: 'admin', component: DashAdminComponent, children: [
+      // { path: '', component: EstudiantesComponent, pathMatch: 'full' },
+      {
+        path: 'estudiantes', component: EstudiantesComponent, children: [
+          { path: 'nuevo-estudiante', component: NuevoEstudianteComponent, canActivate: [GuardService] },
+          { path: 'todos', component: ListaComponent, canActivate: [GuardService] }
+        ], canActivate: [GuardService]
+      },
 
-  ],canActivate: [GuardService] },
+    ], canActivate: [GuardService]
+  },
 
 
   // { path: 'info/:id', component: InfoComponent, children: [

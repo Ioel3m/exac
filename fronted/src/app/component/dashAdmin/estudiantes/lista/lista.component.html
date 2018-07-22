@@ -1,36 +1,42 @@
 <div class="container bg-white mt-3 animated fadeIn">
+<app-load [estado]="sucess"></app-load>
+
 
   <form class="row justify-content-center" #formulario="ngForm">
 
-    <div class="col-3">
+    <div class="col-12 col-md-6 col-lg-3">
       <div class="form-group row py-4 col-12 px-4" style="margin: auto 0">
-        <label for="periodo" class="col-12 col-form-label text-center px-0 py-1 m-0">Periodo</label>
-        <select ngModel id="periodo" class="form-control border-0 t_b-azul-base  col-12" [disabled]="cargando" [ngClass]="{'desactivado': cargando}"  ngModel required name="periodo" #periodo>
+        <label for="periodo" class="col-12 col-md-4 col-lg-6 col-form-label text-center py-1 ">Periodo</label>
+        <select ngModel id="periodo" class="form-control border-0 t_b-azul-base  col-12 col-md-8 col-lg-6" [disabled]="cargando" [ngClass]="{'desactivado': cargando}"  ngModel required name="periodo" #periodo>
           <option *ngFor="let periodo of periodos" [value]="periodo.id" (click)="p()">{{periodo.fecha_inicio}} hasta {{periodo.fecha_fin}}</option>
     
         </select>
       </div>
     </div>
-    <div class="col-3">
+
+
+    <div class="col-12 col-md-6 col-lg-3">
       <div class="form-group row py-4 col-12 px-4" style="margin: auto 0;">
-        <label for="periodo" class="col-12 col-form-label text-center px-0 py-1 m-0">Paralelo</label>
-        <select ngModel id="paralelo" class="form-control border-0 t_b-azul-base  col-12"  ngModel required name="paralelo" #paralelo>
+        <label for="periodo" class="col-12 col-md-4 col-lg-7 col-form-label text-center px-0 py-1 m-0">Paralelo</label>
+        <select ngModel id="paralelo" class="form-control border-0 t_b-azul-base  col-12 col-md-8 col-lg-5"  ngModel required name="paralelo" #paralelo>
           <option *ngFor="let paralelo of paralelos" [value]="paralelo.id">{{paralelo.descripcion}}</option>
         </select>
       </div>
     </div>
-    <div class="col-3">
+
+    <div class="col-12 col-md-6 col-lg-3">
       <div class="form-group row py-4 col-12 px-4 " style="margin: auto 0">
-        <label for="periodo" class="col-12 col-form-label text-center px-0 py-1 m-0">Condicion</label>
-        <select id="condicion" ngModel class="form-control border-0 t_b-azul-base col-12" ngModel required name="condicion" #condicion>
+        <label for="periodo" class="col-12 col-md-4 col-lg-5 col-form-label text-center px-0 py-1 m-0">Estado</label>
+        <select id="condicion" ngModel class="form-control border-0 t_b-azul-base col-12 col-md-8 col-lg-7" ngModel required name="condicion" #condicion>
           <option value="true">Habilitados</option>
           <option value="false">Deshabilitados</option>
         </select>
       </div>
     </div>
-    <div class="col-3 justify-content-center">
-      <div class="form-group row py-4 col-12 px-4 mt-4 justify-content-center justify-content-center" style="margin: auto 0">
-        <button type="button" class="btn t_b-verde col-12 text-white mt-2 py-2" [disabled]="!formulario.valid" (click)="getEstudiantes(periodo.value, paralelo.value, condicion.value)">
+
+    <div class="col-12 col-md-6 col-lg-3 offset-lg-0 justify-content-center">
+      <div class="form-group row py-4 col-12 col-md-8 offset-md-4 offset-lg-0 col-lg-12  px-4 justify-content-center justify-content-center">
+        <button type="button" class="btn t_b-verde col-12 text-white" [disabled]="!formulario.valid" (click)="getEstudiantes(periodo.value, paralelo.value, condicion.value)">
           <ng-container *ngIf="cargando; else filtrarElse">
               <i class="fa fa-spinner fa-spin"></i>
           </ng-container>

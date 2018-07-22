@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from "../../../../services/api.service";
+import { CookieService } from "ngx-cookie-service";
 
 
 @Component({
@@ -14,18 +15,21 @@ export class ListaComponent implements OnInit {
   paralelos = [];
   periodos = [];
   data = [];
+  sucess: boolean;
 
-  constructor(private _apiService: ApiService) { }
-  vari = false;
+  constructor(private _apiService: ApiService, private cookie:CookieService) { 
+    this.sucess = false;
+  }
 
   ngOnInit() {
     this.getParalelos();
     this.getPeriodos();
+    console.log("valor de la cookie"+this.cookie.get("test"));
   }
 
   getParalelos() {
     let array = [];
-    this.cargando = true;
+    this.sucess = true;
     this._apiService.getParalelos().subscribe(res => {
       for (let key in res) {
         array = res[key];
@@ -33,12 +37,12 @@ export class ListaComponent implements OnInit {
       for (let key in array) {
         this.paralelos.push(array[key]);
       }
-      this.cargando = false;
+      this.sucess = false;
     })
   }
 
   getPeriodos() {
-    this.cargando = true;
+    this.sucess = true;
     let array = [];
     this._apiService.getPeriodos().subscribe(res => {
       for (let key in res) {
@@ -48,7 +52,7 @@ export class ListaComponent implements OnInit {
         this.periodos.push(array[key]);
      
       }
-      this.cargando = false;
+      this.sucess = false;
     })
   }
 

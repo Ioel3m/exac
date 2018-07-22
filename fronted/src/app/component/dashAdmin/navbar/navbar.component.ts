@@ -14,8 +14,9 @@ export class NavbarComponent implements OnInit {
   constructor(private _apiService: ApiService, private _router: Router) { }
 
   ngOnInit() {
-    let data = JSON.parse(localStorage.getItem("credenciales"));
-    this.nombreUsuario = data['nombres'];  
+    this.nombreUsuario = this._apiService.getCookie("datos", "nombres");
+    console.log("ok"+this._apiService.getCookie("datos", "nombres"));
+    // this.nombreUsuario = data['nombres'];  
     // this.nombreUsuario = data['nombres'] +" "+ data['apellidos'];  
     this.nombreUsuario =  this.nombreUsuario.toLocaleLowerCase();
     console.log(this.nombreUsuario);
@@ -23,7 +24,7 @@ export class NavbarComponent implements OnInit {
   }
 
   cerrarSesion() {
-    this._apiService.cleanStorage();
+    this._apiService.clearCookies();
     this._router.navigate(['./login'])
   }
 
