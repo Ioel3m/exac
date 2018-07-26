@@ -1,0 +1,71 @@
+<div class="container bg-white mt-3 animated fadeIn" style="position: relative;">
+    <H1 class="f_2rem text-secondary text-center pt-5 f_roboto-regular">INFORMACIÓN DE ESTUDIANTE</H1>
+    <app-load [estado]="sucess"></app-load>
+    <form class="py-5 px-4" #formulario="ngForm" (ngSubmit)="form(formulario)" autocomplete="off">
+
+        <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8 text-center">
+            <label for="cedula">Cedula</label>
+            <input type="number" class="t_b-azul-base  border-0 form-control col-12" id="cedula" placeholder="Cedula" #cedula #mcedula="ngModel"
+                ngModel name="cedula" required disabled>
+            <!-- <p class="m-0 p-0 text-danger" *ngIf="mcedula.invalid && mcedula.touched">Campo requerido</p> -->
+        </div>
+        <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8 text-center">
+            <label for="nombres">Nombres</label>
+            <input type="number" class="t_b-azul-base  border-0 form-control col-12" id="nombres" placeholder="Nombres" #nombres #mnombres="ngModel"
+                ngModel name="nombres" required disabled>
+            <!-- <p class="m-0 p-0 text-danger" *ngIf="mcedula.invalid && mcedula.touched">Campo requerido</p> -->
+        </div>
+        <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8 text-center">
+            <label for="cedula">Apellidos</label>
+            <input type="number" class="t_b-azul-base  border-0 form-control col-12" id="apellidos" placeholder="Apellidos" #apellidos #mapellidos="ngModel"
+                ngModel name="apellidos" required disabled>
+            <!-- <p class="m-0 p-0 text-danger" *ngIf="mcedula.invalid && mcedula.touched">Campo requerido</p> -->
+        </div>
+
+        <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8">
+            <label for="paralelo" class="col-12 col-form-label col-lg-6">Paralelo</label>
+            <select id="paralelo" class="form-control border-0 t_b-azul-base  col-12 col-lg-6 mx-0" #paralelo ngModel required name="paralelo">
+                <option value="" *ngIf="cargando">
+                    <i class="fa fa-spinner fa-spin"></i>
+                </option>
+                <option *ngFor="let paralelo of paralelos" [value]="paralelo.id">{{paralelo.descripcion}}</option>
+            </select>
+        </div>
+
+        <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8">
+            <label for="periodo" class="col-12 col-form-label col-lg-6">Periodo</label>
+            <select id="periodo" class="form-control border-0 t_b-azul-base px-4  col-12 col-lg-6" #periodo ngModel required name="periodo">
+                <option *ngFor="let periodo of periodos" [value]="periodo.id">Desde {{periodo.fecha_inicio}} hasta {{periodo.fecha_fin}}</option>
+            </select>
+        </div>
+
+
+
+
+
+        <div class="form-group row py-2 col-12 mt-5 col-lg-8 offset-lg-2">
+            <button type="button" [disabled]="!formulario.valid || tick || cargando" [ngClass]="{'desactivado': cargando || tick || !formulario.valid}"
+                class="btn t_b-verde col-12 mt-3 text-white" (click)="setNuevoEstudiante(cedula.value, paralelo.value, periodo.value, estado.checked, formulario)">
+                <ng-container *ngIf="cargando; else cargandoFalse">
+                    <span>
+                        <i class="fa fa-spinner fa-spin"></i>
+                    </span>
+                </ng-container>
+                <ng-template #cargandoFalse>
+                    <ng-container *ngIf="tick; else tickFalse">
+                        Actualizado
+                        <i class="fa fa-check" *ngIf="tick"></i>
+                    </ng-container>
+                    <ng-template #tickFalse>
+                        Actualizar
+                    </ng-template>
+                </ng-template>
+            </button>
+
+
+
+        </div>
+
+
+    </form>
+</div>
