@@ -72,6 +72,11 @@ class EstudianteController extends Controller
         return response()->json($estudiantes, 200);   
     }
 
+    public function show($id){
+        $estudiante = User::findOrFail($id);
+        return $estudiante;
+    }
+
     public function ingresarAlumno(Request $request){
         try{
             $estudiante = new User();

@@ -23,6 +23,7 @@ Route::group(['middleware' => 'cors'], function () {
     Route::get('/student', 'EstudianteController@index'); 
     Route::get('/student/all', 'EstudianteController@allStudent'); 
     Route::get('/students', 'EstudianteController@getStudents'); 
+    Route::get('/student/{id}', 'EstudianteController@show'); 
     Route::post('/student', 'EstudianteController@ingresarAlumno'); 
     Route::put('/student/enable/{id}', 'EstudianteController@habilitado'); 
     Route::put('/student/info', 'EstudianteController@updateInformation'); 
@@ -69,7 +70,7 @@ Route::group(['middleware' => 'cors'], function () {
     Route::get('/rol/user', 'UserController@getRolUser');
 });
 
-Route::get('/token', array('middleware' => ['cors', 'jwt.auth'], function() {
+Route::get('/newtoken', array('middleware' => ['cors', 'jwt.auth'], function() {
     if ( ! $user = \JWTAuth::parseToken()->authenticate() ) {
         return response()->json(['Usuario no encontrado'], 404);
     }
