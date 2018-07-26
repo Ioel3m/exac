@@ -32,7 +32,7 @@ class EstudianteController extends Controller
             ->join('areas', 'areas.id', '=', 'users.idarea')
             ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
             ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
-            ->select('users.id', 'areas.name', 'paralelos.descripcion', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+            ->select('users.id', 'areas.name', 'paralelos.descripcion as paralelo', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
             ->where('paralelos.id', '=', $paralelo)
             ->where('periodos_academicos.id', '=', $periodo)
             ->where('users.condicion', '=', '1')
@@ -50,7 +50,7 @@ class EstudianteController extends Controller
             ->join('areas', 'areas.id', '=', 'users.idarea')
             ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
             ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
-            ->select('users.id', 'areas.name', 'paralelos.descripcion', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+            ->select('users.id', 'areas.name', 'paralelos.descripcion as paralelo', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
             ->where('paralelos.id', '=', $paralelo)
             ->where('periodos_academicos.id', '=', $periodo)
             ->where('users.idrol', '=', '2')
@@ -65,7 +65,7 @@ class EstudianteController extends Controller
             ->join('areas', 'areas.id', '=', 'users.idarea')
             ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
             ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
-            ->select('users.id', 'areas.name', 'paralelos.descripcion', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+            ->select('users.id', 'areas.name', 'paralelos.descripcion as paralelo', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
             ->where('users.idrol', '=', '2')
             ->orderBy('users.apellidos', 'users.nombres', 'asc')
             ->get();   
@@ -133,6 +133,19 @@ class EstudianteController extends Controller
             return response()->json(['success' => 'SU INFORMACIÓN HA SIDO ACTUALIZADA '.$request->nombres.' '.$request->apellidos], 200);
         }catch(QueryException $e){
             DB::rollBack();
+            return response()->json($e, 500);
+        }
+    }
+
+    public function edit(Request $request, $id){
+         try{
+            $estudiante = User::findOrFail($id);
+            $estudiante->idparalelo = $request->idparalelo;
+            $estudiante->idperiodo = $request->idperiodo;
+            $estudiante->save();
+            return response()->json(['success' => 'SE HA ACTUALIZADO EL ESTUDIANTE'], 200);   
+
+        }catch(QueryException $e){
             return response()->json($e, 500);
         }
     }

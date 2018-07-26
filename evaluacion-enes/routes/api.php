@@ -26,6 +26,7 @@ Route::group(['middleware' => 'cors'], function () {
     Route::post('/student', 'EstudianteController@ingresarAlumno'); 
     Route::put('/student/enable/{id}', 'EstudianteController@habilitado'); 
     Route::put('/student/info', 'EstudianteController@updateInformation'); 
+    Route::put('/student/edit/{id}', 'EstudianteController@edit'); 
     
     Route::get('/class', 'ClaseController@index');
 
