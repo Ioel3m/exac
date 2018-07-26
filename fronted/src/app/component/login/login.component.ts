@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from "../../services/api.service";
-import { CookieService } from "ngx-cookie-service";
+// import { CookieService } from "ngx-cookie-service";
+import { CookieService } from "angular2-cookie/core";
 import { Router } from "@angular/router";
 import * as $ from 'jquery';
 // import { map, catchError } from 'rxjs/operators'
@@ -18,20 +19,23 @@ import { User } from "../../user.interface";
 export class LoginComponent implements OnInit {
     errorCre: boolean;
     cargando: boolean;
-    success:boolean;
+    success: boolean;
 
-    constructor(private _apiService: ApiService, private _router: Router, private _cookie:CookieService) {
+    constructor(private _apiService: ApiService, private _router: Router, private _cookie: CookieService) {
         this.cargando = false;
     }
 
     ngOnInit() {
-   
-        this.efect();
-        if (localStorage.getItem('credenciales')) {
-            this._router.navigate(['./admin']);
 
-        } else {
-            console.log("falso");
+        this.efect();
+        if (this._cookie.get("credenciales")) {
+
+            if (this._apiService.getCookie('credenciales', 'nickname')) {
+                this._router.navigate(['./admin']);
+
+            } else {
+                console.log("falso");
+            }
         }
     }
 
@@ -86,7 +90,7 @@ export class LoginComponent implements OnInit {
             console.log(data)
 
             let datos = {
-                token: data[0].token,
+
                 paralelo: data['user'].idparalelo,
                 area: data['user'].idarea,
                 id: data['user'].id,
@@ -97,9 +101,12 @@ export class LoginComponent implements OnInit {
                 cedula: data['user'].cedula
             }
 
+   
+
             this._apiService.setCookie('datos', datos);
             this._apiService.setCookie('credenciales', user);
-     
+            this._apiService.setToken(data['0'].token);
+
             setTimeout(() => {
                 this._router.navigate(['./admin']);
             }, 1000);

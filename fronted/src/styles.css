@@ -4,7 +4,7 @@ body{
   background-color: #E5EBF1;
 }
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .m-0{
@@ -244,6 +244,16 @@ button {
 .f_2rem {
   font-size: 2rem;
 }
+.modal-backdrop{
+  display: none;
+}
+
+#dropdownMenuButton{
+  cursor: pointer;
+}
+.dropdown-menu.show{
+  left: -85% !important;
+}
 
 /* ================================= */
 
@@ -292,7 +302,7 @@ button {
   border-radius: 5px;
 }
 #m_login span i {
-  color: #AEAEAE;
+  color: #287cf3;
 }
 #m_login input[type=button] {
   border-radius: 5px;

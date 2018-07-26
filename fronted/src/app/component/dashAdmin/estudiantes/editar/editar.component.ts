@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from "../../../../services/api.service";
-// import { CookieService } from "ngx-cookie-service";
-
 
 @Component({
-  selector: 'app-lista',
-  templateUrl: './lista.component.html',
-  styleUrls: ['./lista.component.css']
+  selector: 'app-editar',
+  templateUrl: './editar.component.html',
+  styleUrls: ['./editar.component.css']
 })
-
-export class ListaComponent implements OnInit {
+export class EditarComponent implements OnInit {
 
   cargando: boolean;
   paralelos = [];
@@ -20,12 +17,10 @@ export class ListaComponent implements OnInit {
   constructor(private _apiService: ApiService) {
     this.sucess = false;
   }
-
   ngOnInit() {
     this.getParalelos();
     this.getPeriodos();
   }
-
 
   getParalelos() {
     let array = [];
@@ -56,29 +51,4 @@ export class ListaComponent implements OnInit {
     })
   }
 
-
-
-  setEstado(id, estado) {
-    console.log(id)
-    console.log(estado)
-    this._apiService.setEstado(id, estado).subscribe(res => {
-      console.log(res)
-    }, err => {
-      console.log(err)
-    })
-  }
-
-  getEstudiantes(periodo, paralelo, condicion) {
-    this.data = [];
-    this.cargando = true;
-    this._apiService.getEstudiantes(periodo, paralelo, condicion).subscribe(res => {
-      for (let i in res) {
-        this.data.push((res[i]));
-      }
-      this.cargando = false;
-      console.log(this.data);
-    }, err => {
-      console.log(err);
-    })
-  }
 }

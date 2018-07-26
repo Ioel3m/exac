@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-nuevo-estudiante',
   templateUrl: './estudiantes.component.html',
-  styleUrls: []
+  styleUrls: ['./estudiantes.component.css']
 })
 export class EstudiantesComponent implements OnInit {
 
