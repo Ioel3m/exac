@@ -145,6 +145,8 @@ class EstudianteController extends Controller
     public function edit(Request $request, $id){
          try{
             $estudiante = User::findOrFail($id);
+            $estudiante->cedula = $request->cedula;
+            $estudiante->nickname = $request->nickname;
             $estudiante->idparalelo = $request->idparalelo;
             $estudiante->idperiodo = $request->idperiodo;
             $estudiante->save();
