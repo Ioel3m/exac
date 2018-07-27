@@ -12,10 +12,7 @@ export class GuardService implements CanActivate {
 
   constructor(private apiSerive: ApiService, private _router:Router) { }
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    console.log(next);
-    console.log(state);
-
+  canActivate() {
     if (this.apiSerive.getLogged()) {
       return true;
     } else {

@@ -77,4 +77,5 @@ export class NuevoEstudianteComponent implements OnInit {
       this.sucess = false;
     })
   }
+
 }
