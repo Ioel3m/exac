@@ -26,7 +26,7 @@ class DocenteController extends Controller
             ->join('areas', 'areas.id', '=', 'users.idarea')
             ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
             ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
-            ->select('users.id', 'areas.name as area', 'paralelos.descripcion', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula', 'users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+            ->select('users.id', 'areas.name as area', 'paralelos.descripcion as paralelo', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula', 'users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
             ->where('users.idrol', '=', '3')
             ->orderBy('users.apellidos', 'users.nombres', 'asc')
             ->get();   
@@ -40,7 +40,7 @@ class DocenteController extends Controller
             ->join('areas', 'areas.id', '=', 'users.idarea')
             ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
             ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
-            ->select('users.id', 'areas.name as area', 'paralelos.descripcion', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula', 'users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+            ->select('users.id', 'areas.name as area', 'paralelos.descripcion as paralelo', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula', 'users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
             ->where('users.idrol', '=', '3')
             ->where('paralelos.id', '=', $paralelo)
             ->where('periodos_academicos.id', '=', $periodo)
@@ -49,18 +49,24 @@ class DocenteController extends Controller
         return response()->json($docentes, 200);
     }
 
+    public function search($id){
+        $docente = User::findOrFail($id);
+        return response()->json($docente, 200);
+    }
+
     public function getDocentesActive(Request $request){
         $paralelo = $request->paralelo;
         $periodo = $request->periodo;
+        $condicion = $request->condicion;
         $docentes = User::join('roles', 'roles.id', '=', 'users.idrol')
             ->join('areas', 'areas.id', '=', 'users.idarea')
             ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
             ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
-            ->select('users.id', 'areas.name as area', 'paralelos.descripcion', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula', 'users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+            ->select('users.id', 'areas.name as area', 'paralelos.descripcion as paralelo', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula', 'users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
             ->where('users.idrol', '=', '3')
             ->where('paralelos.id', '=', $paralelo)
             ->where('periodos_academicos.id', '=', $periodo)
-            ->where('users.condicion', '=', '1')
+            ->where('users.condicion', '=', $condicion)
             ->orderBy('users.apellidos', 'users.nombres', 'asc')
             ->get();   
         return response()->json($docentes, 200);
@@ -111,7 +117,7 @@ class DocenteController extends Controller
             $docente->condicion = 1;
         
             $docente->save();
-            return response()->json(['success' => 'Perfil del administrador actualizado'], 200);   
+            return response()->json(['success' => 'Perfil del docente actualizado'], 200);   
 
         }catch(QueryException $e){
             return response()->json($e, 500);
@@ -129,8 +135,8 @@ class DocenteController extends Controller
             $docente->password = Hash::make($request->cedula);
             $docente->telefono = $request->telefono;
             $docente->direccion = $request->direccion;
-            $docente->fecha_nacimiento = '1990-09-09';
-            $docente->estado_civil = null;
+            $docente->fecha_nacimiento = $request->fecha_nacimiento;
+            $docente->estado_civil = $request->estado_civil;
             $docente->informacion_personal = 1;
             $docente->condicion = 1;
             $docente->idrol = 3;

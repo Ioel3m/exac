@@ -38,8 +38,10 @@ Route::group(['middleware' => 'cors'], function () {
     Route::get('/teachers', 'DocenteController@index');
     Route::get('/teacher/all', 'DocenteController@show');
     Route::get('/teacher', 'DocenteController@getDocentesActive');
+    Route::get('/teacher/{id}', 'DocenteController@search');
     Route::post('/teacher', 'DocenteController@store');
     Route::put('/teacher/{id}', 'DocenteController@update');
+    Route::put('/teacher', 'DocenteController@updateProfileDocente');
     Route::put('/teacher/enable/{id}', 'DocenteController@habilitar');
     
     Route::get('/periodo', 'PeriodoAcademicoController@index');
