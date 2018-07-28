@@ -1,98 +1,107 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-white  d-none d-lg-block" style="max-height: 3.33rem">
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <form id="buscador" class="form-inline my-2 my-lg-0 ml-auto d-flex flex-row align-items-center justify-content-center align-content-center">
-            <a href="">
-                <p class="s" style="border:1px solid #1BDCCF; color: #1BDCCF; padding: 0 10px !important; margin: 0">A</p>
+    <div class="main-header">
+        <div class="logo-header">
+            <a href="index.html" class="logo">
+                EXAC
             </a>
-            <li class="nav-item dropdown mr-3" style="list-style: none;">
-                <a class="nav-link dropdown-toggle text-secondary" id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    {{nombreUsuario | capitalizar}}
-                </a>
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon">
+                    <i class="fa fa-bars"></i>
+                </span>
+            </button>
+            <button class="topbar-toggler more">
+                <i class="fa fa-ellipsis-v"></i>
+            </button>
+        </div>
+        <nav class="navbar navbar-header navbar-expand-lg p-0">
+            <div class="container-fluid">
 
-                <div class="container-fluid">
+                <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" (click)="cerrarSesion()">Salir</a>
+                    <li class="nav-item dropdown hidden-caret">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="fa fa-bell"></i>
+                            <span class="notification">3</span>
+                        </a>
+                        <ul class="dropdown-menu notif-box" aria-labelledby="navbarDropdown">
+                            <li>
+                                <div class="dropdown-title">Tienes 4 notificationes</div>
+                            </li>
+                            <li>
+                                <div class="notif-center">
+                                    <a href="#">
+                                        <div class="notif-icon notif-primary">
+                                            <i class="la la-user-plus"></i>
+                                        </div>
+                                        <div class="notif-content">
+                                            <span class="block">
+                                                Nuevo comentario
+                                            </span>
+                                            <span class="time">5 minutos atras</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
 
-                    </div>
-                </div>
-            </li>
-        </form>
+
+                    <li class="nav-item dropdown">
+
+                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
+                            <span>{{nombreUsuario | capitalizar}}</span>
+
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <button class="dropdown-item" (click)="cerrarSesion()">
+                                <i class="fa fa-power-off"></i> Cerrar sesión</button>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </div>
-</nav>
 
 
 
-<div class="nav-side-menu">
-
-    <div class="brand text-center t_b-azul-primario" style="height: 54px;">
-        <i class="fa fa-youtube-play px-3" aria-hidden="true"></i>
-    </div>
-
-
-    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
 
 
 
-    <div class="menu-list">
+    <div class="sidebar">
+        <div class="scrollbar-inner sidebar-wrapper">
+            <div class="user">
 
-        <ul id="menu-content" class="menu-content collapse out p-0 f_roboto-bold">
-
-            <nav class="nav-item navbar dropdown d-lg-none text-center text-secondary" style="list-style: none;">
-                <a class="nav-link dropdown-toggle text-secondary" id="dropdownMenuButton" role="button" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    {{nombreUsuario | capitalizar}}
-                </a>
-
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Salir</a>
-
-                </div>
-
-            </nav>
-
-            <li class="text-center" routerLinkActive="active">
-                <a [routerLink]="['estudiantes']" class="d-lg-flex flex-row text-lg-center justify-content-around align-items-center" style="color: inherit">
-                    <i class="fa fa-user fa-lg f_1rem  pt-2" style="color: inherit"></i>
-                    <a class="pb-0 pt-2 pl-3 pl-lg-0" style="color: inherit">
-                        Estudiantes
+                <div class="info">
+                    <a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                        <span>
+                            {{nombreUsuario | capitalizar}}
+                            <span class="user-level">Administrator</span>
+                        </span>
                     </a>
-                </a>
-            </li>
-            <li class="text-center" routerLinkActive="active">
-                <a [routerLink]="['profesores']" class="d-lg-flex flex-row text-lg-center justify-content-around align-items-center" style="color: inherit">
-                    <i class="fa fa-users fa-lg f_1rem  pt-2" style="color: inherit"></i>
-                    <a class="pb-0 pt-2 pl-3 pl-lg-0" style="color: inherit">
-                        Profesores
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a href="index.html">
+                        <i class="fa fa-tachometer"></i>
+                        <p>Tablero</p>
                     </a>
-                </a>
-            </li>
-
-
-
-        </ul>
-
-
-    </div>
-
-
-</div>
-
-
-<!-- <nav class="navbar">
-
-    <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            Dropdown link
-        </a>
-
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+                <li class="nav-item" routerLinkActive="active">
+                    <a [routerLink]="['estudiantes']">
+                        <i class="fa fa-user"></i>
+                        <p>Estudiantes</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="forms.html">
+                        <i class="fa fa-users"></i>
+                        <p>Docentes</p>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
- 
-</nav> -->

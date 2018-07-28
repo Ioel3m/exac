@@ -14,7 +14,8 @@ export class NavbarComponent implements OnInit {
   constructor(private _apiService: ApiService, private _router: Router) { }
 
   ngOnInit() {
-    this.nombreUsuario = this._apiService.getCookie("datos", "nombres");
+    this.nombreUsuario = this._apiService.getCookie("datos", "nombres") +" "+ this._apiService.getCookie("datos","apellidos")
+    // this.nombreUsuario = this._apiService.getCookie("datos", "nombres");
     console.log("ok"+this._apiService.getCookie("datos", "nombres"));
     // this.nombreUsuario = data['nombres'];  
     // this.nombreUsuario = data['nombres'] +" "+ data['apellidos'];  

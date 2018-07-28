@@ -1,5 +1,5 @@
-<div class="container bg-white mt-3 animated fadeIn" style="position: relative;">
-    <H1 class="f_2rem text-secondary text-center pt-5 f_roboto-regular">INFORMACIÓN DE ESTUDIANTE</H1>
+<div class="container bg-white mt-3 animated fadeIn col-9" style="position: relative;">
+    <H1 class="f_2rem text-secondary text-center pt-5 f_roboto-regular">ACTUALIZAR DATOS DE ESTUDIANTE</H1>
 
     <ng-container *ngIf="data.idrol == 2; else elseTemplate">
 
@@ -48,7 +48,7 @@
 
             <div class="form-group row py-2 col-12 mt-5 col-lg-8 offset-lg-2">
                 <button type="button" [disabled]="!formulario.valid" [ngClass]="{'desactivado': cargando || tick || !formulario.valid}"
-                    class="btn t_b-verde col-12 mt-3 text-white" (click)="updateParaleloPeriodo(paralelo.value, periodo.value, formulario)">
+                    class="btn t_b-verde col-12 mt-3 text-white" (click)="updateParaleloPeriodo(cedula.value, paralelo.value, periodo.value)">
                     <ng-container *ngIf="cargando; else cargandoFalse">
                         <span>
                             <i class="fa fa-spinner fa-spin"></i>

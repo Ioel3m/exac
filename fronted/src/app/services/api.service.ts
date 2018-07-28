@@ -116,8 +116,8 @@ export class ApiService {
     return this.http.get(`${this.url}/student/${id}?token=${this.cookie.get('token')}`, httpOptions)
   }
 
-  updateParaleloPeriodo(idEstudiante, idparalelo, idperiodo){
-    return this.http.put(`${this.url}/student/edit/${idEstudiante}?token=${this.cookie.get('token')}`, { idparalelo, idperiodo }, httpOptions)// this.http.
+  updateParaleloPeriodo(idEstudiante, cedula, idparalelo, idperiodo, nickname){
+    return this.http.put(`${this.url}/student/edit/${idEstudiante}?token=${this.cookie.get('token')}`, { cedula, idparalelo, idperiodo, nickname }, httpOptions)// this.http.
   }
 
 

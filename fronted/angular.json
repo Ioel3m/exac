@@ -25,14 +25,15 @@
             "styles": [
               "./node_modules/font-awesome/css/font-awesome.min.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/preloader.css",                         
-              "src/styles.css"                         
+              "src/preloader.css",
+              "src/styles.css",
+              "src/assets/css/ready.css"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.slim.js",
-           
-              "./node_modules/bootstrap/dist/js/bootstrap.js"
-
+              "./node_modules/bootstrap/dist/js/bootstrap.js",
+              "src/assets/js/ready.js",
+              "src/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"
             ]
           },
           "configurations": {

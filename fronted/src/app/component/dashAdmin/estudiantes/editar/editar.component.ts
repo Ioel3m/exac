@@ -71,10 +71,10 @@ export class EditarComponent implements OnInit {
     })
   }
 
-  updateParaleloPeriodo(idparalelo, idperiodo, form) {
-    console.log(form);
+  updateParaleloPeriodo(cedula, idparalelo, idperiodo) {
+    // console.log(form);
     this.cargando = true;
-      this._apiService.updateParaleloPeriodo(this.param, idparalelo, idperiodo).subscribe(res => {
+      this._apiService.updateParaleloPeriodo(this.param, cedula, idparalelo, idperiodo).subscribe(res => {
         console.log("actualizado");
         this.cargando = false;
         this.tick = true;
