@@ -4,7 +4,13 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -44,7 +50,32 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        if ($exception instanceof ValidationException) {
+            return $this->convertValidationExceptionToResponse($exception, $request);
+        }
+
+        if ($exception instanceof ModelNotFoundException) {
+            $modelo = strtolower(class_basename($exception->getModel()));
+            return response()->json(["error" => "No existe ninguna instancia de {$modelo} con el id especificado", "code" => 401], 401);
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            return response()->json(["error" => "No se encontró la URL especificada", "code" => 404], 404); 
+        }
+
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            return response()->json(['error' => 'El método especificado en la petición no es válido', 'code' => 405], 405);
+        }
+
+        if ($exception instanceof HttpException) {
+            return response()->json(['error' => $exception->getMessage(), 'code' => $exception->getStatusCode()], $exception->getStatusCode());  
+        }
+
+        if (config('app.debug')) {
+            return parent::render($request, $exception);
+        }
+
+        return response()->json(['error' => 'Falla inesperada. Intente luego', 'code' => 500], 500); 
     }
 
     /**
@@ -61,5 +92,18 @@ class Handler extends ExceptionHandler
         }
 
         return redirect()->guest(route('login'));
+    }
+
+    /**
+     * Create a response object from the given validation exception.
+     *
+     * @param  \Illuminate\Validation\ValidationException  $e
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function convertValidationExceptionToResponse(ValidationException $e, $request)
+    {
+        $errors = $e->validator->errors()->getMessages();
+        return response()->json($errors, 422);
     }
 }

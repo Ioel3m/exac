@@ -46,17 +46,91 @@ class EstudianteController extends Controller
         $paralelo = $request->paralelo;
         $periodo = $request->periodo;
         $condicion = $request->condicion;
-        $estudiantes = User::join('roles', 'roles.id', '=', 'users.idrol')
-            ->join('areas', 'areas.id', '=', 'users.idarea')
-            ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
-            ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
-            ->select('users.id', 'areas.name', 'paralelos.descripcion as paralelo', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
-            ->where('paralelos.id', '=', $paralelo)
-            ->where('periodos_academicos.id', '=', $periodo)
-            ->where('users.idrol', '=', '2')
-            ->where('users.condicion', '=', $condicion)
-            ->orderBy('users.id', 'desc')
-            ->get();   
+        if(isset($periodo) && !isset($paralelo) && !isset($condicion)){
+            $estudiantes = User::join('roles', 'roles.id', '=', 'users.idrol')
+                ->join('areas', 'areas.id', '=', 'users.idarea')
+                ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
+                ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
+                ->select('users.id', 'areas.name', 'paralelos.descripcion as paralelo', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+                ->where('periodos_academicos.id', '=', $periodo)
+                ->where('users.idrol', '=', '2')
+                ->orderBy('users.id', 'desc')
+                ->get();
+        }else if(isset($periodo) && isset($paralelo) && !isset($condicion)){
+            $estudiantes = User::join('roles', 'roles.id', '=', 'users.idrol')
+                ->join('areas', 'areas.id', '=', 'users.idarea')
+                ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
+                ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
+                ->select('users.id', 'areas.name', 'paralelos.descripcion as paralelo', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+                ->where('paralelos.id', '=', $paralelo)
+                ->where('periodos_academicos.id', '=', $periodo)
+                ->where('users.idrol', '=', '2')
+                ->orderBy('users.id', 'desc')
+                ->get();
+        }else if(!isset($periodo) && isset($paralelo) && !isset($condicion)){
+            $estudiantes = User::join('roles', 'roles.id', '=', 'users.idrol')
+                ->join('areas', 'areas.id', '=', 'users.idarea')
+                ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
+                ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
+                ->select('users.id', 'areas.name', 'paralelos.descripcion as paralelo', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+                ->where('paralelos.id', '=', $paralelo)
+                ->where('users.idrol', '=', '2')
+                ->orderBy('users.id', 'desc')
+                ->get();
+        }else if(!isset($periodo) && isset($paralelo) && isset($condicion)){
+            $estudiantes = User::join('roles', 'roles.id', '=', 'users.idrol')
+                ->join('areas', 'areas.id', '=', 'users.idarea')
+                ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
+                ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
+                ->select('users.id', 'areas.name', 'paralelos.descripcion as paralelo', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+                ->where('paralelos.id', '=', $paralelo)
+                ->where('users.idrol', '=', '2')
+                ->where('users.condicion', '=', $condicion)
+                ->orderBy('users.id', 'desc')
+                ->get();   
+        }else if (isset($periodo) && !isset($paralelo) && isset($condicion)){
+            $estudiantes = User::join('roles', 'roles.id', '=', 'users.idrol')
+                ->join('areas', 'areas.id', '=', 'users.idarea')
+                ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
+                ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
+                ->select('users.id', 'areas.name', 'paralelos.descripcion as paralelo', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+                ->where('periodos_academicos.id', '=', $periodo)
+                ->where('users.idrol', '=', '2')
+                ->where('users.condicion', '=', $condicion)
+                ->orderBy('users.id', 'desc')
+                ->get();
+        }else if(!isset($periodo) && !isset($paralelo) && isset($condicion)){
+            $estudiantes = User::join('roles', 'roles.id', '=', 'users.idrol')
+                ->join('areas', 'areas.id', '=', 'users.idarea')
+                ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
+                ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
+                ->select('users.id', 'areas.name', 'paralelos.descripcion as paralelo', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+                ->where('users.idrol', '=', '2')
+                ->where('users.condicion', '=', $condicion)
+                ->orderBy('users.id', 'desc')
+                ->get();
+        }else if(isset($periodo) && isset($paralelo) && isset($condicion)){
+            $estudiantes = User::join('roles', 'roles.id', '=', 'users.idrol')
+                ->join('areas', 'areas.id', '=', 'users.idarea')
+                ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
+                ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
+                ->select('users.id', 'areas.name', 'paralelos.descripcion as paralelo', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+                ->where('paralelos.id', '=', $paralelo)
+                ->where('periodos_academicos.id', '=', $periodo)
+                ->where('users.idrol', '=', '2')
+                ->where('users.condicion', '=', $condicion)
+                ->orderBy('users.id', 'desc')
+                ->get();   
+        }else{
+            $estudiantes = User::join('roles', 'roles.id', '=', 'users.idrol')
+                ->join('areas', 'areas.id', '=', 'users.idarea')
+                ->join('paralelos', 'paralelos.id', '=', 'users.idparalelo')
+                ->join('periodos_academicos', 'periodos_academicos.id', '=', 'users.idperiodo')
+                ->select('users.id', 'areas.name', 'paralelos.descripcion as paralelo', 'periodos_academicos.fecha_inicio', 'periodos_academicos.fecha_fin', 'roles.descripcion', 'users.cedula','users.nombres', 'users.apellidos', 'users.nickname', 'users.email', 'users.telefono', 'users.direccion', 'users.fecha_nacimiento', 'users.estado_civil', 'users.informacion_personal', 'users.condicion', 'users.created_at', 'users.updated_at')
+                ->where('users.idrol', '=', '2')
+                ->orderBy('users.id', 'desc')
+                ->get();   
+        }
         return response()->json($estudiantes, 200);   
     }
     

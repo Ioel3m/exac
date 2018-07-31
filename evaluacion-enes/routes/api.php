@@ -70,6 +70,18 @@ Route::group(['middleware' => 'cors'], function () {
     Route::get('/periodo/user', 'UserController@getPeriodoUser');
     Route::get('/paralelo/user', 'UserController@getParaleloUser');
     Route::get('/rol/user', 'UserController@getRolUser');
+
+    Route::get('/publish', 'PublicacionController@index');
+    Route::get('/publish/{id}', 'PublicacionController@show');
+    Route::post('/publish', 'PublicacionController@store');
+    Route::put('/publish/{id}', 'PublicacionController@update');
+    Route::delete('/publish/{id}', 'PublicacionController@destroy');
+
+    Route::get('/comments', 'ComentarioController@index');
+    Route::get('/comments/publish/{id}', 'ComentarioController@showCommentsByPublish');
+    Route::post('/comments', 'ComentarioController@store');
+    Route::put('/comments/{id}', 'ComentarioController@update');
+    Route::delete('/comments/{id}', 'ComentarioController@destroy');
 });
 
 Route::get('/newtoken', array('middleware' => ['cors', 'jwt.auth'], function() {
