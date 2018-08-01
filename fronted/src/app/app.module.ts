@@ -4,8 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from "@angular/http";
 import { HttpClientModule } from "@angular/common/http";
 // import { CookieService } from "ngx-cookie-service";
-import { CookieService } from "angular2-cookie/services/cookies.service";
-
+// 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './component/login/login.component';
 import { NavbarComponent } from './component/dashAdmin/navbar/navbar.component';
@@ -25,6 +24,7 @@ import { ListaComponent } from './component/dashAdmin/estudiantes/lista/lista.co
 import { CapitalizarPipe } from './pipes/capitalizar.pipe';
 import { LoadComponent } from './decorates/load/load.component';
 import { EditarComponent } from './component/dashAdmin/estudiantes/editar/editar.component';
+import { DocentesComponent } from './component/dashAdmin/docentes/docentes.component';
 
 
 @NgModule({
@@ -38,7 +38,8 @@ import { EditarComponent } from './component/dashAdmin/estudiantes/editar/editar
     ListaComponent,
     CapitalizarPipe,
     LoadComponent,
-    EditarComponent
+    EditarComponent,
+    DocentesComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +53,6 @@ import { EditarComponent } from './component/dashAdmin/estudiantes/editar/editar
   providers: [
     ApiService,
     GuardService,
-    CookieService,
   ],
   bootstrap: [AppComponent]
 })

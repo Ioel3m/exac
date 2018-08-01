@@ -16,6 +16,7 @@ export class ListaComponent implements OnInit {
   periodos = [];
   data = [];
   sucess: boolean;
+  resultados = [];
 
   constructor(private _apiService: ApiService) {
     this.sucess = false;
@@ -24,6 +25,8 @@ export class ListaComponent implements OnInit {
   ngOnInit() {
     this.getParalelos();
     this.getPeriodos();
+    this.getEstudiantes();
+    this.resultados = this.data;
   }
 
 
@@ -68,17 +71,37 @@ export class ListaComponent implements OnInit {
     })
   }
 
-  getEstudiantes(periodo, paralelo, condicion) {
+  filtro(criterio: string) {
+    console.log(criterio);
+    this.resultados = [];
+    criterio = criterio.toLowerCase();
+    this.cargando = true;
+    for (let dato of this.data) {
+      let cedula = dato.cedula.toLowerCase();
+      let nick = dato.nickname.toLowerCase();
+      if (cedula.indexOf(criterio) >=0 || nick.indexOf(criterio)>=0) {
+        console.log(dato);
+        this.resultados.push(dato);
+      }
+    }
+    this.cargando = false;
+  }
+
+  getEstudiantes(periodo?, paralelo?, condicion?) {
     this.data = [];
+    this.resultados = [];
     this.cargando = true;
     this._apiService.getEstudiantes(periodo, paralelo, condicion).subscribe(res => {
       for (let i in res) {
         this.data.push((res[i]));
       }
+      this.resultados = this.data;
       this.cargando = false;
       console.log(this.data);
     }, err => {
       console.log(err);
     })
   }
+
+
 }

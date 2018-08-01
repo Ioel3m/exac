@@ -71,10 +71,10 @@ export class EditarComponent implements OnInit {
     })
   }
 
-  updateParaleloPeriodo(cedula, idparalelo, idperiodo) {
+  updateParaleloPeriodo(cedula, nick, idparalelo, idperiodo) {
     // console.log(form);
     this.cargando = true;
-      this._apiService.updateParaleloPeriodo(this.param, cedula, idparalelo, idperiodo).subscribe(res => {
+      this._apiService.updateParaleloPeriodo(this.param, cedula, nick, idparalelo, idperiodo).subscribe(res => {
         console.log("actualizado");
         this.cargando = false;
         this.tick = true;
@@ -82,7 +82,6 @@ export class EditarComponent implements OnInit {
           this.tick = false;
         }, 3000)
       })
-
 }
 
 
@@ -106,7 +105,7 @@ getParams(){
       this.cargando = false;
     })
     }
-
+    
   }
 
 

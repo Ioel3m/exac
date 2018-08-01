@@ -1,105 +1,113 @@
 <div class="container bg-white mt-3 animated fadeIn">
   <app-load [estado]="sucess"></app-load>
 
-  <form class="row justify-content-center" #formulario="ngForm">
+  <form class="row justify-content-center" #formulario="ngForm" (change)="getEstudiantes(periodo.value, paralelo.value, condicion.value)">
+    <div class="main t_b-azul-base row justify-content-center my-5" style="border-radius: 2rem">
 
-    <div class="col-12 col-md-6 col-lg-3">
-      <div class="form-group row py-4 col-12 px-4" style="margin: auto 0">
-        <label for="periodo" class="col-12 col-md-4 col-lg-6 col-form-label text-center py-1 ">Periodo</label>
-        <select ngModel id="periodo" class="form-control border-0 t_b-azul-base  col-12 col-md-8 col-lg-6" [disabled]="cargando"
-          [ngClass]="{'desactivado': cargando}" ngModel required name="periodo" #periodo>
-          <option *ngFor="let periodo of periodos" [value]="periodo.id" (click)="p()">{{periodo.fecha_inicio}} hasta {{periodo.fecha_fin}}</option>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="form-group row col-12 px-4" style="margin: auto 0">
+          <!-- <label for="periodo" class="col-12 col-md-4 col-lg-6 col-form-label text-center py-1 ">Periodo</label> -->
+          <select id="periodo" class="form-control border-0 t_b-azul-base  col-12" [disabled]="cargando" [ngClass]="{'desactivado': cargando}"
+            required name="periodo" #periodo>
+            <option [value]="0">Periodo</option>
+            <option *ngFor="let periodo of periodos" [value]="periodo.id">{{periodo.fecha_inicio}} hasta {{periodo.fecha_fin}}</option>
 
-        </select>
+          </select>
+        </div>
       </div>
-    </div>
 
-    <div class="col-12 col-md-6 col-lg-3">
-      <div class="form-group row py-4 col-12 px-4" style="margin: auto 0;">
-        <label for="periodo" class="col-12 col-md-4 col-lg-7 col-form-label text-center px-0 py-1 m-0">Paralelo</label>
-        <select ngModel id="paralelo" class="form-control border-0 t_b-azul-base  col-12 col-md-8 col-lg-5" ngModel required name="paralelo"
-          #paralelo>
-          <option *ngFor="let paralelo of paralelos" [value]="paralelo.id">{{paralelo.descripcion}}</option>
-        </select>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="form-group row col-12 px-4" style="margin: auto 0;">
+          <!-- <label for="periodo" class="col-12 col-md-4 col-lg-7 col-form-label text-center px-0 py-1 m-0">Paralelo</label> -->
+          <select id="paralelo" class="form-control border-0 t_b-azul-base  col-12 col-md-8 col-lg-12" required name="paralelo"
+            #paralelo>
+            <option [selected]="paralelo" [value]="0">Paralelo</option>
+            <option *ngFor="let paralelo of paralelos" [value]="paralelo.id" desc>{{paralelo.descripcion}}</option>
+          </select>
+        </div>
       </div>
-    </div>
 
-    <div class="col-12 col-md-6 col-lg-3">
-      <div class="form-group row py-4 col-12 px-4 " style="margin: auto 0">
-        <label for="periodo" class="col-12 col-md-4 col-lg-5 col-form-label text-center px-0 py-1 m-0">Estado</label>
-        <select id="condicion" ngModel class="form-control border-0 t_b-azul-base col-12 col-md-8 col-lg-7" ngModel required name="condicion"
-          #condicion>
-          <option value="true">Habilitados</option>
-          <option value="false">Deshabilitados</option>
-        </select>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="form-group row col-12 px-4 " style="margin: auto 0">
+          <!-- <label for="periodo" class="col-12 col-md-4 col-lg-5 col-form-label text-center px-0 py-1 m-0">Estado</label> -->
+          <select id="condicion" class="form-control border-0 t_b-azul-base col-12" required name="condicion" #condicion>
+            <option [value]="0" selected="true">Estado</option>
+            <option value="true">Habilitados</option>
+            <option value="false">Deshabilitados</option>
+          </select>
+        </div>
       </div>
-    </div>
 
-    <div class="col-12 col-md-6 col-lg-3 offset-lg-0 justify-content-center">
-      <div class="form-group row py-4 col-12 col-md-8 offset-md-4 offset-lg-0 col-lg-12  px-4 justify-content-center justify-content-center">
-        <button type="button" class="btn t_b-verde col-12 text-white" [disabled]="!formulario.valid" (click)="getEstudiantes(periodo.value, paralelo.value, condicion.value)">
-          <ng-container *ngIf="cargando; else filtrarElse">
-            <i class="fa fa-spinner fa-spin"></i>
-          </ng-container>
-          <ng-template #filtrarElse>
-            Filtrar
-          </ng-template>
+      <!-- <div class="col-12 col-md-6 col-lg-3 offset-lg-0 justify-content-center">
+        <div class="form-group row py-4 col-12 col-md-8 offset-md-4 offset-lg-0 col-lg-12  px-4 justify-content-center justify-content-center">
+          <button type="button" class="btn t_b-verde col-12 text-white" [disabled]="!formulario.valid" (click)="getEstudiantes(periodo.value, paralelo.value, condicion.value)">
+            <ng-container *ngIf="cargando; else filtrarElse">
+              <i class="fa fa-spinner fa-spin"></i>
+            </ng-container>
+            <ng-template #filtrarElse>
+              Filtrar
+            </ng-template>
 
-        </button>
-      </div>
+          </button>
+        </div>
+      </div> -->
     </div>
 
   </form>
 
+  <div class="container-fluid">
 
-  <div class="table-responsive col-12 animated fadeIn" *ngIf="data.length>0">
+    <div class="table-responsive col-12 animated fadeIn" *ngIf="data.length>0">
+      <div class="form-group">
+        <input type="text" class="form-control" id="txtbuscar" placeholder="Buscar" #criterio (keyup.enter)="filtro(criterio.value)">
+        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+      </div>
 
-    <table class="table table-borderless">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">CEDULA</th>
-          <th scope="col">NICKNAME</th>
-          <th scope="col">ESTADO</th>
-        </tr>
-      </thead>
-      <tbody>
-
-
-        <tr *ngFor="let item of data; let i = index">
-
-          <th class="">{{i+1}}</th>
-          <td>{{item.cedula}}</td>
-          <td>{{item.nickname}}</td>
-          <td>
-            <label class="switch col-form-label offset-1 m-0">
-              <input type="checkbox" class="t_b-azul-base form-control border-0" id="estado_toggle" [checked]="item.condicion == true"
-                [attr.data-id]="item.id" (click)="setEstado(estado.getAttribute('data-id'),estado.checked)" #estado>
-              <span class="slider round"></span>
-            </label>
-          </td>
-    
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">CEDULA</th>
+            <th scope="col">NICKNAME</th>
+            <th scope="col">ESTADO</th>
+          </tr>
+        </thead>
+        <tbody>
 
 
-          <td>
-            <div class="navbar dropdown" style="display: block">
+          <tr *ngFor="let item of resultados; let i = index">
 
-              <i class="fa fa-ellipsis-h" id="dropdownMenuButton" style="color: #A4B2C1; transform: rotate(90deg); float: right;" role="button"
-                data-toggle="dropdown" aria-haspopup="true"></i>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" [routerLink]="['../editar', item.id]">Editar</a>
-                <a class="dropdown-item">Eliminar</a>
+            <th class="">{{i+1}}</th>
+            <td>{{item.cedula}}</td>
+            <td>{{item.nickname}}</td>
+            <td>
+              <label class="switch col-form-label offset-1 m-0">
+                <input type="checkbox" class="t_b-azul-base form-control border-0" id="estado_toggle" [checked]="item.condicion == true"
+                  [attr.data-id]="item.id" (click)="setEstado(estado.getAttribute('data-id'),estado.checked)" #estado>
+                <span class="slider round"></span>
+              </label>
+            </td>
 
+
+
+            <td>
+              <div class="navbar dropdown" style="display: block">
+
+                <i class="fa fa-ellipsis-h" id="dropdownMenuButton" style="color: #A4B2C1; transform: rotate(90deg); float: right;" role="button"
+                  data-toggle="dropdown" aria-haspopup="true"></i>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" [routerLink]="['../editar', item.id]">Editar</a>
+                </div>
               </div>
-            </div>
-          </td>
+            </td>
 
 
-        </tr>
+          </tr>
 
 
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
+
   </div>
-
 </div>

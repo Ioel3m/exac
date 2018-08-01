@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from "../../services/api.service";
-// import { CookieService } from "ngx-cookie-service";
-import { CookieService } from "angular2-cookie/core";
 import { Router } from "@angular/router";
 import * as $ from 'jquery';
 // import { map, catchError } from 'rxjs/operators'
@@ -21,24 +19,20 @@ export class LoginComponent implements OnInit {
     cargando: boolean;
     success: boolean;
 
-    constructor(private _apiService: ApiService, private _router: Router, private _cookie: CookieService) {
+    constructor(private _apiService: ApiService, private _router: Router) {
         this.cargando = false;
     }
 
     ngOnInit() {
 
         this.efect();
-        if (this._cookie.get("credenciales")) {
-
-            if (this._apiService.getCookie('credenciales', 'nickname')) {
-                this._router.navigate(['./admin']);
-
-            } else {
-                console.log("falso");
+        if (localStorage.getItem('token')) {
+                this._router.navigate(['./admin'])  
+                // window.location.assign("./admin")                                      
+                } else {
+                    this._router.navigate(['./login'])
             }
-        }
     }
-
 
     efect() {
         $(document).ready(function () {
@@ -87,10 +81,8 @@ export class LoginComponent implements OnInit {
             this.errorCre = false;
             this.cargando = false;
             this.success = true;
-            console.log(data)
 
             let datos = {
-
                 paralelo: data['user'].idparalelo,
                 area: data['user'].idarea,
                 id: data['user'].id,
@@ -100,21 +92,24 @@ export class LoginComponent implements OnInit {
                 periodo: data['user'].idperiodo,
                 cedula: data['user'].cedula
             }
+            
+            this._apiService.setStorage('datos', datos);
 
-   
-
-            this._apiService.setCookie('datos', datos);
-            this._apiService.setCookie('credenciales', user);
             this._apiService.setToken(data['0'].token);
+            this._apiService.checkToken(this);
 
             setTimeout(() => {
+                if(data['user'].idrol == 1){
                 this._router.navigate(['./admin']);
+                // window.location.href = "/admin";
+            }
             }, 1000);
 
         }, error => {
             this.cargando = false;
             this.success = false;
             this.errorCre = true;
+            console.log("error");
             this._router.navigate(['./login'])
         })
 
