@@ -91,7 +91,7 @@ Route::get('/newtoken', array('middleware' => ['cors', 'jwt.auth'], function() {
     $nickname = \JWTAuth::parseToken()->authenticate();
     $token = \JWTAuth::getToken();
     $newToken = \JWTAuth::refresh($token);
-    return response()->json(['nickname' => $user->nickname, 'token' => $newToken], 200);
+    return response()->json(['token' => $newToken, 'user' => $user], 200);
 }));
 
 /*

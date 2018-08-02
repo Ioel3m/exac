@@ -24,9 +24,15 @@ class ContactoController extends Controller
             $contacto->mensaje = $request->mensaje;
             $contacto->save();
             
-            return response()->json(['succes' => 'Su información se ha enviado correctamente'], 200);
+            return response()->json(['success' => 'Su información se ha enviado correctamente'], 200);
         }catch(QueryException $e){
             return response()->json($e, 500);
         }
+    }
+
+    public function destroy($id) {
+        $contact = Contacto::findOrFail($id);
+        $contact->delete();
+        return response()->json(['success' => 'SE HA BORRADO ESTE COMENTARIO']);
     }
 }
