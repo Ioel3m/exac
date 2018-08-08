@@ -23,7 +23,7 @@ class PeriodoAcademicoController extends Controller
     public function index()
     {
         $periodos = PeriodoAcademico::where('condicion', '=', '1')->orderBy('id', 'desc')->get();
-        return response()->json(['periodos' => $periodos], 200);
+        return response()->json([$periodos], 200);
     }
 
     /**

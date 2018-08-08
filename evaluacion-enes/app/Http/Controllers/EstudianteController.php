@@ -25,6 +25,7 @@ class EstudianteController extends Controller
         $this->middleware('jwt.auth', ['except' => ['Autenticar']]);
     }
 
+    /*Devuelve alumnos activos para el docente que hayan actualizado su información de acuerdo a periodo y paralelo*/
     public function index(Request $request){
         $paralelo = $request->paralelo;
         $periodo = $request->periodo;
@@ -37,8 +38,9 @@ class EstudianteController extends Controller
             ->where('periodos_academicos.id', '=', $periodo)
             ->where('users.condicion', '=', '1')
             ->where('users.idrol', '=', '2')
+            ->where('users.informacion_personal', '=', '1')
             ->orderBy('users.apellidos', 'users.nombres', 'asc')
-            ->get();   
+            ->get();
         return response()->json($estudiantes, 200);
     }
 
@@ -133,7 +135,7 @@ class EstudianteController extends Controller
         }
         return response()->json($estudiantes, 200);   
     }
-    
+     
     public function getStudents(){
         $estudiantes = User::join('roles', 'roles.id', '=', 'users.idrol')
             ->join('areas', 'areas.id', '=', 'users.idarea')

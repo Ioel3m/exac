@@ -73,83 +73,90 @@ class DocenteController extends Controller
     }
 
     public function store(Request $request){
-        try{
-            $docente = new User();
-            $docente->nombres = $request->nombres;
-            $docente->apellidos = $request->apellidos;
-            $docente->cedula = $request->cedula;
-            $docente->nickname = $request->cedula.'-DOC';
-            $docente->email = $request->email;
-            $docente->password = Hash::make($request->cedula);
-            $docente->telefono = $request->telefono;
-            $docente->direccion = $request->direccion;
-            $docente->fecha_nacimiento = $request->fecha_nacimiento;
-            $docente->estado_civil = null;
-            $docente->informacion_personal = 1;
-            $docente->condicion = 1;
-            $docente->idrol = 3;
-            $docente->idparalelo = $request->idparalelo;
-            $docente->idarea = $request->idarea;
-            $docente->idperiodo = $request->idperiodo;
-            
-            $docente->save();
-            return response()->json(['success' => 'DOCENTE REGISTRADO CORRECTAMENTE'], 200);   
+        $rules = [
+            'cedula' => 'numeric|required|unique:users',
+            'email' => 'required|unique:users'
+        ];
 
-        }catch(QueryException $e){
-            return response()->json($e, 500);
-        }
+        $this->validate($request, $rules);
+
+        $docente = new User();
+        $docente->nombres = $request->nombres;
+        $docente->apellidos = $request->apellidos;
+        $docente->cedula = $request->cedula;
+        $docente->nickname = $request->cedula.'-DOC';
+        $docente->email = $request->email;
+        $docente->password = Hash::make($request->cedula);
+        $docente->telefono = $request->telefono;
+        $docente->direccion = $request->direccion;
+        $docente->fecha_nacimiento = $request->fecha_nacimiento;
+        $docente->estado_civil = null;
+        $docente->informacion_personal = 1;
+        $docente->condicion = 1;
+        $docente->idrol = 3;
+        $docente->idparalelo = $request->idparalelo;
+        $docente->idarea = $request->idarea;
+        $docente->idperiodo = $request->idperiodo;
+        
+        $docente->save();
+        return response()->json(['success' => 'Docente registrado correctamente !!'], 200);   
     }
 
     public function updateProfileDocente(Request $request){
-        try{
-            $docente = User::findOrFail(Auth::user()->id);
-            $docente->nombres = $request->nombres;
-            $docente->apellidos = $request->apellidos;
-            $docente->cedula = $request->cedula;
-            $docente->nickname = $request->nickname;
-            $docente->email = $request->email;
-            $docente->password = Hash::make($request->password);
-            $docente->telefono = $request->telefono;
-            $docente->direccion = $request->direccion;
-            $docente->fecha_nacimiento = $request->fecha_nacimiento;
-            $docente->estado_civil = $request->estado_civil;
-            $docente->informacion_personal = 1;
-            $docente->condicion = 1;
-        
-            $docente->save();
-            return response()->json(['success' => 'Perfil del docente actualizado'], 200);   
+        $rules = [
+            'cedula' => 'numeric|required|unique:users',
+            'nickname' => 'required|unique:users',
+            'email' => 'required|unique:users'
+        ];
 
-        }catch(QueryException $e){
-            return response()->json($e, 500);
-        }
+        $this->validate($request, $rules);
+
+        $docente = User::findOrFail(Auth::user()->id);
+        $docente->nombres = $request->nombres;
+        $docente->apellidos = $request->apellidos;
+        $docente->cedula = $request->cedula;
+        $docente->nickname = $request->nickname;
+        $docente->email = $request->email;
+        $docente->password = Hash::make($request->password);
+        $docente->telefono = $request->telefono;
+        $docente->direccion = $request->direccion;
+        $docente->fecha_nacimiento = $request->fecha_nacimiento;
+        $docente->estado_civil = $request->estado_civil;
+        $docente->informacion_personal = 1;
+        $docente->condicion = 1;
+    
+        $docente->save();
+        return response()->json(['success' => 'Perfil del docente actualizado'], 200);   
     }
     
     public function update(Request $request, $id){
-        try{
-            $docente = User::findOrFail($id);
-            $docente->nombres = $request->nombres;
-            $docente->apellidos = $request->apellidos;
-            $docente->cedula = $request->cedula;
-            $docente->nickname = $request->cedula.'-DOC';
-            $docente->email = $request->email;
-            $docente->password = Hash::make($request->cedula);
-            $docente->telefono = $request->telefono;
-            $docente->direccion = $request->direccion;
-            $docente->fecha_nacimiento = $request->fecha_nacimiento;
-            $docente->estado_civil = $request->estado_civil;
-            $docente->informacion_personal = 1;
-            $docente->condicion = 1;
-            $docente->idrol = 3;
-            $docente->idparalelo = $request->idparalelo;
-            $docente->idarea = $request->idarea;
-            $docente->idperiodo = $request->idperiodo;
-            
-            $docente->save();
-            return response()->json(['success' => 'SE HAN GUARDADO LOS CAMBIOS'], 200);   
+        $rules = [
+            'cedula' => 'numeric|required|unique:users',
+            'email' => 'required|unique:users'
+        ];
 
-        }catch(QueryException $e){
-            return response()->json($e, 500);
-        }
+        $this->validate($request, $rules);
+
+        $docente = User::findOrFail($id);
+        $docente->nombres = $request->nombres;
+        $docente->apellidos = $request->apellidos;
+        $docente->cedula = $request->cedula;
+        $docente->nickname = $request->cedula.'-DOC';
+        $docente->email = $request->email;
+        $docente->password = Hash::make($request->cedula);
+        $docente->telefono = $request->telefono;
+        $docente->direccion = $request->direccion;
+        $docente->fecha_nacimiento = $request->fecha_nacimiento;
+        $docente->estado_civil = $request->estado_civil;
+        $docente->informacion_personal = 1;
+        $docente->condicion = 1;
+        $docente->idrol = 3;
+        $docente->idparalelo = $request->idparalelo;
+        $docente->idarea = $request->idarea;
+        $docente->idperiodo = $request->idperiodo;
+        
+        $docente->save();
+        return response()->json(['success' => 'Se han guardado los cambios !!'], 200);   
     }
 
     public function habilitar(Request $request, $id) 
