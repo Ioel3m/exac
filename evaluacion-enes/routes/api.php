@@ -94,6 +94,14 @@ Route::get('/newtoken', array('middleware' => ['cors', 'jwt.auth'], function() {
     return response()->json(['token' => $newToken, 'user' => $user], 200);
 }));
 
+Route::get('/validatetoken', array('middleware' => ['cors', 'jwt.auth'], function() {
+    if ( ! $user = \JWTAuth::parseToken()->authenticate() ) {
+        return response()->json(['Usuario no encontrado'], 404);
+    }
+    $nickname = \JWTAuth::parseToken()->authenticate();
+    return response()->json(['rol' => $user->idrol], 200);
+}));
+
 /*
 Route::group(['middleware' => ['api', 'cors'], 'namespace' => $this->namespace, 'prefix' => 'api'], function () {
     Route::post('/auth', 'AuthController@Autenticar');
