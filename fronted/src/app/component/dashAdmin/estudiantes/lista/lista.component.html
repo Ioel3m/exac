@@ -7,7 +7,7 @@
       <div class="col-12 col-md-6 col-lg-4">
         <div class="form-group row col-12 px-4" style="margin: auto 0">
           <!-- <label for="periodo" class="col-12 col-md-4 col-lg-6 col-form-label text-center py-1 ">Periodo</label> -->
-          <select id="periodo" class="form-control border-0 t_b-azul-base  col-12" [disabled]="cargando" [ngClass]="{'desactivado': cargando}"
+          <select id="periodo" class="form-control border-0 t_b-azul-base  col-12"
             required name="periodo" #periodo>
             <option [value]="0">Periodo</option>
             <option *ngFor="let periodo of periodos" [value]="periodo.id">{{periodo.fecha_inicio}} hasta {{periodo.fecha_fin}}</option>

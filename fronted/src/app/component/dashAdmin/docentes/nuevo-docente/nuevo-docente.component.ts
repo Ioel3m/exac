@@ -1,64 +1,53 @@
 import { Component, OnInit } from '@angular/core';
-
 import { ApiService } from "../../../../services/api.service";
+
+
 @Component({
-  selector: 'app-nuevo-estudiante',
-  templateUrl: './nuevo-estudiante.component.html',
-  styleUrls: ['./nuevo-estudiante.component.css']
+  selector: 'app-nuevo-docente',
+  templateUrl: './nuevo-docente.component.html',
+  styleUrls: ['./nuevo-docente.component.css']
 })
-export class NuevoEstudianteComponent implements OnInit {
-
-
+export class NuevoDocenteComponent implements OnInit {
+  cargando: boolean;
   paralelos = [];
   periodos = [];
-  cargando: boolean;
-  tick:boolean;
+  tick: boolean;
   sucess: boolean;
-  token;
 
   constructor(private _apiService: ApiService) {
     this.tick = false;
     this.sucess = false;
-   }
-
-  ngOnInit() {
-
-      this.getParalelos();
-      this.getPeriodos();
- 
-
   }
 
-  setNuevoEstudiante(cedula, idparalelo, idperiodo, condicion, form) {
-    let estudiante = {
-      cedula, idparalelo, idperiodo, condicion
+  ngOnInit() {
+    this.getParalelos();
+    this.getPeriodos();
+  }
+
+  setNuevoDocente(cedula, idparalelo, idperiodo, idarea, nombres, apellidos, telefono, direccion, email, fecha_nacimiento, form) {
+    let docente = {
+      cedula, idparalelo, idperiodo, idarea, nombres, apellidos, telefono, direccion, email, fecha_nacimiento
     }
+
     this.cargando = true;
-    this._apiService.setNuevoEstudiante(estudiante).subscribe(res => {
+    this._apiService.setNuevoDocente(docente).subscribe(res => {
       this.cargando = false;
       this.tick = true;
-      setTimeout(()=>{
+      setTimeout(() => {
         this.tick = false;
         form.reset();
       }, 3000)
-      
-      
+
+
     }, error => {
       console.log(error)
     })
-  }
-
-  form(form) {
-    console.log(form);
-    
   }
 
   getParalelos() {
     let array = [];
     this.sucess = true;
     this._apiService.getParalelos().subscribe(res => {
-      console.log("par"+res);
-
       for (let key in res) {
         array = res[key];
       }
@@ -73,8 +62,6 @@ export class NuevoEstudianteComponent implements OnInit {
     this.sucess = true;
     let array = [];
     this._apiService.getPeriodos().subscribe(res => {
-      console.log(res);
-
       for (let key in res) {
         array = res[key];
       }
@@ -86,3 +73,5 @@ export class NuevoEstudianteComponent implements OnInit {
   }
 
 }
+
+

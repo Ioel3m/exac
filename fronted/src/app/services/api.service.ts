@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
+import { Observable, Subject, } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 
 //INTERFACES
 import { User } from "../user.interface";
-import { interval } from '../../../node_modules/rxjs';
 
 
 const httpOptions = {
@@ -16,22 +17,23 @@ const httpOptions = {
 })
 export class ApiService {
 
-  url: string = "http://127.0.0.1:8000/api";
-  logged: boolean;
+  private token$ = new Subject<string>();
+  private token;
+  private url: string = "http://127.0.0.1:8000/api";
+  private logged: boolean;
   private tokenAPI;
   private interval;
+  private rol;
+
   constructor(public http: HttpClient, private _router: Router) {
-    this.logged = false;
-    this.getNtoken();
-
+    this.logged = true;
   }
-
-
 
   getSesion(user: User) {
     return this.http.post(`${this.url}/auth`, user, httpOptions)
   }
 
+  //STORAGE
 
   getStorage(idStorage: string, dato?: string) {
     if (!dato) {
@@ -50,19 +52,21 @@ export class ApiService {
     localStorage.clear();
   }
 
+  //---------------------------------------------------------
+
   getLogged() {
-    if (localStorage.getItem('token')) {
-      return true;
-    } else {
+    if (!localStorage.getItem('token')) {
       return false;
+    } else {
+      if (localStorage.getItem('token')){
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
 
-
-  getToken() {
-    return this.tokenAPI;
-  }
   getNtoken() {
     setInterval(function () {
       this.checkToken();
@@ -70,50 +74,60 @@ export class ApiService {
   }
 
   setToken(token) {
-    localStorage.setItem('token', token)
+    localStorage.setItem('token', token);
+    this.token = localStorage.getItem('token');
+    this.token$.next(localStorage.getItem('token'));
   }
 
-  checkToken(id): boolean {
-    if (localStorage.getItem('token')) {
-      console.log(id);
-      console.log("actual      " + localStorage.getItem('token'));
+  getToken(): Observable<string> {
+    return this.token$.asObservable();
+  }
 
-      this.http.get(`${this.url}/newtoken?token=${localStorage.getItem('token')}`, httpOptions).subscribe(data => {
-        this.setToken(data['token']);
-        console.log("nuevo     " + localStorage.getItem('token'));
-        this.logged = true;
-      }, () => {
-        localStorage.removeItem('token');
-        this.logged = false;
-      })
-    }
+
+  check(token) {
+    this.http.get(`${this.url}/validatetoken?token=${token}`, httpOptions).subscribe(token => {
+      this.logged = true;
+      this.rol = token['rol'];
+    }, () => {
+      this.logged = false;
+    })
     return this.logged;
   }
 
 
 
-
+  getRol() {
+    return this.rol;
+  }
 
   setNuevoEstudiante(estudiante) {
-    return this.http.post(`${this.url}/student?token=${localStorage.getItem('token')}`, estudiante, httpOptions)
-
+    return this.http.post(`${this.url}/student?token=${this.getStorage('token')}`, estudiante, httpOptions)
   }
+
+  setNuevoDocente(docente) {
+    return this.http.post(`${this.url}/teacher?token=${this.getStorage('token')}`, docente, httpOptions)
+  }
+
 
   setEstado(idEstudiante: string, estado: string) {
-    return this.http.put(`${this.url}/student/enable/${idEstudiante}?token=${localStorage.getItem('token')}`, { condicion: estado }, httpOptions)
+    return this.http.put(`${this.url}/student/enable/${idEstudiante}?token=${this.getStorage('token')}`, { condicion: estado }, httpOptions)
   }
 
-  getParalelos() {
-    return this.http.get(`${this.url}/paralelo?token=${localStorage.getItem('token')}`, httpOptions)
-  }
 
-  getPeriodos() {
-    return this.http.get(`${this.url}/periodo?token=${localStorage.getItem('token')}`, httpOptions)
+  getParalelos(token?) {
+      return this.http.get(`${this.url}/paralelo?token=${this.getStorage('token')}`, httpOptions)
+    }
+
+
+  getPeriodos(token?) {
+    return this.http.get(`${this.url}/periodo?token=${this.getStorage('token')}`, httpOptions)
   }
 
 
   getEstudiantes(periodo?: string, paralelo?: string, estado?: string) {
-    let url: string = this.url + `/student/all?token=${localStorage.getItem('token')}`;
+    // this.checkToken(this);
+
+    let url: string = this.url + `/student/all?token=${this.getStorage('token')}`;
 
     if (periodo !== null && periodo !== undefined && periodo != "0")
       url = url + `&periodo=${periodo}`;
@@ -123,18 +137,17 @@ export class ApiService {
 
     if (estado !== null && estado !== undefined && estado != "0")
       url = url + `&condicion=${estado}`;
-
     return this.http.get(url, httpOptions)
+
+
   }
 
-
-
   getEstudiante(id) {
-    return this.http.get(`${this.url}/student/${id}?token=${localStorage.getItem('token')}`, httpOptions)
+    return this.http.get(`${this.url}/student/${id}?token=${this.getStorage('token')}`, httpOptions)
   }
 
   updateParaleloPeriodo(idEstudiante, cedula, nickname, idparalelo, idperiodo) {
-    return this.http.put(`${this.url}/student/edit/${idEstudiante}?token=${localStorage.getItem('token')}`, { cedula, nickname, idparalelo, idperiodo, }, httpOptions)// this.http.
+    return this.http.put(`${this.url}/student/edit/${idEstudiante}?token=${this.getStorage('token')}`, { cedula, nickname, idparalelo, idperiodo, }, httpOptions)// this.http.
   }
 
 }

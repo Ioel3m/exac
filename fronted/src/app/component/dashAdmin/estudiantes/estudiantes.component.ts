@@ -6,16 +6,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './estudiantes.component.html',
   styleUrls: ['./estudiantes.component.css']
 })
-export class EstudiantesComponent implements OnInit {
+export class EstudiantesComponent {
 
   // constructor(private _apiService:ApiService) { }
-
-  ngOnInit() {
-    let n = {
-      
-    }
-
-
-  }
 
 }

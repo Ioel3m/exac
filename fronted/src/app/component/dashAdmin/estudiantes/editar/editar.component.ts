@@ -15,21 +15,23 @@ export class EditarComponent implements OnInit {
   data: any;
   success: boolean;
   tick: boolean;
-  param:number;
+  param: number;
   defaultpa;
   defaultpe;
+  token;
 
   constructor(private _apiService: ApiService, private activatedRouter: ActivatedRoute) {
     this.success = true;
     this.tick = false;
     this.cargando = false;
-    this.data = {};    
+    this.data = {};
   }
   ngOnInit() {
     this.getParams();
-    this.getEstudiante();
     this.getParalelos();
     this.getPeriodos();
+    this.getEstudiante();
+
 
   }
 
@@ -41,9 +43,9 @@ export class EditarComponent implements OnInit {
         array = res[key];
       }
       for (let key in array) {
-        if(this.data.idparalelo == array[key].id){
+        if (this.data.idparalelo == array[key].id) {
           this.defaultpa = array[key].descripcion
-        } 
+        }
         console.log(array[key].id);
         this.paralelos.push(array[key]);
       }
@@ -59,14 +61,12 @@ export class EditarComponent implements OnInit {
         array = res[key];
       }
       for (let key in array) {
-        if(this.data.idperiodo == array[key].id){
-          this.defaultpe = array[key].fecha_inicio+" a "+array[key].fecha_fin;
-        } 
+        if (this.data.idperiodo == array[key].id) {
+          this.defaultpe = array[key].fecha_inicio + " a " + array[key].fecha_fin;
+        }
         this.periodos.push(array[key]);
 
       }
-      console.log(this.defaultpe);
-
       this.success = false;
     })
   }
@@ -74,38 +74,37 @@ export class EditarComponent implements OnInit {
   updateParaleloPeriodo(cedula, nick, idparalelo, idperiodo) {
     // console.log(form);
     this.cargando = true;
-      this._apiService.updateParaleloPeriodo(this.param, cedula, nick, idparalelo, idperiodo).subscribe(res => {
-        console.log("actualizado");
-        this.cargando = false;
-        this.tick = true;
-        setTimeout(() => {
-          this.tick = false;
-        }, 3000)
-      })
-}
+    this._apiService.updateParaleloPeriodo(this.param, cedula, nick, idparalelo, idperiodo).subscribe(res => {
+      this.cargando = false;
+      this.tick = true;
+      setTimeout(() => {
+        this.tick = false;
+      }, 3000)
+    })
+  }
 
 
-getParams(){
-  this.cargando = true;
-  this.success = true;
-  this.activatedRouter.params.subscribe(params => {
-    this.cargando = false;
-    this.success = false;
-    this.param = params['id'];
-  })
-}
-  
-  getEstudiante(){
+  getParams() {
+    this.cargando = true;
+    this.success = true;
+    this.activatedRouter.params.subscribe(params => {
+      this.cargando = false;
+      this.success = false;
+      this.param = params['id'];
+    })
+  }
+
+  getEstudiante() {
     this.data = {};
     this.cargando = true;
     this.success = true;
     this._apiService.getEstudiante(this.param).subscribe(res => {
-      this.data = res;    
+      this.data = res;
       this.success = false;
       this.cargando = false;
     })
-    }
-    
   }
+
+}
 
 

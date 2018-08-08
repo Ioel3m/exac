@@ -17,34 +17,46 @@ export class ListaComponent implements OnInit {
   data = [];
   sucess: boolean;
   resultados = [];
+  token;
 
   constructor(private _apiService: ApiService) {
     this.sucess = false;
   }
-
+  
   ngOnInit() {
-    this.getParalelos();
-    this.getPeriodos();
-    this.getEstudiantes();
-    this.resultados = this.data;
+      this.getParalelos();
+      this.getPeriodos();
+      this.getEstudiantes();
+
+ 
   }
 
 
   getParalelos() {
+    console.log("ejecutado con"+this.token);
+    
     let array = [];
     this.sucess = true;
     this._apiService.getParalelos().subscribe(res => {
+      console.log("ejecutado con"+res);
+      
       for (let key in res) {
         array = res[key];
       }
       for (let key in array) {
+        console.log("ejecutado con"+key);
         this.paralelos.push(array[key]);
       }
       this.sucess = false;
     })
+    
+    console.log("ejecutado con"+this.paralelos);
   }
 
   getPeriodos() {
+    console.log("ejecutado con"+this.token);
+
+    this.periodos = [];
     this.sucess = true;
     let array = [];
     this._apiService.getPeriodos().subscribe(res => {
@@ -53,7 +65,6 @@ export class ListaComponent implements OnInit {
       }
       for (let key in array) {
         this.periodos.push(array[key]);
-
       }
       this.sucess = false;
     })
@@ -79,7 +90,7 @@ export class ListaComponent implements OnInit {
     for (let dato of this.data) {
       let cedula = dato.cedula.toLowerCase();
       let nick = dato.nickname.toLowerCase();
-      if (cedula.indexOf(criterio) >=0 || nick.indexOf(criterio)>=0) {
+      if (cedula.indexOf(criterio) >= 0 || nick.indexOf(criterio) >= 0) {
         console.log(dato);
         this.resultados.push(dato);
       }
@@ -88,10 +99,17 @@ export class ListaComponent implements OnInit {
   }
 
   getEstudiantes(periodo?, paralelo?, condicion?) {
+    console.log(paralelo);
+    console.log(periodo);
+    console.log(condicion);
+
     this.data = [];
     this.resultados = [];
     this.cargando = true;
+
     this._apiService.getEstudiantes(periodo, paralelo, condicion).subscribe(res => {
+      console.log("RES" + res);
+
       for (let i in res) {
         this.data.push((res[i]));
       }
@@ -101,6 +119,7 @@ export class ListaComponent implements OnInit {
     }, err => {
       console.log(err);
     })
+
   }
 
 

@@ -21,10 +21,12 @@ import { RUTAS } from "./rutas.component";
 import { ApiService } from './services/api.service';
 import { GuardService } from './services/guard.service';
 import { ListaComponent } from './component/dashAdmin/estudiantes/lista/lista.component';
+import { ListaDocenteComponent } from "./component/dashAdmin/docentes/lista/listaDocente.component";
 import { CapitalizarPipe } from './pipes/capitalizar.pipe';
 import { LoadComponent } from './decorates/load/load.component';
 import { EditarComponent } from './component/dashAdmin/estudiantes/editar/editar.component';
 import { DocentesComponent } from './component/dashAdmin/docentes/docentes.component';
+import { NuevoDocenteComponent } from './component/dashAdmin/docentes/nuevo-docente/nuevo-docente.component';
 
 
 @NgModule({
@@ -36,10 +38,12 @@ import { DocentesComponent } from './component/dashAdmin/docentes/docentes.compo
     NuevoEstudianteComponent,
     EstudiantesComponent,
     ListaComponent,
+    ListaDocenteComponent,
     CapitalizarPipe,
     LoadComponent,
     EditarComponent,
-    DocentesComponent
+    DocentesComponent,
+    NuevoDocenteComponent
   ],
   imports: [
     BrowserModule,

@@ -27,11 +27,11 @@ export class LoginComponent implements OnInit {
 
         this.efect();
         if (localStorage.getItem('token')) {
-                this._router.navigate(['./admin'])  
-                // window.location.assign("./admin")                                      
-                } else {
-                    this._router.navigate(['./login'])
-            }
+            this._router.navigate(['./admin'])
+            // window.location.assign("./admin")                                      
+        } else {
+            this._router.navigate(['./login'])
+        }
     }
 
     efect() {
@@ -92,17 +92,17 @@ export class LoginComponent implements OnInit {
                 periodo: data['user'].idperiodo,
                 cedula: data['user'].cedula
             }
-            
+
             this._apiService.setStorage('datos', datos);
 
             this._apiService.setToken(data['0'].token);
-            this._apiService.checkToken(this);
+            this._apiService.check(data['0'].token);
 
             setTimeout(() => {
-                if(data['user'].idrol == 1){
-                this._router.navigate(['./admin']);
-                // window.location.href = "/admin";
-            }
+                if (data['user'].idrol == 1) {
+                    this._router.navigate(['./admin']);
+                    // window.location.href = "/admin";
+                }
             }, 1000);
 
         }, error => {
