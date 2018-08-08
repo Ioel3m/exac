@@ -27,6 +27,9 @@ import { LoadComponent } from './decorates/load/load.component';
 import { EditarComponent } from './component/dashAdmin/estudiantes/editar/editar.component';
 import { DocentesComponent } from './component/dashAdmin/docentes/docentes.component';
 import { NuevoDocenteComponent } from './component/dashAdmin/docentes/nuevo-docente/nuevo-docente.component';
+import { ActualizarComponent } from './component/dashAdmin/docentes/actualizar/actualizar.component';
+import { BuzonComponent } from './component/dashAdmin/buzon/buzon.component';
+
 
 
 @NgModule({
@@ -43,7 +46,9 @@ import { NuevoDocenteComponent } from './component/dashAdmin/docentes/nuevo-doce
     LoadComponent,
     EditarComponent,
     DocentesComponent,
-    NuevoDocenteComponent
+    NuevoDocenteComponent,
+    ActualizarComponent,
+    BuzonComponent
   ],
   imports: [
     BrowserModule,

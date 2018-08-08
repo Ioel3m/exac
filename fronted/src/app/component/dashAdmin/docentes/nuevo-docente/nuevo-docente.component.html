@@ -4,7 +4,7 @@
  
      <div class="form-group row py-3 col-12  offset-lg-1 col-lg-10 text-center">
        <div class="col-12 px-0">
-         <input type="number" class="t_b-azul-base  border-0 form-control col-12 " id="cedula" [ngClass]="{'i-invalid': (mcedula.touched && mcedula.invalid)}"
+         <input type="number" class="t_b-azul-base  border-0 form-control col-12 " id="cedula" [ngClass]="{'i-invalid': (mcedula.touched && mcedula.invalid || !validarCI(cedula.value))}"
            placeholder="Cedula" #cedula #mcedula="ngModel" ngModel name="cedula" required>
        </div>
      </div>
@@ -52,12 +52,7 @@
 
 
  
-     <div class="form-group row py-3 col-12  offset-lg-1 col-lg-10">
-       <label for="paralelo" class="col-12 col-form-label col-lg-6">Paralelo</label>
-       <select id="paralelo" class="form-control border-0 t_b-azul-base  col-12 col-lg-6 mx-0" #paralelo  required name="paralelo">
-         <option *ngFor="let paralelo of paralelos" [value]="paralelo.id" [selected]="paralelo.descripcion">{{paralelo.descripcion}}</option>
-       </select>
-     </div>
+ 
  
      <div class="form-group row py-3 col-12  offset-lg-1 col-lg-10">
        <label for="periodo" class="col-12 col-form-label col-lg-6">Periodo</label>
@@ -70,8 +65,8 @@
 
  
      <div class="form-group row py-2 col-12 mt-5 col-lg-10 offset-lg-1">
-       <button type="button" [disabled]="!formulario.valid || tick || cargando" [ngClass]="{'desactivado': cargando || tick || !formulario.valid}"
-         class="btn t_b-verde col-12 mt-3 text-white" (click)="setNuevoDocente(cedula.value, paralelo.value, periodo.value, 1, nombres.value, apellidos.value, telefono.value, direccion.value, email.value, fecha_nacimiento.value, formulario)">
+       <button type="button" [disabled]="!formulario.valid || tick || cargando || !validarCI(cedula.value)" [ngClass]="{'desactivado': cargando || tick || !formulario.valid}"
+         class="btn t_b-verde col-12 mt-3 text-white" (click)="setNuevoDocente(cedula.value, 1, periodo.value, 1, nombres.value, apellidos.value, telefono.value, direccion.value, email.value, fecha_nacimiento.value, formulario)">
          <ng-container *ngIf="cargando; else cargandoFalse">
            <span>
              <i class="fa fa-spinner fa-spin"></i>

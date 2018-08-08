@@ -10,15 +10,15 @@
 
             <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8 text-center">
                 <label for="cedula">Cedula</label>
-                <input type="number" class="t_b-azul-base  border-0 form-control col-12" id="cedula" [(ngModel)]="data.cedula" #cedula
-                    #mcedula="ngModel" ngModel name="cedula" required >
+                <input type="number" class="t_b-azul-base  border-0 form-control col-12" id="cedula" [(ngModel)]="data.cedula" #cedula #mcedula="ngModel"
+                    ngModel name="cedula" required>
                 <!-- <p class="m-0 p-0 text-danger" *ngIf="mcedula.invalid && mcedula.touched">Campo requerido</p> -->
             </div>
 
             <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8 text-center">
                 <label for="cedula">Nickname</label>
-                <input type="text" class="t_b-azul-base  border-0 form-control col-12" id="nick" [(ngModel)]="data.nickname" #nick
-                    #mnick="ngModel" ngModel name="nick" required >
+                <input type="text" class="t_b-azul-base  border-0 form-control col-12" id="nick" [(ngModel)]="data.nickname" #nick #mnick="ngModel"
+                    ngModel name="nick" required>
                 <!-- <p class="m-0 p-0 text-danger" *ngIf="mcedula.invalid && mcedula.touched">Campo requerido</p> -->
             </div>
             <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8 text-center" *ngIf="data.nombres">
@@ -37,15 +37,16 @@
 
             <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8">
                 <label for="paralelo" class="col-12 col-form-label col-lg-6">Paralelo</label>
-                <select id="paralelo" class="form-control border-0 t_b-azul-base  col-12 col-lg-6 mx-0" #paralelo  required name="paralelo">
-                    <option *ngFor="let paralelo of paralelos;"  [selected]="defaultpa == paralelo.descripcion" [value]="paralelo.id" name="op-paralelo">{{paralelo.descripcion}}</option>
+                <select id="paralelo" class="form-control border-0 t_b-azul-base  col-12 col-lg-6 mx-0" #paralelo required name="paralelo">
+                    <option *ngFor="let paralelo of paralelos;" [selected]="defaultpa == paralelo.descripcion" [value]="paralelo.id" name="op-paralelo">{{paralelo.descripcion}}</option>
                 </select>
             </div>
 
             <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8">
                 <label for="periodo" class="col-12 col-form-label col-lg-6">Periodo</label>
                 <select id="periodo" class="form-control border-0 t_b-azul-base px-4  col-12 col-lg-6" #periodo required name="periodo">
-                    <option *ngFor="let periodo of periodos"  [selected]="defaultpe == (periodo.fecha_inicio+' a '+periodo.fecha_fin)" [value]="periodo.id" name="op-periodo">{{periodo.fecha_inicio}} a {{periodo.fecha_fin}}</option>
+                    <option *ngFor="let periodo of periodos" [selected]="defaultpe == (periodo.fecha_inicio+' a '+periodo.fecha_fin)" [value]="periodo.id"
+                        name="op-periodo">{{periodo.fecha_inicio}} a {{periodo.fecha_fin}}</option>
                 </select>
             </div>
 
@@ -54,8 +55,8 @@
 
 
             <div class="form-group row py-2 col-12 mt-5 col-lg-8 offset-lg-2">
-                <button type="button" [disabled]="!formulario.valid" [ngClass]="{'desactivado': cargando || tick || !formulario.valid}"
-                    class="btn t_b-verde col-12 mt-3 text-white" (click)="updateParaleloPeriodo(cedula.value, nick.value, paralelo.value, periodo.value)">
+                <button type="button" [disabled]="!formulario.valid" [ngClass]="{'desactivado': cargando || tick || !formulario.valid}" class="btn t_b-verde col-12 mt-3 text-white"
+                    (click)="updateParaleloPeriodo(cedula.value, nick.value, paralelo.value, periodo.value)">
                     <ng-container *ngIf="cargando; else cargandoFalse">
                         <span>
                             <i class="fa fa-spinner fa-spin"></i>

@@ -6,7 +6,6 @@
 
       <div class="col-12 col-md-6 col-lg-4">
         <div class="form-group row col-12 px-4" style="margin: auto 0">
-          <!-- <label for="periodo" class="col-12 col-md-4 col-lg-6 col-form-label text-center py-1 ">Periodo</label> -->
           <select id="periodo" class="form-control border-0 t_b-azul-base  col-12"
             required name="periodo" #periodo>
             <option [value]="0">Periodo</option>
@@ -37,20 +36,6 @@
           </select>
         </div>
       </div>
-
-      <!-- <div class="col-12 col-md-6 col-lg-3 offset-lg-0 justify-content-center">
-        <div class="form-group row py-4 col-12 col-md-8 offset-md-4 offset-lg-0 col-lg-12  px-4 justify-content-center justify-content-center">
-          <button type="button" class="btn t_b-verde col-12 text-white" [disabled]="!formulario.valid" (click)="getEstudiantes(periodo.value, paralelo.value, condicion.value)">
-            <ng-container *ngIf="cargando; else filtrarElse">
-              <i class="fa fa-spinner fa-spin"></i>
-            </ng-container>
-            <ng-template #filtrarElse>
-              Filtrar
-            </ng-template>
-
-          </button>
-        </div>
-      </div> -->
     </div>
 
   </form>
@@ -60,7 +45,6 @@
     <div class="table-responsive col-12 animated fadeIn" *ngIf="data.length>0">
       <div class="form-group">
         <input type="text" class="form-control" id="txtbuscar" placeholder="Buscar" #criterio (keyup.enter)="filtro(criterio.value)">
-        <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
       </div>
 
       <table class="table table-borderless">
@@ -108,6 +92,5 @@
         </tbody>
       </table>
     </div>
-
   </div>
 </div>

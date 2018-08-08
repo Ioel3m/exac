@@ -2,16 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from "../../../../services/api.service";
 import { ActivatedRoute } from '@angular/router';
 
+
+
 @Component({
-  selector: 'app-editar',
-  templateUrl: './editar.component.html',
-  styleUrls: ['./editar.component.css']
+  selector: 'app-actualizar',
+  templateUrl: './actualizar.component.html',
+  styleUrls: ['./actualizar.component.css']
 })
-export class EditarComponent implements OnInit {
+export class ActualizarComponent implements OnInit {
 
   cargando: boolean;
   paralelos = [];
   periodos = [];
+  area = [];
   data: any;
   success: boolean;
   tick: boolean;
@@ -20,19 +23,16 @@ export class EditarComponent implements OnInit {
   defaultpe;
 
   constructor(private _apiService: ApiService, private activatedRouter: ActivatedRoute) {
-    this.success = true;
-    this.tick = false;
-    this.cargando = false;
-    this.data = {};
   }
+
   ngOnInit() {
     this.getParams();
     this.getParalelos();
     this.getPeriodos();
-    this.getEstudiante();
-
-
+    this.getArea();
+    this.getDocente();
   }
+
 
   getParalelos() {
     let array = [];
@@ -70,19 +70,6 @@ export class EditarComponent implements OnInit {
     })
   }
 
-  updateParaleloPeriodo(cedula, nick, idparalelo, idperiodo) {
-    // console.log(form);
-    this.cargando = true;
-    this._apiService.updateEstudiante(this.param, cedula, nick, idparalelo, idperiodo).subscribe(res => {
-      this.cargando = false;
-      this.tick = true;
-      setTimeout(() => {
-        this.tick = false;
-      }, 3000)
-    })
-  }
-
-
   getParams() {
     this.cargando = true;
     this.success = true;
@@ -93,7 +80,8 @@ export class EditarComponent implements OnInit {
     })
   }
 
-  getEstudiante() {
+
+  getDocente() {
     this.data = {};
     this.cargando = true;
     this.success = true;
@@ -104,6 +92,38 @@ export class EditarComponent implements OnInit {
     })
   }
 
+  updateDocente(cedula, nombres, apellidos, email, telefono, direccion, fecha_nacimiento, estado_civil, paralelo, area, periodo) {
+    // console.log(form);
+    this.cargando = true;
+    this._apiService.updateDocente(this.param, cedula, nombres, apellidos, email, telefono, direccion, fecha_nacimiento, estado_civil, paralelo, area, periodo).subscribe(res => {
+      this.cargando = false;
+      this.tick = true;
+      setTimeout(() => {
+        this.tick = false;
+      }, 3000)
+    })
+  }
+
+  datas(cedula, nombres, apellidos, email, telefono, direccion, fecha_nacimiento, estado_civil, paralelo, area, periodo) {
+    console.log(cedula, nombres, apellidos, email, telefono, direccion, fecha_nacimiento, estado_civil, paralelo, area, periodo);
+  }
+
+  getArea() {
+    this.success = true;
+    let array = [];
+    this._apiService.getDominio().subscribe(res => {
+      console.log(res);
+      for (let key in res) {
+        array.push(res[key]);
+      }
+
+      for (let key in array) {
+        this.area.push(array[key]);
+
+      }
+      console.log(this.area);
+      this.success = false;
+    })
+  }
+
 }
-
-

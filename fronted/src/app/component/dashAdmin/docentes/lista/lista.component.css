@@ -1,0 +1,23 @@
+table{
+    border-collapse: separate;
+    border-spacing: 0px 25px !important;
+}
+tbody{
+    
+}
+tbody > tr{
+    background-color: #E5EBF1;
+}
+
+th{
+    color: #A4B2C1;
+    font-size: 0.8rem;
+}
+td{
+    padding: auto auto;
+    min-width: 100px;
+    max-width: auto;
+}
+
+
+

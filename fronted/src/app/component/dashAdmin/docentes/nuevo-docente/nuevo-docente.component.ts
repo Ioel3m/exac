@@ -24,6 +24,10 @@ export class NuevoDocenteComponent implements OnInit {
     this.getPeriodos();
   }
 
+  validarCI(ci) {
+    return this._apiService.validarCI(ci);
+  }
+
   setNuevoDocente(cedula, idparalelo, idperiodo, idarea, nombres, apellidos, telefono, direccion, email, fecha_nacimiento, form) {
     let docente = {
       cedula, idparalelo, idperiodo, idarea, nombres, apellidos, telefono, direccion, email, fecha_nacimiento

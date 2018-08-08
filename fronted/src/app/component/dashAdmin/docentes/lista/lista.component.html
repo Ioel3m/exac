@@ -1,3 +1,53 @@
-<p>
-  lista works!
-</p>
+<div class="container bg-white mt-3 animated fadeIn">
+  <app-load [estado]="sucess"></app-load>
+
+
+
+  <div class="container-fluid">
+
+    <div class="table-responsive col-12 animated fadeIn">
+      <div class="form-group" class="mt-5">
+        <input type="text" class="form-control" id="txtbuscar" placeholder="Buscar" #criterio (keyup.enter)="filtro(criterio.value)">
+      </div>
+
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <!-- <th scope="col">#</th> -->
+            <th scope="col">CEDULA</th>
+            <th scope="col">NOMBRE</th>
+            <th scope="col">EMAIL</th>
+            <th scope="col">TELEFONO</th>
+            <th scope="col">DIRECCION</th>
+            <th scope="col">PERIODO</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr *ngFor="let item of resultados; let i = index">
+            <!-- <th class="">{{i+1}}</th> -->
+            <td>{{item.cedula}}</td>
+            <td>{{item.nombres | capitalizar}} {{item.apellidos | capitalizar}}</td>
+            <td>{{item.email}}</td>
+            <td>{{item.telefono}}</td>
+            <td>{{item.direccion}}</td>
+            <td>{{item.fecha_inicio}} a {{item.fecha_fin}} </td>
+
+            <td id="menu">
+              <div class="navbar dropdown" style="display: block">
+
+                <i class="fa fa-ellipsis-h" id="dropdownMenuButton" style="color: #A4B2C1; transform: rotate(90deg); float: right;" role="button"
+                  data-toggle="dropdown" aria-haspopup="true"></i>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" [routerLink]="['../editar', item.id]">Editar</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

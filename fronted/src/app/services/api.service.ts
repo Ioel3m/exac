@@ -33,8 +33,34 @@ export class ApiService {
     return this.http.post(`${this.url}/auth`, user, httpOptions)
   }
 
-  //STORAGE
+  validarCI(cedula) {
+    let total = 0;
+    let longitud = cedula.length;
+    let longcheck = longitud - 1;
 
+    if (cedula !== "" && longitud === 10) {
+      for (let i = 0; i < longcheck; i++) {
+        if (i % 2 === 0) {
+          var aux = cedula.charAt(i) * 2;
+          if (aux > 9) aux -= 9;
+          total += aux;
+        } else {
+          total += parseInt(cedula.charAt(i)); // parseInt o concatenará en lugar de sumar
+        }
+      }
+
+      total = total % 10 ? 10 - total % 10 : 0;
+
+      if (cedula.charAt(longitud - 1) == total) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
+
+  //STORAGE
   getStorage(idStorage: string, dato?: string) {
     if (!dato) {
       return localStorage.getItem('token');
@@ -58,7 +84,7 @@ export class ApiService {
     if (!localStorage.getItem('token')) {
       return false;
     } else {
-      if (localStorage.getItem('token')){
+      if (localStorage.getItem('token')) {
         return true;
       } else {
         return false;
@@ -115,8 +141,8 @@ export class ApiService {
 
 
   getParalelos(token?) {
-      return this.http.get(`${this.url}/paralelo?token=${this.getStorage('token')}`, httpOptions)
-    }
+    return this.http.get(`${this.url}/paralelo?token=${this.getStorage('token')}`, httpOptions)
+  }
 
 
   getPeriodos(token?) {
@@ -146,8 +172,30 @@ export class ApiService {
     return this.http.get(`${this.url}/student/${id}?token=${this.getStorage('token')}`, httpOptions)
   }
 
-  updateParaleloPeriodo(idEstudiante, cedula, nickname, idparalelo, idperiodo) {
+  updateEstudiante(idEstudiante, cedula, nickname, idparalelo, idperiodo) {
     return this.http.put(`${this.url}/student/edit/${idEstudiante}?token=${this.getStorage('token')}`, { cedula, nickname, idparalelo, idperiodo, }, httpOptions)// this.http.
+  }
+  updateDocente(id, cedula, nombres, apellidos, email, telefono, direccion, fecha_nacimiento, estado_civil, idparalelo, idarea, idperiodo) {
+    return this.http.put(`${this.url}/teacher/${id}?token=${this.getStorage('token')}`, {id, cedula, nombres, apellidos, email, telefono, direccion, fecha_nacimiento, estado_civil, idparalelo, idarea, idperiodo }, httpOptions)// this.http.
+  }
+
+
+  getDocentes() {
+    return this.http.get(`${this.url}/teachers?token=${this.getStorage('token')}`, httpOptions)
+  }
+
+  getDocente(id) {
+    return this.http.get(`${this.url}/teacher/${id}?token=${this.getStorage('token')}`, httpOptions)
+  }
+
+  getDominio(){
+    return this.http.get(`${this.url}/dominio?token=${this.getStorage('token')}`, httpOptions)
+
+  }
+
+  getComentarios(){
+    return this.http.get(`${this.url}/dominio?token=${this.getStorage('token')}`, httpOptions)
+
   }
 
 }
