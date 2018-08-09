@@ -9,7 +9,7 @@
        </div>
      </div>
      
-     <div class="form-group row py-3 col-12  offset-lg-1 col-lg-10 text-center">
+     <!-- <div class="form-group row py-3 col-12  offset-lg-1 col-lg-10 text-center">
        <div class="col-12 px-0">
          <input type="text" class="t_b-azul-base  border-0 form-control col-12 " id="nombres" [ngClass]="{'i-invalid': (mnombres.touched && mnombres.invalid)}"
            placeholder="nombres" #nombres #mnombres="ngModel" ngModel name="nombres" required>
@@ -48,7 +48,7 @@
          <input type="date" class="t_b-azul-base  border-0 form-control col-12 " id="fecha_nacimiento" [ngClass]="{'i-invalid': (mfecha_nacimiento.touched && mfecha_nacimiento.invalid)}"
            placeholder="fecha_nacimiento" #fecha_nacimiento #mfecha_nacimiento="ngModel" ngModel name="fecha_nacimiento" required>
        </div>
-     </div>
+     </div> -->
 
 
  
@@ -66,7 +66,7 @@
  
      <div class="form-group row py-2 col-12 mt-5 col-lg-10 offset-lg-1">
        <button type="button" [disabled]="!formulario.valid || tick || cargando || !validarCI(cedula.value)" [ngClass]="{'desactivado': cargando || tick || !formulario.valid}"
-         class="btn t_b-verde col-12 mt-3 text-white" (click)="setNuevoDocente(cedula.value, 1, periodo.value, 1, nombres.value, apellidos.value, telefono.value, direccion.value, email.value, fecha_nacimiento.value, formulario)">
+         class="btn t_b-verde col-12 mt-3 text-white" (click)="setNuevoDocente(cedula.value, 1, periodo.value, 1, formulario)">
          <ng-container *ngIf="cargando; else cargandoFalse">
            <span>
              <i class="fa fa-spinner fa-spin"></i>

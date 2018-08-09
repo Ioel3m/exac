@@ -1,3 +1,4 @@
+
 <div class="container-fluid">
 
   <div class="row bg-white" style="height: 100vh;">
@@ -51,18 +52,21 @@
 
         <div id="form-contacto" class="d-flex justify-center d-none offset-md-3 col-md-6 col-12">
 
-          <form id="form-contact" action="" class="d-flex flex-column align-items-center col-12" style="height: 100vh;" #form="ngForm" autocomplete="off">
+          <form id="form-contact" action="" class="d-flex flex-column align-items-center col-12" style="height: 100vh;" #form="ngForm"
+            autocomplete="off">
             <input type="text" placeholder="*Nombre" required #nombres ngModel name="nombres">
             <input type="text" placeholder="*Telefono" #telefono ngModel name="telefono">
-            <input type="text" placeholder="*Correo" required #correo ngModel name="correo"> 
+            <input type="text" placeholder="*Correo" required #correo ngModel name="correo">
             <textarea placeholder="*Comentario" #comentario ngModel name="comentario"></textarea>
-            <input type="button" class="f_roboto-regular" [ngClass]="{'desactivado': cargando || !form.valid}" value="ENVIAR" [disabled]="!form.valid"  (click)="setComentario(nombres.value, telefono.value, correo.value, comentario.value)">
+            <input type="button" class="f_roboto-regular" [ngClass]="{'desactivado': cargando || !form.valid}" value="ENVIAR" [disabled]="!form.valid"
+              (click)="setComentario(nombres.value, telefono.value, correo.value, comentario.value, form)">
           </form>
 
-          <p class="text-success f_roboto-italic" *ngIf="comentario">Gracias! Nos pondremos en contacto contigo dentro de poco</p>
-
         </div>
-
+        <span *ngIf="comentario" class="d-flex flex-row justify-content-center align-items-center align-content-center mt-3 text-success">
+          <p class="f_roboto-italic m-0">Gracias! Nos pondremos en contacto contigo dentro de poco</p>
+          <i id="up-contacto" class="fa fa-clock-o mx-2" aria-hidden="true"></i>
+        </span>
       </div>
 
     </div>

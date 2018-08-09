@@ -1,9 +1,8 @@
+
 <div class="container bg-white mt-3 animated fadeIn col-9" style="position: relative;">
     <H1 class="f_2rem text-secondary text-center pt-5 f_roboto-regular">ACTUALIZAR DATOS DE ESTUDIANTE</H1>
 
     <ng-container *ngIf="data.idrol == 2; else elseTemplate">
-
-
 
         <app-load [estado]="success"></app-load>
         <form class="py-5 px-4" #formulario="ngForm" (ngSubmit)="form(formulario)" autocomplete="off">
@@ -21,6 +20,7 @@
                     ngModel name="nick" required>
                 <!-- <p class="m-0 p-0 text-danger" *ngIf="mcedula.invalid && mcedula.touched">Campo requerido</p> -->
             </div>
+            
             <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8 text-center" *ngIf="data.nombres">
                 <label for="nombres">Nombres</label>
                 <input type="number" class="t_b-azul-base  border-0 form-control col-12" id="nombres" [placeholder]="data.nombres" #nombres
@@ -29,12 +29,52 @@
             </div>
 
             <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8 text-center" *ngIf="data.apellidos">
-                <label for="cedula">Apellidos</label>
-                <input type="number" class="t_b-azul-base  border-0 form-control col-12" id="apellidos" [placeholder]="data.apellidos" #apellidos
+                <label for="apellidos">Apellidos</label>
+                <input type="text" class="t_b-azul-base  border-0 form-control col-12" id="apellidos" [placeholder]="data.apellidos" #apellidos
                     #mapellidos="ngModel" ngModel name="apellidos" required disabled>
                 <!-- <p class="m-0 p-0 text-danger" *ngIf="mcedula.invalid && mcedula.touched">Campo requerido</p> -->
             </div>
 
+            <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8 text-center">
+                    <label for="Email">Email</label>
+                    <input type="email" class="t_b-azul-base  border-0 form-control col-12" id="Email" [(ngModel)]="data.email" #email #mEmail="ngModel"
+                      ngModel name="Email" required>
+                    <!-- <p class="m-0 p-0 text-danger" *ngIf="mcedula.invalid && mcedula.touched">Campo requerido</p> -->
+                  </div>
+              
+                  <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8 text-center">
+                    <label for="Telefono">Telefono</label>
+              
+                    <input type="text" class="t_b-azul-base  border-0 form-control col-12" id="Telefono" [(ngModel)]="data.telefono" #telefono
+                      #mTelefono="ngModel" ngModel name="Telefono" required>
+                    <!-- <p class="m-0 p-0 text-danger" *ngIf="mcedula.invalid && mcedula.touched">Campo requerido</p> -->
+                  </div>
+              
+                  <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8 text-center">
+                    <label for="Direccion">Direccion</label>
+                    <input type="text" class="t_b-azul-base  border-0 form-control col-12" id="Direccion" [(ngModel)]="data.direccion" #direccion
+                      #mDireccion="ngModel" ngModel name="Direccion" required>
+                    <!-- <p class="m-0 p-0 text-danger" *ngIf="mcedula.invalid && mcedula.touched">Campo requerido</p> -->
+                  </div>
+              
+                  <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8 text-center">
+                    <label for="fecha_nacimiento">Fecha de nacimiento</label>
+                    <input type="date" class="t_b-azul-base  border-0 form-control col-12" id="fecha_nacimiento" [(ngModel)]="data.fecha_nacimiento"
+                      #fecha_nacimiento #mfecha_nacimiento="ngModel" ngModel name="fecha_nacimiento" required>
+                    <!-- <p class="m-0 p-0 text-danger" *ngIf="mcedula.invalid && mcedula.touched">Campo requerido</p> -->
+                  </div>
+              
+              
+              
+                  <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8">
+                    <label for="estado_civil" class="col-12 col-form-label col-lg-6">Estado civil</label>
+                    <select id="estado_civilpa" class="form-control border-0 t_b-azul-base  col-12 col-lg-6 mx-0" #estado_civil required name="estado_civil">
+                      <option [value]="soltero" name="op-paralelo">Soltero</option>
+                      <option [value]="casado" name="op-paralelo">Casado</option>
+                    </select>
+                  </div>
+              
+               
             <div class="form-group row py-2 col-12 offset-lg-2 col-lg-8">
                 <label for="paralelo" class="col-12 col-form-label col-lg-6">Paralelo</label>
                 <select id="paralelo" class="form-control border-0 t_b-azul-base  col-12 col-lg-6 mx-0" #paralelo required name="paralelo">

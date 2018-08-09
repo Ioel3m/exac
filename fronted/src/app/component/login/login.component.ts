@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
     cargando: boolean;
     success: boolean;
     comentario: boolean;
+    tick:boolean;
 
     constructor(private _apiService: ApiService, private _router: Router) {
         this.cargando = false;
@@ -116,15 +117,15 @@ export class LoginComponent implements OnInit {
 
     }
 
-    setComentario(nombres, telefono, correo, mensaje) {
+    setComentario(nombres, telefono, correo, mensaje, form) {
         console.log(nombres, telefono, correo, mensaje);
         this._apiService.setComentarios(nombres, telefono, correo, mensaje).subscribe(success => {
-
-
+            
+            
             setTimeout(() => {
                 this.comentario = true;
             }, 1000);
-            this.comentario = false;
+            form.reset();
         },()=>{
             console.log("error al enviar");
         })

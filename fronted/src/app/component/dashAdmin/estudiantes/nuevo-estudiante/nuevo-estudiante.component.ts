@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxNotificationService } from 'ngx-notification';
 
 import { ApiService } from "../../../../services/api.service";
 @Component({
@@ -15,8 +16,9 @@ export class NuevoEstudianteComponent implements OnInit {
   tick:boolean;
   sucess: boolean;
   token;
+  private notificacion:string;
 
-  constructor(private _apiService: ApiService) {
+  constructor(private _apiService: ApiService, private _notificacion:NgxNotificationService) {
     this.tick = false;
     this.sucess = false;
    }
@@ -37,10 +39,13 @@ export class NuevoEstudianteComponent implements OnInit {
     this._apiService.setNuevoEstudiante(estudiante).subscribe(res => {
       this.cargando = false;
       this.tick = true;
+      this._apiService.show("Usuario registrado correctamente");
+      // this._notificacion.sendMessage(this.notificacion, 'none', 'bottom-right');
       setTimeout(()=>{
         this.tick = false;
         form.reset();
       }, 3000)
+
       
       
     }, error => {

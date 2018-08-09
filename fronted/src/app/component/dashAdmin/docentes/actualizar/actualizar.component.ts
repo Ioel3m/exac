@@ -27,10 +27,10 @@ export class ActualizarComponent implements OnInit {
 
   ngOnInit() {
     this.getParams();
+    this.getDocente();
     this.getParalelos();
     this.getPeriodos();
     this.getArea();
-    this.getDocente();
   }
 
 

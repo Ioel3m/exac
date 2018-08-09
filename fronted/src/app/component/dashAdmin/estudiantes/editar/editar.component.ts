@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from "../../../../services/api.service";
 import { ActivatedRoute } from '@angular/router';
+import * as $ from 'jquery';
+
+
 
 @Component({
   selector: 'app-editar',
@@ -27,9 +30,11 @@ export class EditarComponent implements OnInit {
   }
   ngOnInit() {
     this.getParams();
+    this.getEstudiante();
     this.getParalelos();
     this.getPeriodos();
-    this.getEstudiante();
+
+
 
 
   }
@@ -38,14 +43,15 @@ export class EditarComponent implements OnInit {
     let array = [];
     this.success = true;
     this._apiService.getParalelos().subscribe(res => {
+console.log(res);
       for (let key in res) {
         array = res[key];
       }
+
       for (let key in array) {
         if (this.data.idparalelo == array[key].id) {
           this.defaultpa = array[key].descripcion
         }
-        console.log(array[key].id);
         this.paralelos.push(array[key]);
       }
       this.success = false;
@@ -60,6 +66,7 @@ export class EditarComponent implements OnInit {
         array = res[key];
       }
       for (let key in array) {
+        
         if (this.data.idperiodo == array[key].id) {
           this.defaultpe = array[key].fecha_inicio + " a " + array[key].fecha_fin;
         }

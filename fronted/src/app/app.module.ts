@@ -3,8 +3,11 @@ import { FormsModule } from "@angular/forms";
 import { NgModule } from '@angular/core';
 import { HttpModule } from "@angular/http";
 import { HttpClientModule } from "@angular/common/http";
-// import { CookieService } from "ngx-cookie-service";
-// 
+
+//NOTIFICACIONES
+import {UixLightNotifierModule} from 'uix-light-notifier';
+import { NgxNotificationComponent } from 'ngx-notification';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './component/login/login.component';
 import { NavbarComponent } from './component/dashAdmin/navbar/navbar.component';
@@ -48,7 +51,8 @@ import { BuzonComponent } from './component/dashAdmin/buzon/buzon.component';
     DocentesComponent,
     NuevoDocenteComponent,
     ActualizarComponent,
-    BuzonComponent
+    BuzonComponent,
+    NgxNotificationComponent
   ],
   imports: [
     BrowserModule,
@@ -56,8 +60,8 @@ import { BuzonComponent } from './component/dashAdmin/buzon/buzon.component';
     HttpClientModule,
     RUTAS,
     FormsModule,
-    
-  
+    UixLightNotifierModule
+
   ],
   providers: [
     ApiService,

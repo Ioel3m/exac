@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+.ngx-notification {
+  background-color: #287CF3;
+  color: #fff;
+}
+
 body{
   background-color: #E5EBF1;
 }
@@ -181,12 +186,13 @@ button {
   border: 0;
   width: 70%;
   height: 35px;
-  background-color: #287CF3;
+  background-color: #2E90DE;
   color: white;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.16);
   transition: 0.3s all;
 }
 
-#form-contacto form input[type=submit]:hover {
+#form-contacto form input[type=button]:hover {
   background-color: #006DC4;
 }
 

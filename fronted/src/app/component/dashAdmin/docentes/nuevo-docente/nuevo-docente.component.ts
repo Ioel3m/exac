@@ -28,9 +28,9 @@ export class NuevoDocenteComponent implements OnInit {
     return this._apiService.validarCI(ci);
   }
 
-  setNuevoDocente(cedula, idparalelo, idperiodo, idarea, nombres, apellidos, telefono, direccion, email, fecha_nacimiento, form) {
+  setNuevoDocente(cedula, idparalelo, idperiodo, idarea, form) {
     let docente = {
-      cedula, idparalelo, idperiodo, idarea, nombres, apellidos, telefono, direccion, email, fecha_nacimiento
+      cedula, idparalelo, idperiodo, idarea
     }
 
     this.cargando = true;

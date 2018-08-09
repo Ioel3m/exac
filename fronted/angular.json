@@ -33,7 +33,8 @@
               "./node_modules/jquery/dist/jquery.slim.js",
               "./node_modules/bootstrap/dist/js/bootstrap.js",
               "src/assets/js/ready.js",
-              "src/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"
+              "src/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js",
+              "src/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"
             ]
           },
           "configurations": {

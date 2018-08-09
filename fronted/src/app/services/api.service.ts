@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from "@angul
 import { Router } from "@angular/router";
 import { Observable, Subject, } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
+import { NgxNotificationService } from 'ngx-notification';
+
 
 //INTERFACES
 import { User } from "../user.interface";
@@ -25,8 +27,13 @@ export class ApiService {
   private interval;
   private rol;
 
-  constructor(public http: HttpClient, private _router: Router) {
+  constructor(public http: HttpClient, private _router: Router, private notificacion: NgxNotificationService) {
     this.logged = true;
+  }
+
+
+  show(mensaje) {
+    this.notificacion.sendMessage(mensaje, 'none', 'bottom-right');
   }
 
   getSesion(user: User) {
@@ -195,7 +202,7 @@ export class ApiService {
 
   getComentarios() {
     // return this.http.get(`${this.url}/contact?token=${this.getStorage('token')}`, httpOptions)
-    return this.http.get(`${this.url}/contact?`, httpOptions)
+    return this.http.get(`${this.url}/contact?token=${this.getStorage('token')}`, httpOptions)
   }
 
   setComentarios(nombres, telefono, correo, mensaje) {
