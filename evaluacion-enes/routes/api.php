@@ -24,7 +24,7 @@ Route::group(['middleware' => 'cors'], function () {
     Route::get('/student/all', 'EstudianteController@allStudent'); 
     Route::get('/students', 'EstudianteController@getStudents'); 
     Route::get('/student/{id}', 'EstudianteController@show'); 
-    Route::post('/student', 'EstudianteController@ingresarAlumno'); 
+    Route::post('/student', 'EstudianteController@store'); 
     Route::put('/student/enable/{id}', 'EstudianteController@habilitado'); 
     Route::put('/student/info', 'EstudianteController@updateInformation'); 
     Route::put('/student/edit/{id}', 'EstudianteController@edit'); 
@@ -62,8 +62,9 @@ Route::group(['middleware' => 'cors'], function () {
     Route::post('/dominio', 'AreaController@store');
     Route::put('/dominio/{id}', 'AreaController@update');
     
-    Route::get('/contact', 'ContactoController@index');
+    Route::get('/contact', 'ContactoAuthController@index');
     Route::post('/contact', 'ContactoController@store');
+    Route::delete('/contact/{id}', 'ContactoAuthController@destroy');
     
     Route::get('/user', 'UserController@getUserAuth');
     Route::get('/area/user', 'UserController@getAreaUser');

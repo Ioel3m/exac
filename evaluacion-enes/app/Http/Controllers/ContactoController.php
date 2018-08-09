@@ -10,16 +10,11 @@ use Illuminate\Database\QueryException;
 
 class ContactoController extends Controller
 {
-    public function index(){
-        $contactos = Contacto::orderBy('id', 'desc')->get();
-        return response()->json($contactos, 200);
-    }
-
     public function store(Request $request){
         try{
             $contacto = new Contacto();
             $contacto->nombres = $request->nombres;
-            $contacto->teléfono = $request->telefono;
+            $contacto->telefono = $request->telefono;
             $contacto->correo = $request->correo;
             $contacto->mensaje = $request->mensaje;
             $contacto->save();
@@ -28,11 +23,5 @@ class ContactoController extends Controller
         }catch(QueryException $e){
             return response()->json($e, 500);
         }
-    }
-
-    public function destroy($id) {
-        $contact = Contacto::findOrFail($id);
-        $contact->delete();
-        return response()->json(['success' => 'SE HA BORRADO ESTE COMENTARIO']);
     }
 }

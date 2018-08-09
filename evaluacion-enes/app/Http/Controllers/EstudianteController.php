@@ -153,7 +153,7 @@ class EstudianteController extends Controller
         return $estudiante;
     }
 
-    public function ingresarAlumno(Request $request){
+    public function store(Request $request){
         try{
             $estudiante = new User();
             $estudiante->nombres = '';
@@ -222,8 +222,18 @@ class EstudianteController extends Controller
          try{
             $estudiante = User::findOrFail($id);
             $estudiante->cedula = $request->cedula;
+            $estudiante->nombres = $request->nombres;
+            $estudiante->apellidos = $request->apellidos;
             $estudiante->nickname = $request->nickname;
+            $estudiante->email = $request->email;
+            $estudiante->password = Hash::make($request->password);
+            $estudiante->telefono = $request->telefono;
+            $estudiante->direccion = $request->direccion;
+            $estudiante->fecha_nacimiento = $request->fecha_nacimiento;
+            $estudiante->estado_civil = $request->estado_civil;   
+            $estudiante->condicion = 1;
             $estudiante->idparalelo = $request->idparalelo;
+            $estudiante->idarea = $request->idarea;
             $estudiante->idperiodo = $request->idperiodo;
             $estudiante->save();
             return response()->json(['success' => 'SE HA ACTUALIZADO EL ESTUDIANTE'], 200);   
