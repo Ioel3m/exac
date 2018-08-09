@@ -52,6 +52,7 @@ export class NuevoDocenteComponent implements OnInit {
     let array = [];
     this.sucess = true;
     this._apiService.getParalelos().subscribe(res => {
+      console.log(res);
       for (let key in res) {
         array = res[key];
       }

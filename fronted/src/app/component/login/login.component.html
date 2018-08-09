@@ -51,13 +51,15 @@
 
         <div id="form-contacto" class="d-flex justify-center d-none offset-md-3 col-md-6 col-12">
 
-          <form id="form-contact" action="" class="d-flex flex-column align-items-center col-12" style="height: 100vh;">
-            <input type="text" placeholder="Nombre" required>
-            <input type="text" placeholder="telefono" required>
-            <input type="text" placeholder="correo" required>
-            <textarea placeholder="Pregunta"></textarea>
-            <input type="submit" class="f_roboto-regular" value="ENVIAR">
+          <form id="form-contact" action="" class="d-flex flex-column align-items-center col-12" style="height: 100vh;" #form="ngForm" autocomplete="off">
+            <input type="text" placeholder="*Nombre" required #nombres ngModel name="nombres">
+            <input type="text" placeholder="*Telefono" #telefono ngModel name="telefono">
+            <input type="text" placeholder="*Correo" required #correo ngModel name="correo"> 
+            <textarea placeholder="*Comentario" #comentario ngModel name="comentario"></textarea>
+            <input type="button" class="f_roboto-regular" [ngClass]="{'desactivado': cargando || !form.valid}" value="ENVIAR" [disabled]="!form.valid"  (click)="setComentario(nombres.value, telefono.value, correo.value, comentario.value)">
           </form>
+
+          <p class="text-success f_roboto-italic" *ngIf="comentario">Gracias! Nos pondremos en contacto contigo dentro de poco</p>
 
         </div>
 

@@ -1,5 +1,51 @@
-<div class="mt-5 pt-5">
-
-  <h2 class="text-center text-lg-left">BUZON</h2>
-
+<div class="container-fluid mt-5 pt-2">
+  <h2 class="mt-5">BUZON</h2>
 </div>
+
+<div class="container bg-white animated fadeIn">
+    <app-load [estado]="sucess"></app-load>
+
+    <div class="container-fluid mt-5 py-5">
+  
+      <div class=" mt-5 table-responsive col-12 animated fadeIn">
+
+  
+        <table class="table table-borderless col-12">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">NOMBRES</th>
+              <th scope="col">TELEFONO</th>
+              <th scope="col">EMAIL</th>
+              <th scope="col">COMENTARIO</th>
+            </tr>
+          </thead>
+          <tbody>
+  
+  
+            <tr *ngFor="let item of comentarios; let i = index">
+  
+              <th class="">{{i+1}}</th>
+              <td>{{item.nombres}}</td>
+              <td>{{item.telefono}}</td>
+              <td>{{item.correo}}</td>
+              <td>{{item.mensaje}}</td>  
+  
+              <td>
+ 
+  
+                  <i class="fa fa-close text-danger" style="color: #A4B2C1; cursor: pointer;" role="button"
+                    data-toggle="dropdown" aria-haspopup="true"></i>
+   
+              </td>
+  
+  
+            </tr>
+  
+  
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

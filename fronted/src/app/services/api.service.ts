@@ -176,7 +176,7 @@ export class ApiService {
     return this.http.put(`${this.url}/student/edit/${idEstudiante}?token=${this.getStorage('token')}`, { cedula, nickname, idparalelo, idperiodo, }, httpOptions)// this.http.
   }
   updateDocente(id, cedula, nombres, apellidos, email, telefono, direccion, fecha_nacimiento, estado_civil, idparalelo, idarea, idperiodo) {
-    return this.http.put(`${this.url}/teacher/${id}?token=${this.getStorage('token')}`, {id, cedula, nombres, apellidos, email, telefono, direccion, fecha_nacimiento, estado_civil, idparalelo, idarea, idperiodo }, httpOptions)// this.http.
+    return this.http.put(`${this.url}/teacher/${id}?token=${this.getStorage('token')}`, { id, cedula, nombres, apellidos, email, telefono, direccion, fecha_nacimiento, estado_civil, idparalelo, idarea, idperiodo }, httpOptions)// this.http.
   }
 
 
@@ -188,14 +188,18 @@ export class ApiService {
     return this.http.get(`${this.url}/teacher/${id}?token=${this.getStorage('token')}`, httpOptions)
   }
 
-  getDominio(){
+  getDominio() {
     return this.http.get(`${this.url}/dominio?token=${this.getStorage('token')}`, httpOptions)
 
   }
 
-  getComentarios(){
-    return this.http.get(`${this.url}/dominio?token=${this.getStorage('token')}`, httpOptions)
+  getComentarios() {
+    // return this.http.get(`${this.url}/contact?token=${this.getStorage('token')}`, httpOptions)
+    return this.http.get(`${this.url}/contact?`, httpOptions)
+  }
 
+  setComentarios(nombres, telefono, correo, mensaje) {
+    return this.http.post(`${this.url}/contact?token=${this.getStorage('token')}`, { nombres, telefono, correo, mensaje }, httpOptions)
   }
 
 }

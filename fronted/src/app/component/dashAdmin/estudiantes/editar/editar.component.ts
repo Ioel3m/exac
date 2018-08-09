@@ -98,6 +98,7 @@ export class EditarComponent implements OnInit {
     this.cargando = true;
     this.success = true;
     this._apiService.getEstudiante(this.param).subscribe(res => {
+      console.log(res);
       this.data = res;
       this.success = false;
       this.cargando = false;

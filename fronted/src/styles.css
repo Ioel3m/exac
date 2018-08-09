@@ -176,14 +176,13 @@ button {
   margin-bottom: 20px;
   padding: 10px;
 }
-#form-contacto form input[type=submit] {
+#form-contacto form input[type=button] {
   margin-top: 20px;
   border: 0;
   width: 70%;
   height: 35px;
-  background-color: #2E90DE;
+  background-color: #287CF3;
   color: white;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.16);
   transition: 0.3s all;
 }
 

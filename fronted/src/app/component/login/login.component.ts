@@ -18,9 +18,11 @@ export class LoginComponent implements OnInit {
     errorCre: boolean;
     cargando: boolean;
     success: boolean;
+    comentario: boolean;
 
     constructor(private _apiService: ApiService, private _router: Router) {
         this.cargando = false;
+        this.comentario = false;
     }
 
     ngOnInit() {
@@ -101,7 +103,6 @@ export class LoginComponent implements OnInit {
             setTimeout(() => {
                 if (data['user'].idrol == 1) {
                     this._router.navigate(['./admin']);
-                    // window.location.href = "/admin";
                 }
             }, 1000);
 
@@ -113,6 +114,20 @@ export class LoginComponent implements OnInit {
             this._router.navigate(['./login'])
         })
 
+    }
+
+    setComentario(nombres, telefono, correo, mensaje) {
+        console.log(nombres, telefono, correo, mensaje);
+        this._apiService.setComentarios(nombres, telefono, correo, mensaje).subscribe(success => {
+
+
+            setTimeout(() => {
+                this.comentario = true;
+            }, 1000);
+            this.comentario = false;
+        },()=>{
+            console.log("error al enviar");
+        })
     }
 
 
