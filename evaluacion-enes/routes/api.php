@@ -28,6 +28,7 @@ Route::group(['middleware' => 'cors'], function () {
     Route::put('/student/enable/{id}', 'EstudianteController@habilitado'); 
     Route::put('/student/info', 'EstudianteController@updateInformation'); 
     Route::put('/student/edit/{id}', 'EstudianteController@edit'); 
+    Route::put('/student/reset/{id}', 'EstudianteController@resetPassword'); 
     
     Route::get('/class', 'ClaseController@index');
 
@@ -43,7 +44,8 @@ Route::group(['middleware' => 'cors'], function () {
     Route::put('/teacher/{id}', 'DocenteController@update');
     Route::put('/teacher', 'DocenteController@updateProfileDocente');
     Route::put('/teacher/enable/{id}', 'DocenteController@habilitar');
-    
+    Route::put('/teacher/reset/{id}', 'DocenteController@resetPassword'); 
+
     Route::get('/periodo', 'PeriodoAcademicoController@index');
     Route::post('/periodo', 'PeriodoAcademicoController@store');
     Route::put('/periodo/enable/{id}', 'PeriodoAcademicoController@habilitado');

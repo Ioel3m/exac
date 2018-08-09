@@ -226,18 +226,28 @@ class EstudianteController extends Controller
             $estudiante->apellidos = $request->apellidos;
             $estudiante->nickname = $request->nickname;
             $estudiante->email = $request->email;
-            $estudiante->password = Hash::make($request->password);
             $estudiante->telefono = $request->telefono;
             $estudiante->direccion = $request->direccion;
             $estudiante->fecha_nacimiento = $request->fecha_nacimiento;
             $estudiante->estado_civil = $request->estado_civil;   
             $estudiante->condicion = 1;
             $estudiante->idparalelo = $request->idparalelo;
-            $estudiante->idarea = $request->idarea;
             $estudiante->idperiodo = $request->idperiodo;
             $estudiante->save();
             return response()->json(['success' => 'SE HA ACTUALIZADO EL ESTUDIANTE'], 200);   
 
+        }catch(QueryException $e){
+            return response()->json($e, 500);
+        }
+    }
+
+    public function resetPassword($id){
+        try{
+            $estudiante = User::findOrFail($id);
+            $estudiante->password = Hash::make($estudiante->cedula);
+            $estudiante->informacion_personal = 0;
+            $estudiante->save();
+            return response()->json(['success' => 'Se ha reseteado la clave de el estudiante '.$estudiante->nombres.' '.$estudiante->apellidos], 200);
         }catch(QueryException $e){
             return response()->json($e, 500);
         }

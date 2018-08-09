@@ -19,6 +19,8 @@ class CreateContactosTable extends Migration
             $table->string('telefono', 12)->nullable();
             $table->string('correo', 95);
             $table->string('mensaje', 155);
+            
+            $table->timestamps();
         });
     }
 
