@@ -103,9 +103,8 @@ class DocenteController extends Controller
 
     public function updateProfileDocente(Request $request){
         $rules = [
-            'cedula' => 'numeric|required|unique:users',
-            'nickname' => 'required|unique:users',
-            'email' => 'required|unique:users'
+            'nickname' => 'required',
+            'email' => 'required'
         ];
 
         $this->validate($request, $rules);
@@ -113,7 +112,6 @@ class DocenteController extends Controller
         $docente = User::findOrFail(Auth::user()->id);
         $docente->nombres = $request->nombres;
         $docente->apellidos = $request->apellidos;
-        $docente->cedula = $request->cedula;
         $docente->nickname = $request->nickname;
         $docente->email = $request->email;
         $docente->password = Hash::make($request->password);
@@ -142,7 +140,6 @@ class DocenteController extends Controller
             $docente->cedula = $request->cedula;
             $docente->nickname = $request->nickname;
             $docente->email = $request->email;
-            $docente->password = Hash::make($request->password);
             $docente->telefono = $request->telefono;
             $docente->direccion = $request->direccion;
             $docente->fecha_nacimiento = $request->fecha_nacimiento;
@@ -155,6 +152,18 @@ class DocenteController extends Controller
             
             $docente->save();
             return response()->json(['success' => 'Se han guardado los cambios !!'], 200);   
+        }catch(QueryException $e){
+            return response()->json($e, 500);
+        }
+    }
+
+    public function resetPassword($id){
+        try{
+            $docente = User::findOrFail($id);
+            $docente->password = Hash::make($docente->cedula);
+            $docente->informacion_personal = 0;
+            $docente->save();
+            return response()->json(['success' => 'Se ha reseteado la clave de el docente '.$docente->nombres.' '.$docente->apellidos], 200);
         }catch(QueryException $e){
             return response()->json($e, 500);
         }
