@@ -52,7 +52,7 @@ export class ListaDocenteComponent implements OnInit {
       for (let i in res) {
         this.data.push((res[i]));
       }
-      
+
       this.resultados = this.data;
       console.log(this.resultados);
       this.cargando = false;
@@ -76,6 +76,14 @@ export class ListaDocenteComponent implements OnInit {
       }
     }
     this.cargando = false;
+  }
+
+  resetPass(id) {
+    this._apiService.resetPassword(id).subscribe(() => {
+      this._apiService.setNotification(true, "Clave restablecida", "Exito");
+    }, () => {
+      this._apiService.setNotification(false, 'Clave no restablecida', 'Error');
+    })
   }
 
 }

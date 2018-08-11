@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxNotificationService } from 'ngx-notification';
 
 import { ApiService } from "../../../../services/api.service";
 @Component({
@@ -13,22 +12,23 @@ export class NuevoEstudianteComponent implements OnInit {
   paralelos = [];
   periodos = [];
   cargando: boolean;
-  tick:boolean;
+  tick: boolean;
   sucess: boolean;
   token;
-  private notificacion:string;
+  private notificacion: string;
 
-  constructor(private _apiService: ApiService, private _notificacion:NgxNotificationService) {
+  constructor(private _apiService: ApiService) {
     this.tick = false;
     this.sucess = false;
-   }
+  }
 
   ngOnInit() {
+    this.getParalelos();
+    this.getPeriodos();
+  }
 
-      this.getParalelos();
-      this.getPeriodos();
- 
-
+  validarCI(ci) {
+    return this._apiService.validarCI(ci);
   }
 
   setNuevoEstudiante(cedula, idparalelo, idperiodo, condicion, form) {
@@ -39,30 +39,25 @@ export class NuevoEstudianteComponent implements OnInit {
     this._apiService.setNuevoEstudiante(estudiante).subscribe(res => {
       this.cargando = false;
       this.tick = true;
-      this._apiService.show("Usuario registrado correctamente");
-      // this._notificacion.sendMessage(this.notificacion, 'none', 'bottom-right');
-      setTimeout(()=>{
+
+      setTimeout(() => {
         this.tick = false;
         form.reset();
       }, 3000)
 
-      
-      
+
+
     }, error => {
       console.log(error)
     })
   }
 
-  form(form) {
-    console.log(form);
-    
-  }
+
 
   getParalelos() {
     let array = [];
     this.sucess = true;
     this._apiService.getParalelos().subscribe(res => {
-      console.log("par"+res);
 
       for (let key in res) {
         array = res[key];
@@ -78,7 +73,6 @@ export class NuevoEstudianteComponent implements OnInit {
     this.sucess = true;
     let array = [];
     this._apiService.getPeriodos().subscribe(res => {
-      console.log(res);
 
       for (let key in res) {
         array = res[key];

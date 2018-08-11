@@ -1,8 +1,15 @@
 @charset "UTF-8";
 
-.ngx-notification {
-  background-color: #287CF3;
+.notification {
   color: #fff;
+} 
+
+#toastr-container{
+  box-shadow: none !important;
+}
+.toastr-success{
+  box-shadow: none !important;
+  background-color: #287CF3 !important;
 }
 
 body{
@@ -28,8 +35,6 @@ button {
 .desactivado{
   cursor: not-allowed;
 }
-
-
 
 /* ======================================= */
 
@@ -94,6 +99,11 @@ button {
   margin-top: 40px;
   height: 100%;
   /*Contacto*/
+}
+
+#up-contacto, #down-contacto{
+  cursor: pointer;
+  font-size: 0.9rem !important;
 }
 
 #m_login input[type=text], #m_login input[type=password] {
@@ -171,7 +181,7 @@ button {
   width: 100%;
   margin-top: 40px;
 }
-#form-contacto form input[type=text], #form-contacto form textarea {
+#form-contacto form input[type=text], #form-contacto form textarea, #form-contacto form input[type=email],#form-contacto form  input[type=number]  {
   border: 1px solid #AEAEAE;
   height: 45px;
   width: 70%;
@@ -186,10 +196,10 @@ button {
   border: 0;
   width: 70%;
   height: 35px;
-  background-color: #2E90DE;
+  background-color: #287CF3;
   color: white;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.16);
   transition: 0.3s all;
+  border-radius: 5px;
 }
 
 #form-contacto form input[type=button]:hover {

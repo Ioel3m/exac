@@ -12,11 +12,17 @@ tbody > tr{
 th{
     color: #A4B2C1;
     font-size: 0.8rem;
+    text-align: center;
 }
 td{
     padding: auto auto;
     min-width: 100px;
     max-width: auto;
+    text-align: center;
+}
+
+.dropdown-menu{
+    left: 0 !important;
 }
 
 

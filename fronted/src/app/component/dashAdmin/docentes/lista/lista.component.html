@@ -16,10 +16,10 @@
             <!-- <th scope="col">#</th> -->
             <th scope="col">CEDULA</th>
             <th scope="col">NOMBRE</th>
-            <th scope="col">EMAIL</th>
-            <th scope="col">TELEFONO</th>
-            <th scope="col">DIRECCION</th>
+            <th scope="col">PARALELO</th>
             <th scope="col">PERIODO</th>
+            <th scope="col"></th>
+
           </tr>
         </thead>
         <tbody>
@@ -28,10 +28,15 @@
             <!-- <th class="">{{i+1}}</th> -->
             <td>{{item.cedula}}</td>
             <td>{{item.nombres | capitalizar}} {{item.apellidos | capitalizar}}</td>
-            <td>{{item.email}}</td>
-            <td>{{item.telefono}}</td>
-            <td>{{item.direccion}}</td>
-            <td>{{item.fecha_inicio}} a {{item.fecha_fin}} </td>
+            <td>{{item.paralelo}}</td>
+            <td>{{item.fecha_inicio}} a {{item.fecha_fin}}</td>
+            <td>
+              
+                <input type="button" class="btn btn-inline btn-primary" id="estado_toggle"
+                [attr.data-id]="item.id" (click)="resetPass(password.getAttribute('data-id'))" #password value="Reiniciar clave">                
+             
+
+            </td>
 
             <td id="menu">
               <div class="navbar dropdown" style="display: block">
@@ -39,7 +44,7 @@
                 <i class="fa fa-ellipsis-h" id="dropdownMenuButton" style="color: #A4B2C1; transform: rotate(90deg); float: right;" role="button"
                   data-toggle="dropdown" aria-haspopup="true"></i>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" [routerLink]="['../editar', item.id]">Editar</a>
+                  <a class="dropdown-item" [routerLink]="['../editar', item.id]">Detalles</a>
                 </div>
               </div>
             </td>

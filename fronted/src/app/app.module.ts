@@ -5,8 +5,8 @@ import { HttpModule } from "@angular/http";
 import { HttpClientModule } from "@angular/common/http";
 
 //NOTIFICACIONES
-import {UixLightNotifierModule} from 'uix-light-notifier';
-import { NgxNotificationComponent } from 'ngx-notification';
+import {  ToastrModule} from "ng6-toastr-notifications";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './component/login/login.component';
@@ -23,6 +23,8 @@ import { RUTAS } from "./rutas.component";
 //SERVICIOS
 import { ApiService } from './services/api.service';
 import { GuardService } from './services/guard.service';
+import { ResolveService } from './services/resolve.service';
+
 import { ListaComponent } from './component/dashAdmin/estudiantes/lista/lista.component';
 import { ListaDocenteComponent } from "./component/dashAdmin/docentes/lista/listaDocente.component";
 import { CapitalizarPipe } from './pipes/capitalizar.pipe';
@@ -32,6 +34,7 @@ import { DocentesComponent } from './component/dashAdmin/docentes/docentes.compo
 import { NuevoDocenteComponent } from './component/dashAdmin/docentes/nuevo-docente/nuevo-docente.component';
 import { ActualizarComponent } from './component/dashAdmin/docentes/actualizar/actualizar.component';
 import { BuzonComponent } from './component/dashAdmin/buzon/buzon.component';
+import { ErrorComponent } from './decorates/error/error.component';
 
 
 
@@ -52,7 +55,7 @@ import { BuzonComponent } from './component/dashAdmin/buzon/buzon.component';
     NuevoDocenteComponent,
     ActualizarComponent,
     BuzonComponent,
-    NgxNotificationComponent
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,12 +63,14 @@ import { BuzonComponent } from './component/dashAdmin/buzon/buzon.component';
     HttpClientModule,
     RUTAS,
     FormsModule,
-    UixLightNotifierModule
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule
 
   ],
   providers: [
     ApiService,
     GuardService,
+    ResolveService
   ],
   bootstrap: [AppComponent]
 })

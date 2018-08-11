@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from "../../services/api.service";
+import { GuardService } from "../../services/guard.service";
 import { Router } from "@angular/router";
 import * as $ from 'jquery';
 // import { map, catchError } from 'rxjs/operators'
@@ -18,12 +19,12 @@ export class LoginComponent implements OnInit {
     errorCre: boolean;
     cargando: boolean;
     success: boolean;
-    comentario: boolean;
-    tick:boolean;
+    mensaje: boolean;
+    tick: boolean;
 
-    constructor(private _apiService: ApiService, private _router: Router) {
+    constructor(private _apiService: ApiService, private _router: Router, private guard: GuardService) {
         this.cargando = false;
-        this.comentario = false;
+        this.mensaje = false;
     }
 
     ngOnInit() {
@@ -84,7 +85,7 @@ export class LoginComponent implements OnInit {
             this.errorCre = false;
             this.cargando = false;
             this.success = true;
-
+            
             let datos = {
                 paralelo: data['user'].idparalelo,
                 area: data['user'].idarea,
@@ -95,9 +96,8 @@ export class LoginComponent implements OnInit {
                 periodo: data['user'].idperiodo,
                 cedula: data['user'].cedula
             }
-
+            
             this._apiService.setStorage('datos', datos);
-
             this._apiService.setToken(data['0'].token);
             this._apiService.check(data['0'].token);
 
@@ -120,13 +120,13 @@ export class LoginComponent implements OnInit {
     setComentario(nombres, telefono, correo, mensaje, form) {
         console.log(nombres, telefono, correo, mensaje);
         this._apiService.setComentarios(nombres, telefono, correo, mensaje).subscribe(success => {
-            
-            
+
+            this.mensaje = true;
             setTimeout(() => {
-                this.comentario = true;
-            }, 1000);
-            form.reset();
-        },()=>{
+                form.reset();
+                this.mensaje = false;
+            }, 3000);
+        }, () => {
             console.log("error al enviar");
         })
     }

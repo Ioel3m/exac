@@ -7,12 +7,19 @@ tbody{
 }
 tbody > tr{
     background-color: #E5EBF1;
+    text-align: center;
 }
 
 th{
+    text-align: center;
     color: #A4B2C1;
     font-size: 0.8rem;
 }
 td{
+    text-align: center;
     padding: auto auto;
+}
+
+.dropdown-menu{
+    left: -10px;
 }

@@ -25,7 +25,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "ng2-opd-popup": "^1.1.21",
-    "ngx-notification": "^1.0.5",
+    "ng6-toastr-notifications": "^1.0.4",
     "popper.js": "^1.14.3",
     "rxjs": "^6.0.0",
     "uix-light-notifier": "0.0.4",

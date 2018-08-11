@@ -21,8 +21,10 @@ export class ActualizarComponent implements OnInit {
   param: number;
   defaultpa;
   defaultpe;
+  defaultRol: number;
 
   constructor(private _apiService: ApiService, private activatedRouter: ActivatedRoute) {
+    this.defaultRol = 1;
   }
 
   ngOnInit() {
@@ -64,7 +66,6 @@ export class ActualizarComponent implements OnInit {
           this.defaultpe = array[key].fecha_inicio + " a " + array[key].fecha_fin;
         }
         this.periodos.push(array[key]);
-
       }
       this.success = false;
     })
@@ -92,14 +93,22 @@ export class ActualizarComponent implements OnInit {
     })
   }
 
-  updateDocente(cedula, nombres, apellidos, email, telefono, direccion, fecha_nacimiento, estado_civil, paralelo, area, periodo) {
+  updateDocente(cedula, nick, nombres, apellidos, email, telefono, direccion, fecha_nacimiento, estado_civil, paralelo, area, periodo, form) {
     // console.log(form);
+    console.log(this.param, cedula, nick, nombres, apellidos, estado_civil, email, telefono, fecha_nacimiento, direccion, paralelo, periodo);
+
     this.cargando = true;
-    this._apiService.updateDocente(this.param, cedula, nombres, apellidos, email, telefono, direccion, fecha_nacimiento, estado_civil, paralelo, area, periodo).subscribe(res => {
+    this._apiService.updateDocente(this.param, cedula, nick, this._apiService.Capitalizar(nombres), this._apiService.Capitalizar(apellidos), email.toLowerCase(), telefono, direccion.toLowerCase(), fecha_nacimiento, estado_civil.toLowerCase(), paralelo, area, periodo).subscribe(res => {
       this.cargando = false;
       this.tick = true;
+      this._apiService.setNotification(true, "Docente actualizado correctamente", "Éxito")
       setTimeout(() => {
+        form.reset();
         this.tick = false;
+        this.getDocente();
+        this.getParalelos();
+        this.getPeriodos();
+        this.getArea();
       }, 3000)
     })
   }
@@ -119,9 +128,8 @@ export class ActualizarComponent implements OnInit {
 
       for (let key in array) {
         this.area.push(array[key]);
-
       }
-      console.log(this.area);
+
       this.success = false;
     })
   }
