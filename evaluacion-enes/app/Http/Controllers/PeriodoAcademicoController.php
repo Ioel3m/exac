@@ -20,12 +20,22 @@ class PeriodoAcademicoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $periodos = PeriodoAcademico::where('condicion', '=', '1')->orderBy('id', 'desc')->get();
+        if (isset($request->condicion)) {
+            $periodos = PeriodoAcademico::where('condicion', '=', $request->condicion)
+                ->orderBy('fecha_inicio', 'asc')
+                ->get();    
+        }else{
+            $periodos = PeriodoAcademico::orderBy('fecha_inicio', 'asc')->get();
+        }
         return response()->json([$periodos], 200);
     }
 
+    public function show($id){
+        $periodo = PeriodoAcademico::findOrFail($id);
+        return response()->json([$periodo], 200);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -35,6 +45,14 @@ class PeriodoAcademicoController extends Controller
     public function store(Request $request)
     {
         try{
+            $rules = [
+                'fecha_inicio' => 'required|date|unique:periodos_academicos',
+                'fecha_fin' => 'required|date|unique:periodos_academicos',
+                'condicion' => 'required|boolean'
+            ];
+
+            $this->validate($request, $rules);
+
             $periodo = new PeriodoAcademico();
             $periodo->fecha_inicio = $request->fecha_inicio;
             $periodo->fecha_fin = $request->fecha_fin;
@@ -56,6 +74,14 @@ class PeriodoAcademicoController extends Controller
     public function update(Request $request, $id)
     {
         try{
+            $rules = [
+                'fecha_inicio' => 'required|date',
+                'fecha_fin' => 'required|date',
+                'condicion' => 'required|boolean'
+            ];
+
+            $this->validate($request, $rules);
+
             $periodo = PeriodoAcademico::findOrFail($id);
             $periodo->fecha_inicio = $request->fecha_inicio;
             $periodo->fecha_fin = $request->fecha_fin;
@@ -67,21 +93,15 @@ class PeriodoAcademicoController extends Controller
         }
     }
 
-    public function desactivarPeriodo($id) 
-    {
-        try{
-            $periodo = PeriodoAcademico::findOrFail($id);
-            $periodo->condicion = '0';
-            $periodo->save();
-            return response()->json(['success' => 'Se ha desactivado este periodo'], 200);   
-        }catch(QueryException $e){
-            return response()->json($e, 500);
-        }
-    }
-
     public function habilitado(Request $request, $id) 
     {
         try{
+            $rules = [
+                'condicion' => 'required|boolean'
+            ];
+
+            $this->validate($request, $rules);
+
             $periodo = PeriodoAcademico::findOrFail($id);
             $periodo->condicion = $request->condicion;
             $periodo->save();

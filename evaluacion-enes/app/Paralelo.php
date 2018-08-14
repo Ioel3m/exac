@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Paralelo extends Model
 {
     protected $fillable = [
-        'descripcion', 'condicion'
+        'descripcion', 'condicion', 'created_at', 'updated_at'
     ];
 
     public function users(){

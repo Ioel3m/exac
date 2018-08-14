@@ -47,14 +47,15 @@ Route::group(['middleware' => 'cors'], function () {
     Route::put('/teacher/reset/{id}', 'DocenteController@resetPassword'); 
 
     Route::get('/periodo', 'PeriodoAcademicoController@index');
+    Route::get('/periodo/{id}', 'PeriodoAcademicoController@show');
     Route::post('/periodo', 'PeriodoAcademicoController@store');
     Route::put('/periodo/enable/{id}', 'PeriodoAcademicoController@habilitado');
     Route::put('/periodo/{id}', 'PeriodoAcademicoController@update');
 
     Route::get('/paralelo', 'ParaleloController@index');
+    Route::get('/paralelo/{id}', 'ParaleloController@show');
     Route::post('/paralelo', 'ParaleloController@store');
-    Route::put('/paralelo/active/{id}', 'ParaleloController@activarParalelo');
-    Route::put('/paralelo/desactive/{id}', 'ParaleloController@desactivarParalelo');
+    Route::put('/paralelo/enable/{id}', 'ParaleloController@habilitado');
     Route::put('/paralelo/{id}', 'ParaleloController@update');
 
     Route::put('/profile/admin', 'AdministradorController@updateProfileAdmin');

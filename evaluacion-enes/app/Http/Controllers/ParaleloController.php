@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Paralelo;
 
+use Illuminate\Database\QueryException;
+
 class ParaleloController extends Controller
 {
     public function __construct()
@@ -18,12 +20,20 @@ class ParaleloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $paralelos = Paralelo::where('condicion', '=', '1')->where('id', '<>', '1')->orderBy('id', 'desc')->get();
-        return response()->json([$paralelos], 200);
+        if (isset($request->condicion)) {
+            $paralelos = Paralelo::where('condicion', '=', $request->condicion)->where('id', '<>', '1')->orderBy('descripcion', 'asc')->get();    
+        }else{
+            $paralelos = Paralelo::where('id', '<>', '1')->orderBy('descripcion', 'asc')->get();
+        }
+        return response()->json($paralelos, 200);
     }
 
+    public function show($id){
+        $paralelo = Paralelo::findOrFail($id);
+        return response()->json($paralelo, 200);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -32,14 +42,18 @@ class ParaleloController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-            $paralelo = new Paralelo();
-            $paralelo->descripcion = $request->descripcion;
-            $paralelo->save();
-            return response()->json(['success' => 'Se ha creado un nuevo paralelo'], 200);   
-        }catch(QueryException $e){
-            return response()->json($e, 500);
-        }
+        $rules = [
+            'descripcion' => 'required|unique:paralelos',
+            'condicion' => 'required|boolean'
+        ];
+
+        $this->validate($request, $rules);
+
+        $paralelo = new Paralelo();
+        $paralelo->descripcion = $request->descripcion;
+        $paralelo->condicion = $request->condicion;
+        $paralelo->save();
+        return response()->json(['success' => 'Se ha creado el paralelo '.$request->descripcion], 200);   
     }
 
     /**
@@ -50,36 +64,44 @@ class ParaleloController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        try{
+    {   
+        try{     
+            $rules = [
+                'descripcion' => 'required',
+                'condicion' => 'required|boolean'
+            ];
+
+            $this->validate($request, $rules);
+
             $paralelo = Paralelo::findOrFail($id);
+            $descripcion_paralelo = $paralelo->descripcion;
+
             $paralelo->descripcion = $request->descripcion;
+            $paralelo->condicion = $request->condicion;
+            
             $paralelo->save();
-            return response()->json(['success' => 'Se ha editado este paralelo'], 200);   
+            return response()->json(['success' => 'Se ha editado el paralelo '.$descripcion_paralelo.' a '.$paralelo->descripcion], 200);   
         }catch(QueryException $e){
-            return response()->json($e, 500);
+            return response()->json($e, 422);
         }
     }
 
-    public function desactivarParalelo($id) 
+    public function habilitado(Request $request, $id) 
     {
         try{
-            $paralelo = Paralelo::findOrFail($id);
-            $paralelo->condicion = '0';
-            $paralelo->save();
-            return response()->json(['success' => 'Se ha desactivado este paralelo'], 200);   
-        }catch(QueryException $e){
-            return response()->json($e, 500);
-        }
-    }
+            $rules = [
+                'condicion' => 'required|boolean'
+            ];
 
-    public function activarParalelo($id) 
-    {
-        try{
+            $this->validate($request, $rules);
             $paralelo = Paralelo::findOrFail($id);
-            $paralelo->condicion = '1';
+            $paralelo->condicion = $request->condicion;
             $paralelo->save();
-            return response()->json(['success' => 'Se ha activado este paralelo'], 200);   
+            if ($request->condicion) {
+                return response()->json(['success' => 'SE HA HABILITADO EL PARALELO '.$paralelo->descripcion], 200);   
+            }else{
+                return response()->json(['success' => 'SE HA DESHABILITADO EL PARALELO '.$paralelo->descripcion], 200);
+            }
         }catch(QueryException $e){
             return response()->json($e, 500);
         }
