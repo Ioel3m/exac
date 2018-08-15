@@ -29,12 +29,12 @@ class PeriodoAcademicoController extends Controller
         }else{
             $periodos = PeriodoAcademico::orderBy('fecha_inicio', 'asc')->get();
         }
-        return response()->json([$periodos], 200);
+        return response()->json($periodos, 200);
     }
 
     public function show($id){
         $periodo = PeriodoAcademico::findOrFail($id);
-        return response()->json([$periodo], 200);
+        return response()->json($periodo, 200);
     }
     /**
      * Store a newly created resource in storage.

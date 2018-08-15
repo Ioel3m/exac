@@ -20,24 +20,37 @@ class AreaController extends Controller
         return response()->json($areas, 200);
     }
 
+    public function show($id){
+        $area = Area::findOrFail($id);
+        return response()->json($area, 200);
+    }
+
     public function store(Request $request){    
-        try{
-            $area = new Area();
-            $area->name = $request->name;
-            $area->save();
-            return response()->json(['success' => 'Se ha creado una nueva área'], 200);   
-        }catch(QueryException $ex){
-            return response()->json($e, 500);
-        }
+        $rules = [
+            'name' => 'required|unique:areas'
+        ];
+
+        $this->validate($request, $rules);
+
+        $area = new Area();
+        $area->name = $request->name;
+        $area->save();
+        return response()->json(['success' => 'Se ha creado una nueva área'], 200);   
     }
 
     public function update(Request $request, $id){
         try{
+            $rules = [
+                'name' => 'required'
+            ];
+
+            $this->validate($request, $rules);
+
             $area = Area::findOrFail($id);
             $area->name = $request->name;
             $area->save();
             return response()->json(['success' => 'Se ha modificado esta área'], 200);   
-        }catch(QueryException $ex){
+        }catch(QueryException $e){
             return response()->json($e, 500);
         }
     }

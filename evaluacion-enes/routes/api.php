@@ -62,6 +62,7 @@ Route::group(['middleware' => 'cors'], function () {
     Route::put('/profile/teacher', 'DocenteController@updateProfileDocente');
     
     Route::get('/dominio', 'AreaController@index');
+    Route::get('/dominio/{id}', 'AreaController@show');
     Route::post('/dominio', 'AreaController@store');
     Route::put('/dominio/{id}', 'AreaController@update');
     
