@@ -8,6 +8,10 @@ use App\Contacto;
 
 use Illuminate\Database\QueryException;
 
+use Carbon\Carbon;
+
+use DB;
+
 class ContactoAuthController extends Controller
 {
     public function __construct()
@@ -22,8 +26,38 @@ class ContactoAuthController extends Controller
      */
     public function index()
     {
+        $date = Carbon::now('America/Lima');
+
+        $FechaActual = strtotime($date->toDateTimeString());
         $contactos = Contacto::orderBy('id', 'desc')->get();
-        return response()->json($contactos, 200);
+        
+        foreach ($contactos as $key => $contacto) {
+            $c = new Contacto();
+            $c->id = $contacto['id'];
+            $c->nombres = $contacto['nombres'];
+            $c->telefono = $contacto['telefono'];
+            $c->correo = $contacto['correo'];
+            $c->mensaje = $contacto['mensaje'];
+            $c->created_at = $contacto['created_at'];
+            $c->updated_at = $contacto['updated_at'];
+            
+            $FechaRegistro = strtotime($c->created_at);
+            
+            $tiempoTranscurridosRegistro = $FechaActual - $FechaRegistro;
+            $dias = floor($tiempoTranscurridosRegistro / 86400);
+        
+            $arrayContactos[] = [   
+                'id' => $c->id, 
+                'nombres' => $c->nombres,
+                'telefono' => $c->telefono,
+                'correo' => $c->correo,
+                'mensaje' => $c->mensaje,
+                'created_at' => $c->created_at->toDateTimeString(),
+                'updated_at' => $c->updated_at->toDateTimeString(),
+                'created_day' => ($dias == 0) ? 'Hoy' : 'Hace '.$dias.' día'
+            ];
+        }
+        return response()->json($arrayContactos, 200);
     }
 
     /**
