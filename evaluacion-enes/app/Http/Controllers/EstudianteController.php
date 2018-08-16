@@ -149,8 +149,47 @@ class EstudianteController extends Controller
     }
 
     public function show($id){
+        $alumno = [];
         $estudiante = User::findOrFail($id);
-        return $estudiante;
+        $representante = Representante::where('idalumno', '=', $id)->get();
+
+        $rep = new Representante();
+        foreach ($representante as $key => $r) {
+            $rep->cedula = $r['cedula'];
+            $rep->nombres = $r['nombres'];
+            $rep->apellidos = $r['apellidos'];
+            $rep->telefono = $r['telefono'];
+            $rep->correo = $r['correo'];
+            $rep->condicion = $r['condicion'];
+            $rep->idalumno = $r['idalumno'];
+        }
+
+        $alumno = [
+            "id" =>  $estudiante->id,
+            "nombres" => $estudiante->nombres,
+            "apellidos" => $estudiante->apellidos,
+            "cedula" => $estudiante->cedula,
+            "nickname" => $estudiante->nickname,
+            "email" => $estudiante->email,
+            "telefono" => $estudiante->telefono,
+            "direccion" => $estudiante->direccion,
+            "fecha_nacimiento" => $estudiante->fecha_nacimiento,
+            "estado_civil" => $estudiante->estado_civil,
+            "informacion_personal" => $estudiante->informacion_personal,
+            "condicion" => $estudiante->condicion,
+            "idrol" => $estudiante->idrol,
+            "idparalelo" => $estudiante->idparalelo,
+            "idarea" => $estudiante->idarea,
+            "idperiodo" => $estudiante->idperiodo,
+            "created_at" => ($estudiante->created_at == null) ? $estudiante->created_at : $estudiante->created_at->toDateTimeString(),
+            "updated_at" => ($estudiante->updated_at == null) ? $estudiante->updated_at : $estudiante->updated_at->toDateTimeString(),
+            "cedula_rep" => $rep->cedula,
+            "nombres_rep" => $rep->nombres,
+            "apellidos_rep" => $rep->apellidos,
+            "telefono_rep" => $rep->telefono,
+            "correo_rep" => $rep->correo
+        ];
+        return response()->json($alumno, 200); 
     }
 
     public function store(Request $request){
@@ -198,18 +237,16 @@ class EstudianteController extends Controller
                 $estudiante->informacion_personal = 1;
                 $estudiante->update();
 
-                $representantes = $request->representantes;
-                foreach ($representantes as $r => $representante) {
-                    $rep = new Representante();
-                    $rep->cedula = $representante['cedula'];
-                    $rep->nombres = $representante['nombres'];
-                    $rep->apellidos = $representante['apellidos'];
-                    $rep->telefono = $representante['telefono'];
-                    $rep->correo = $representante['correo'];
-                    $rep->condicion = 1;
-                    $rep->idalumno = Auth::user()->id;
-                    $rep->save();
-                }
+                $rep = new Representante();
+                $rep->cedula = $request->cedula_rep;
+                $rep->nombres = $request->nombres_rep;
+                $rep->apellidos = $request->apellidos_rep;
+                $rep->telefono = $request->telefono_rep;
+                $rep->correo = $request->correo_rep;
+                $rep->condicion = 1;
+                $rep->idalumno = Auth::user()->id;
+                $rep->save();
+                
             DB::commit();
             return response()->json(['success' => 'SU INFORMACIÓN HA SIDO ACTUALIZADA '.$request->nombres.' '.$request->apellidos], 200);
         }catch(QueryException $e){
@@ -220,6 +257,7 @@ class EstudianteController extends Controller
 
     public function edit(Request $request, $id){
          try{
+            DB::beginTransaction();
             $estudiante = User::findOrFail($id);
             $estudiante->cedula = $request->cedula;
             $estudiante->nombres = $request->nombres;
@@ -234,9 +272,20 @@ class EstudianteController extends Controller
             $estudiante->idparalelo = $request->idparalelo;
             $estudiante->idperiodo = $request->idperiodo;
             $estudiante->save();
-            return response()->json(['success' => 'SE HA ACTUALIZADO EL ESTUDIANTE'], 200);   
 
+            $rep = Representante::where('idalumno', $id)->first();
+            $rep->cedula = $request->cedula_rep;
+            $rep->nombres = $request->nombres_rep;
+            $rep->apellidos = $request->apellidos_rep;
+            $rep->telefono = $request->telefono_rep;
+            $rep->correo = $request->correo_rep;
+            $rep->condicion = 1;
+            $rep->save();
+            DB::commit();
+
+            return response()->json(['success' => 'SE HA ACTUALIZADO EL ESTUDIANTE '.$estudiante->nombres.' '.$estudiante->apellidos], 200);   
         }catch(QueryException $e){
+            DB::rollBack();
             return response()->json($e, 500);
         }
     }
@@ -245,7 +294,7 @@ class EstudianteController extends Controller
         try{
             $estudiante = User::findOrFail($id);
             $estudiante->password = Hash::make($estudiante->cedula);
-            $estudiante->informacion_personal = 0;
+            //$estudiante->informacion_personal = 0;
             $estudiante->save();
             return response()->json(['success' => 'Se ha reseteado la clave de el estudiante '.$estudiante->nombres.' '.$estudiante->apellidos], 200);
         }catch(QueryException $e){

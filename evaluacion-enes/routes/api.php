@@ -104,7 +104,7 @@ Route::get('/validatetoken', array('middleware' => ['cors', 'jwt.auth'], functio
         return response()->json(['Usuario no encontrado'], 404);
     }
     $nickname = \JWTAuth::parseToken()->authenticate();
-    return response()->json(['rol' => $user->idrol], 200);
+    return response()->json(['rol' => $user->idrol, 'informacion_personal' => $user->informacion_personal], 200);
 }));
 
 /*

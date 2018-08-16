@@ -161,7 +161,7 @@ class DocenteController extends Controller
         try{
             $docente = User::findOrFail($id);
             $docente->password = Hash::make($docente->cedula);
-            $docente->informacion_personal = 0;
+            //$docente->informacion_personal = 0;
             $docente->save();
             return response()->json(['success' => 'Se ha reseteado la clave de el docente '.$docente->nombres.' '.$docente->apellidos], 200);
         }catch(QueryException $e){

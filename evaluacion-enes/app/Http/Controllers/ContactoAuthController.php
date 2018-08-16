@@ -31,6 +31,7 @@ class ContactoAuthController extends Controller
         $FechaActual = strtotime($date->toDateTimeString());
         $contactos = Contacto::orderBy('id', 'desc')->get();
         
+        $arrayContactos = [];
         foreach ($contactos as $key => $contacto) {
             $c = new Contacto();
             $c->id = $contacto['id'];
@@ -52,11 +53,12 @@ class ContactoAuthController extends Controller
                 'telefono' => $c->telefono,
                 'correo' => $c->correo,
                 'mensaje' => $c->mensaje,
-                'created_at' => $c->created_at->toDateTimeString(),
-                'updated_at' => $c->updated_at->toDateTimeString(),
+                'created_at' => ($c->created_at == null) ? $c->created_at : $c->created_at->toDateTimeString(),
+                'updated_at' => ($c->updated_at == null) ? $c->updated_at : $c->updated_at->toDateTimeString(),
                 'created_day' => ($dias == 0) ? 'Hoy' : 'Hace '.$dias.' día'
             ];
         }
+            
         return response()->json($arrayContactos, 200);
     }
 
