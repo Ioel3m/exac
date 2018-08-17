@@ -15,10 +15,10 @@ class CreateRepresentantesTable extends Migration
     {
         Schema::create('representantes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('cedula', 12)->unique();
-            $table->string('nombres', 95);
-            $table->string('apellidos', 95);
-            $table->string('telefono', 12);
+            $table->string('cedula', 12)->nullable();
+            $table->string('nombres', 95)->nullable();
+            $table->string('apellidos', 95)->nullable();
+            $table->string('telefono', 12)->nullable();
             $table->string('correo', 95)->nullable();
             $table->boolean('condicion')->default(1);
             

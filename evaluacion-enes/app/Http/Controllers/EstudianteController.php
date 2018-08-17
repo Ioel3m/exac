@@ -194,29 +194,43 @@ class EstudianteController extends Controller
 
     public function store(Request $request){
         try{
-            $estudiante = new User();
-            $estudiante->nombres = '';
-            $estudiante->apellidos = '';
-            $estudiante->cedula = $request->cedula;
-            $estudiante->nickname = $request->cedula.'-EST';
-            $estudiante->email = '';
-            $estudiante->password = Hash::make($request->cedula);
-            $estudiante->telefono = '';
-            $estudiante->direccion = '';
-            $estudiante->fecha_nacimiento = '1990-09-09';
-            $estudiante->estado_civil = null;
-            $estudiante->informacion_personal = 0;
-            $estudiante->condicion = $request->condicion;
-            $estudiante->idrol = 2;
-            $estudiante->idparalelo = $request->idparalelo;
-            $estudiante->idarea = 2;
-            $estudiante->idperiodo = $request->idperiodo;
-            
-            $estudiante->save();
+            DB::beginTransaction();
+                $estudiante = new User();
+                $estudiante->nombres = '';
+                $estudiante->apellidos = '';
+                $estudiante->cedula = $request->cedula;
+                $estudiante->nickname = $request->cedula.'-EST';
+                $estudiante->email = '';
+                $estudiante->password = Hash::make($request->cedula);
+                $estudiante->telefono = '';
+                $estudiante->direccion = '';
+                $estudiante->fecha_nacimiento = '1990-09-09';
+                $estudiante->estado_civil = null;
+                $estudiante->informacion_personal = 0;
+                $estudiante->condicion = $request->condicion;
+                $estudiante->idrol = 2;
+                $estudiante->idparalelo = $request->idparalelo;
+                $estudiante->idarea = 2;
+                $estudiante->idperiodo = $request->idperiodo;
+                
+                $estudiante->save();
+
+                $rep = new Representante();
+                $rep->cedula = '';
+                $rep->nombres = '';
+                $rep->apellidos = '';
+                $rep->telefono = '';
+                $rep->correo = '';
+                $rep->condicion = 1;
+                $rep->idalumno = $estudiante->id;
+                $rep->save();
+
+            DB::commit();
 
             return response()->json(['success' => 'ESTUDIANTE INGRESADO'], 200);   
 
         }catch(QueryException $e){
+            DB::rollBack();
             return response()->json($e, 500);
         }
     }
@@ -237,7 +251,7 @@ class EstudianteController extends Controller
                 $estudiante->informacion_personal = 1;
                 $estudiante->update();
 
-                $rep = new Representante();
+                $rep = Representante::where('idalumno', Auth::user()->id)->first();
                 $rep->cedula = $request->cedula_rep;
                 $rep->nombres = $request->nombres_rep;
                 $rep->apellidos = $request->apellidos_rep;
@@ -248,7 +262,7 @@ class EstudianteController extends Controller
                 $rep->save();
                 
             DB::commit();
-            return response()->json(['success' => 'SU INFORMACIÓN HA SIDO ACTUALIZADA '.$request->nombres.' '.$request->apellidos], 200);
+            return response()->json(['success' => 'Se información ha sido actualizada '.$request->nombres.' '.$request->apellidos], 200);
         }catch(QueryException $e){
             DB::rollBack();
             return response()->json($e, 500);
@@ -258,32 +272,32 @@ class EstudianteController extends Controller
     public function edit(Request $request, $id){
          try{
             DB::beginTransaction();
-            $estudiante = User::findOrFail($id);
-            $estudiante->cedula = $request->cedula;
-            $estudiante->nombres = $request->nombres;
-            $estudiante->apellidos = $request->apellidos;
-            $estudiante->nickname = $request->nickname;
-            $estudiante->email = $request->email;
-            $estudiante->telefono = $request->telefono;
-            $estudiante->direccion = $request->direccion;
-            $estudiante->fecha_nacimiento = $request->fecha_nacimiento;
-            $estudiante->estado_civil = $request->estado_civil;   
-            $estudiante->condicion = 1;
-            $estudiante->idparalelo = $request->idparalelo;
-            $estudiante->idperiodo = $request->idperiodo;
-            $estudiante->save();
+                $estudiante = User::findOrFail($id);
+                $estudiante->cedula = $request->cedula;
+                $estudiante->nombres = $request->nombres;
+                $estudiante->apellidos = $request->apellidos;
+                $estudiante->nickname = $request->nickname;
+                $estudiante->email = $request->email;
+                $estudiante->telefono = $request->telefono;
+                $estudiante->direccion = $request->direccion;
+                $estudiante->fecha_nacimiento = $request->fecha_nacimiento;
+                $estudiante->estado_civil = $request->estado_civil;   
+                $estudiante->condicion = 1;
+                $estudiante->idparalelo = $request->idparalelo;
+                $estudiante->idperiodo = $request->idperiodo;
+                $estudiante->save();
 
-            $rep = Representante::where('idalumno', $id)->first();
-            $rep->cedula = $request->cedula_rep;
-            $rep->nombres = $request->nombres_rep;
-            $rep->apellidos = $request->apellidos_rep;
-            $rep->telefono = $request->telefono_rep;
-            $rep->correo = $request->correo_rep;
-            $rep->condicion = 1;
-            $rep->save();
+                $rep = Representante::where('idalumno', $id)->first();
+                $rep->cedula = $request->cedula_rep;
+                $rep->nombres = $request->nombres_rep;
+                $rep->apellidos = $request->apellidos_rep;
+                $rep->telefono = $request->telefono_rep;
+                $rep->correo = $request->correo_rep;
+                $rep->condicion = 1;
+                $rep->save();    
             DB::commit();
 
-            return response()->json(['success' => 'SE HA ACTUALIZADO EL ESTUDIANTE '.$estudiante->nombres.' '.$estudiante->apellidos], 200);   
+            return response()->json(['success' => 'Se ha actualizado el alumno '.$estudiante->nombres.' '.$estudiante->apellidos], 200);   
         }catch(QueryException $e){
             DB::rollBack();
             return response()->json($e, 500);
@@ -309,9 +323,9 @@ class EstudianteController extends Controller
             $estudiante->condicion = $request->condicion;
             $estudiante->save();
             if ($request->condicion) {
-                return response()->json(['success' => 'SE HA HABILITADO EL ESTUDIANTE '.$estudiante->nombres.' '.$estudiante->apellidos], 200);   
+                return response()->json(['success' => 'Se ha habilitado el estudiante '.$estudiante->nombres.' '.$estudiante->apellidos], 200);   
             }else{
-                return response()->json(['success' => 'SE HA DESHABILITADO EL ESTUDIANTE '.$estudiante->nombres.' '.$estudiante->apellidos], 200);
+                return response()->json(['success' => 'Se ha deshabilitado el estudiante '.$estudiante->nombres.' '.$estudiante->apellidos], 200);
             }
         }catch(QueryException $e){
             return response()->json($e, 500);
