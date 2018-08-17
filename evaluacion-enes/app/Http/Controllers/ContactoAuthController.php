@@ -46,7 +46,20 @@ class ContactoAuthController extends Controller
             
             $tiempoTranscurridosRegistro = $FechaActual - $FechaRegistro;
             $dias = floor($tiempoTranscurridosRegistro / 86400);
-        
+            
+            $created_day = '';
+            
+            if($dias == 0){
+                $created_day = 'Hoy';
+            }else if($dias == 1){
+                $created_day = 'Ayer';
+            }else if($dias > 1 && $dias < 28){
+                $created_day = 'Hace '.$dias.' días';
+            }else if($dias >= 28 && $dias <= 31){
+                $created_day = 'Hace aproximadamente un mes';
+            }else{
+                $created_day = ($c->created_at == null) ? $c->created_at : $c->created_at->toFormattedDateString();
+            }
             $arrayContactos[] = [   
                 'id' => $c->id, 
                 'nombres' => $c->nombres,
@@ -55,7 +68,7 @@ class ContactoAuthController extends Controller
                 'mensaje' => $c->mensaje,
                 'created_at' => ($c->created_at == null) ? $c->created_at : $c->created_at->toDateTimeString(),
                 'updated_at' => ($c->updated_at == null) ? $c->updated_at : $c->updated_at->toDateTimeString(),
-                'created_day' => ($dias == 0) ? 'Hoy' : 'Hace '.$dias.' día'
+                'created_day' => $created_day
             ];
         }
             

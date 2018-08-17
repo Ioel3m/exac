@@ -31,8 +31,9 @@ Route::group(['middleware' => 'cors'], function () {
     Route::put('/student/reset/{id}', 'EstudianteController@resetPassword'); 
     
     Route::get('/class', 'ClaseController@index');
+    Route::post('/class', 'ClaseController@store');
 
-    Route::post('/asistencia', 'AsistenciaController@store');
+    Route::put('/asistencia/{id}', 'AsistenciaController@update');
     Route::get('/asistencia/clase/{id}', 'AsistenciaController@getAsistenciasByClase');
     Route::get('/asistencia/alumno/{id}', 'AsistenciaController@show');
 
